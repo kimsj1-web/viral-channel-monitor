@@ -1,0 +1,36 @@
+name: Daily channel metrics
+
+on:
+  schedule:
+    - cron: '0 22 * * *'   # 매일 07:00 KST (= 22:00 UTC 전날)
+  workflow_dispatch:         # '수동 실행(Run workflow)' 버튼용
+
+permissions:
+  contents: write
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install deps
+        run: pip install requests
+
+      - name: Collect metrics
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+        run: python collect.py
+
+      - name: Commit updated data
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@users.noreply.github.com"
+          git add docs/data.json
+          git diff --staged --quiet || git commit -m "Update metrics ($(date -u +%Y-%m-%d))"
+          git push

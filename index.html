@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>협찬 채널 효율 대시보드</title>
+<style>
+:root{
+  --bg:#f7f7f5; --card:#ffffff; --head:#1f2937; --text:#1a1a1a; --muted:#6b7280;
+  --border:#e5e7eb; --up:#dc2626; --down:#2563eb; --accent:#4f46e5; --accent-bg:#eef2ff;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#17171a; --card:#1f2024; --head:#0f1420; --text:#ededed; --muted:#9aa0aa;
+    --border:#2e3036; --up:#f87171; --down:#60a5fa; --accent:#a5b4fc; --accent-bg:#232542; }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",Segoe UI,Roboto,sans-serif;
+  padding:env(safe-area-inset-top,0) 16px env(safe-area-inset-bottom,0);line-height:1.5}
+.wrap{max-width:1000px;margin:0 auto;padding:24px 0 48px}
+h1{font-size:20px;font-weight:600;margin:0 0 4px}
+.sub{color:var(--muted);font-size:13px;margin:0 0 20px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:20px}
+.c{background:var(--card);border:.5px solid var(--border);border-radius:12px;padding:12px 14px}
+.c .l{font-size:12px;color:var(--muted)}
+.c .v{font-size:22px;font-weight:600;margin-top:2px}
+.tblwrap{background:var(--card);border:.5px solid var(--border);border-radius:12px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:720px}
+th{background:var(--head);color:#fff;font-weight:500;padding:10px 12px;text-align:right;white-space:nowrap}
+th:nth-child(1),th:nth-child(2){text-align:left}
+td{padding:10px 12px;text-align:right;border-top:.5px solid var(--border);white-space:nowrap}
+td:nth-child(1),td:nth-child(2){text-align:left}
+tr.top td{background:var(--accent-bg)}
+.rank{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;
+  border-radius:6px;font-size:12px;font-weight:600;background:transparent;color:var(--muted)}
+tr.top .rank{background:var(--accent);color:#fff}
+.ch{font-weight:500}
+.up{color:var(--up);font-weight:600}.down{color:var(--down);font-weight:600}
+.tag{display:inline-block;font-size:11px;color:var(--muted)}
+.err td{color:var(--muted);font-style:italic}
+.spark{vertical-align:middle}
+.foot{color:var(--muted);font-size:12px;margin-top:16px}
+.empty{background:var(--card);border:.5px solid var(--border);border-radius:12px;padding:32px;text-align:center;color:var(--muted)}
+.reload{background:transparent;border:.5px solid var(--border);color:var(--text);border-radius:8px;
+  padding:6px 12px;font-size:13px;cursor:pointer;margin-left:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>협찬 채널 효율 대시보드</h1>
+  <p class="sub" id="sub">불러오는 중…<button class="reload" onclick="location.reload()">새로고침</button></p>
+  <div id="root"></div>
+  <p class="foot">최근 7일 좋아요·댓글 기준 · 참여율 = (좋아요+댓글) ÷ 팔로워 · 참여율 내림차순 · 매일 07:00(KST) 자동 갱신</p>
+</div>
+<script>
+function nf(n){ return (n==null)?"—":Number(n).toLocaleString(); }
+function trendCell(t){
+  if(t==null) return '<span style="color:var(--muted)">—</span>';
+  if(t>=0) return '<span class="up">▲ +'+t.toFixed(1)+'%</span>';
+  return '<span class="down">▼ '+t.toFixed(1)+'%</span>';
+}
+function spark(points){
+  var pts=(points||[]).filter(function(p){return p.eng_rate!=null;});
+  if(pts.length<2) return '<span style="color:var(--muted)">—</span>';
+  var ys=pts.map(function(p){return p.eng_rate;});
+  var min=Math.min.apply(null,ys), max=Math.max.apply(null,ys);
+  var w=80,h=22,pad=2, span=(max-min)||1;
+  var step=(w-pad*2)/(pts.length-1);
+  var d=pts.map(function(p,i){
+    var x=pad+i*step, y=h-pad-((p.eng_rate-min)/span)*(h-pad*2);
+    return x.toFixed(1)+','+y.toFixed(1);
+  }).join(' ');
+  var last=ys[ys.length-1], first=ys[0];
+  var col=last>=first?'var(--up)':'var(--down)';
+  return '<svg class="spark" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'">'+
+    '<polyline points="'+d+'" fill="none" stroke="'+col+'" stroke-width="1.5" '+
+    'stroke-linejoin="round" stroke-linecap="round"/></svg>';
+}
+function render(data){
+  var sub=document.getElementById('sub');
+  var root=document.getElementById('root');
+  var ok=(data.channels||[]).filter(function(c){return !c.error;});
+  var errs=(data.channels||[]).filter(function(c){return c.error;});
+
+  sub.innerHTML='업데이트: '+(data.updated_kst||'-')+' KST'+
+    '<button class="reload" onclick="location.reload()">새로고침</button>';
+
+  if(ok.length===0 && errs.length===0){
+    root.innerHTML='<div class="empty">아직 수집된 데이터가 없어요.<br>GitHub → Actions 탭에서 워크플로우를 한 번 수동 실행(Run workflow)하면 채워집니다.</div>';
+    return;
+  }
+
+  var rates=ok.map(function(c){return c.eng_rate;}).filter(function(v){return v!=null;});
+  var avgRate=rates.length?(rates.reduce(function(a,b){return a+b;},0)/rates.length):0;
+  var ups=ok.filter(function(c){return c.trend_pct!=null && c.trend_pct>=0;}).length;
+  var downs=ok.filter(function(c){return c.trend_pct!=null && c.trend_pct<0;}).length;
+
+  var cards='<div class="cards">'+
+    '<div class="c"><div class="l">집계 채널</div><div class="v">'+ok.length+'곳</div></div>'+
+    '<div class="c"><div class="l">평균 참여율</div><div class="v">'+avgRate.toFixed(2)+'%</div></div>'+
+    '<div class="c"><div class="l">상승 / 하락</div><div class="v"><span class="up">'+ups+'</span> / <span class="down">'+downs+'</span></div></div>'+
+    '</div>';
+
+  var rows=ok.map(function(c,i){
+    var hist=(data.history&&data.history[c.username])||[];
+    return '<tr'+(i===0?' class="top"':'')+'>'+
+      '<td><span class="rank">'+(i+1)+'</span></td>'+
+      '<td class="ch">@'+c.username+'</td>'+
+      '<td>'+nf(c.followers)+'</td>'+
+      '<td>'+nf(c.avg_likes)+'</td>'+
+      '<td>'+nf(c.avg_comments)+'</td>'+
+      '<td style="font-weight:600">'+(c.eng_rate==null?'—':c.eng_rate.toFixed(2)+'%')+'</td>'+
+      '<td>'+trendCell(c.trend_pct)+'</td>'+
+      '<td>'+spark(hist)+'</td>'+
+    '</tr>';
+  }).join('');
+
+  var errRows=errs.map(function(c){
+    return '<tr class="err"><td></td><td>@'+c.username+'</td>'+
+      '<td colspan="6" style="text-align:left">수집 실패: '+String(c.error).slice(0,60)+'</td></tr>';
+  }).join('');
+
+  root.innerHTML=cards+
+    '<div class="tblwrap"><table><thead><tr>'+
+    '<th>순위</th><th>채널</th><th>팔로워</th><th>평균 좋아요</th><th>평균 댓글</th>'+
+    '<th>참여율</th><th>추이(7일)</th><th>추이 그래프</th>'+
+    '</tr></thead><tbody>'+rows+errRows+'</tbody></table></div>';
+}
+fetch('./data.json?_='+Date.now())
+  .then(function(r){ if(!r.ok) throw new Error('no data'); return r.json(); })
+  .then(render)
+  .catch(function(){
+    document.getElementById('sub').innerHTML='데이터 파일이 아직 없어요.<button class="reload" onclick="location.reload()">새로고침</button>';
+    document.getElementById('root').innerHTML='<div class="empty">아직 수집된 데이터가 없어요.<br>GitHub → Actions 탭에서 워크플로우를 한 번 수동 실행하면 채워집니다.</div>';
+  });
+</script>
+</body>
+</html>
