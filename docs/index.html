@@ -43,7 +43,11 @@ button.ghost{border:none;background:transparent;color:var(--muted);padding:2px 6
 .sec{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:16px}
 .sec h2{font-size:14px;font-weight:600;margin:0 0 10px;display:flex;align-items:center;gap:8px}
 .sec h2 .n{color:var(--muted);font-weight:400;font-size:12px}
-.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.cols{display:block}
+.col{margin-bottom:16px}
+.listbox{display:flex;flex-flow:column wrap;align-content:flex-start;max-height:560px;overflow-x:auto;overflow-y:hidden;padding-bottom:6px}
+.listbox .acct{flex:0 0 auto;width:272px;margin-right:8px}
+.listbox .empty-note{width:220px}
 .col h3{font-size:12px;font-weight:600;margin:0 0 8px;display:flex;align-items:center;gap:6px;color:var(--muted)}
 .chip{display:inline-block;font-size:11px;padding:1px 7px;border-radius:999px;font-weight:600}
 .chip.img{color:var(--img);background:var(--img-bg)}
@@ -111,13 +115,13 @@ button.ghost{border:none;background:transparent;color:var(--muted);padding:2px 6
   <p class="status" id="status">불러오는 중…</p>
 
   <div class="sec">
-    <h2>계정 목록 <span class="n">참여율 높은 순 · 드래그하거나 계정 클릭 후 빈칸 클릭</span>
+    <h2>계정 목록 <span class="n">평균 좋아요 많은 순 · 드래그로 배정 · 계정명 클릭 시 상세</span>
       <button class="primary" id="addAcct" style="margin-left:auto">+ 계정 추가</button>
     </h2>
     <div class="cols">
-      <div class="col"><h3><span class="chip img">이미지 썸네일</span></h3><div id="colImg"></div></div>
-      <div class="col"><h3><span class="chip txt">텍스트 썸네일</span></h3><div id="colTxt"></div></div>
-      <div class="col"><h3><span class="chip non">미설정</span></h3><div id="colNon"></div></div>
+      <div class="col"><h3><span class="chip img">이미지 썸네일</span></h3><div class="listbox" id="colImg"></div></div>
+      <div class="col"><h3><span class="chip txt">텍스트 썸네일</span></h3><div class="listbox" id="colTxt"></div></div>
+      <div class="col"><h3><span class="chip non">미설정</span></h3><div class="listbox" id="colNon"></div></div>
     </div>
   </div>
 
@@ -133,6 +137,14 @@ button.ghost{border:none;background:transparent;color:var(--muted);padding:2px 6
 
 <div class="toast" id="toast"></div>
 <input type="file" id="restoreFile" accept="application/json" style="display:none">
+
+<div class="modal" id="detailModal">
+  <div class="box" style="width:360px">
+    <h3 id="dTitle"></h3>
+    <div id="dBody"></div>
+    <div class="acts"><button class="primary" id="dClose" style="flex:1">닫기</button></div>
+  </div>
+</div>
 
 <div class="modal" id="modal">
   <div class="box">
@@ -192,7 +204,7 @@ function usedMap(){var map={};if(!PLAN)return map;PLAN.materials.forEach(functio
 
 function loadEfficiency(){
   fetch('./data.json?_='+Date.now()).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){
-    (d.channels||[]).forEach(function(c){ if(c.username) EFF[c.username]={rate:c.eng_rate,trend:c.trend_pct}; });
+    (d.channels||[]).forEach(function(c){ if(c.username) EFF[c.username]={rate:c.eng_rate,trend:c.trend_pct,likes:c.avg_likes,posts:c.posts||[]}; });
     $('freshness').textContent='참여율 '+(d.updated_kst||'')+' 기준';
     render();
   }).catch(function(){
@@ -213,13 +225,13 @@ function removeMaterial(mi){if(!PLAN)return;PLAN.materials.splice(mi,1);savePlan
 function setType(id,t){var a=acctById(id);if(!a)return;a.type=t;saveAccounts();render();}
 
 function rateHTML(name){
-  var e=EFF[name]; if(!e||e.rate==null) return '';
+  var e=EFF[name]; if(!e||e.likes==null) return '';
   var tr=''; if(e.trend!=null){tr=e.trend>=0?'<span class="tr up">▲'+e.trend.toFixed(0)+'%</span>':'<span class="tr down">▼'+e.trend.toFixed(0)+'%</span>';}
-  return '<span class="rate">'+e.rate.toFixed(2)+'%</span>'+tr;
+  return '<span class="rate">❤ '+Number(e.likes).toLocaleString()+'</span>'+tr;
 }
 function sortByEff(a,b){
-  var ra=(EFF[a.name]&&EFF[a.name].rate!=null)?EFF[a.name].rate:-1;
-  var rb=(EFF[b.name]&&EFF[b.name].rate!=null)?EFF[b.name].rate:-1;
+  var ra=(EFF[a.name]&&EFF[a.name].likes!=null)?EFF[a.name].likes:-1;
+  var rb=(EFF[b.name]&&EFF[b.name].likes!=null)?EFF[b.name].likes:-1;
   if(rb!==ra)return rb-ra; return a.name.localeCompare(b.name);
 }
 function render(){renderAccounts();renderPlan();}
@@ -232,7 +244,7 @@ function renderAccounts(){
     var tg=a.type==='none'?'<div class="tg"><button data-act="type" data-id="'+a.id+'" data-t="image">이미지</button><button data-act="type" data-id="'+a.id+'" data-t="text">텍스트</button></div>':'';
     var right=u?'<span class="usedtag">'+letter(used[a.id])+' 사용중</span>':'';
     return '<div class="acct'+(u?' used':'')+(picked===a.id?' picked':'')+'" data-aid="'+a.id+'" draggable="'+(!u)+'">'
-      +'<span class="nm" data-act="pick" data-id="'+a.id+'">@'+esc(a.name)+'</span>'
+      +'<span class="nm" data-act="detail" data-id="'+a.id+'">@'+esc(a.name)+'</span>'
       +rateHTML(a.name)
       +'<span class="pr">'+won(a.price)+'</span>'+tg+right
       +'<button class="ghost" data-act="edit" data-id="'+a.id+'" title="수정">⋯</button></div>';
@@ -251,7 +263,7 @@ function renderPlan(){
       if(aid){var a=acctById(aid);
         if(a){mt+=(a.price||0);
           var chip=a.type==='image'?'<span class="chip img">이미지</span>':a.type==='text'?'<span class="chip txt">텍스트</span>':'<span class="chip non">미설정</span>';
-          var e=EFF[a.name]; var fr=(e&&e.rate!=null)?'<span class="fr">'+e.rate.toFixed(2)+'%</span>':'';
+          var e=EFF[a.name]; var fr=(e&&e.likes!=null)?'<span class="fr">❤ '+Number(e.likes).toLocaleString()+'</span>':'';
           return '<div class="slot" data-mi="'+mi+'" data-si="'+si+'"><span class="fn">@'+esc(a.name)+'</span>'+chip+fr+'<span class="fp">'+won(a.price)+'</span><button class="ghost" data-act="clear" data-mi="'+mi+'" data-si="'+si+'">✕</button></div>';
         }
         return '<div class="slot" data-mi="'+mi+'" data-si="'+si+'"><span class="empty">삭제된 계정</span><button class="ghost" data-act="clear" data-mi="'+mi+'" data-si="'+si+'">✕</button></div>';
@@ -265,6 +277,41 @@ function renderPlan(){
   $('grand').textContent='총 '+won(grand);
 }
 
+function fmt(n){return Number(n).toLocaleString();}
+function sparkLikes(posts){
+  var p=(posts||[]).filter(function(x){return x.likes!=null;});
+  if(p.length<2) return '<div style="color:var(--muted);font-size:12px">추이를 그릴 게시물이 부족해요</div>';
+  var ys=p.map(function(x){return x.likes;});
+  var mn=Math.min.apply(null,ys),mx=Math.max.apply(null,ys),sp=(mx-mn)||1;
+  var w=300,h=64,pad=5,step=(w-pad*2)/(p.length-1);
+  var d=p.map(function(x,i){var px=pad+i*step,py=h-pad-((x.likes-mn)/sp)*(h-pad*2);return px.toFixed(1)+','+py.toFixed(1);}).join(' ');
+  return '<svg width="100%" height="'+h+'" viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none">'
+    +'<polyline points="'+d+'" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg>'
+    +'<div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted)"><span>'+p[0].date+'</span><span>'+p[p.length-1].date+'</span></div>';
+}
+function openDetail(id){
+  var a=acctById(id); if(!a) return;
+  var e=EFF[a.name]||{};
+  var posts=(e.posts||[]);
+  var top=posts.slice().sort(function(x,y){return (y.likes||0)-(x.likes||0);}).slice(0,5);
+  var h='';
+  h+='<div style="font-size:13px;color:var(--muted);margin-bottom:6px">'
+    +'참여율 <b style="color:var(--text)">'+(e.rate!=null?e.rate.toFixed(2)+'%':'—')+'</b>'
+    +' · 평균 좋아요(7일) <b style="color:var(--text)">'+(e.likes!=null?fmt(e.likes):'—')+'</b></div>';
+  h+='<div style="font-size:12px;font-weight:700;margin:14px 0 4px">최근 7일 좋아요 추이</div>'+sparkLikes(posts);
+  h+='<div style="font-size:12px;font-weight:700;margin:16px 0 6px">좋아요 TOP 5 (최근 7일)</div>';
+  if(top.length){
+    h+='<ol style="margin:0;padding-left:20px">'+top.map(function(p){
+      var lnk=p.permalink?' <a href="'+p.permalink+'" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">열기↗</a>':'';
+      return '<li style="margin-bottom:5px">❤ <b>'+fmt(p.likes)+'</b> <span style="color:var(--muted)">· '+(p.date||'')+'</span>'+lnk+'</li>';
+    }).join('')+'</ol>';
+  } else {
+    h+='<div style="color:var(--muted);font-size:13px">수집된 게시물이 없어요. (Actions 수집을 한 번 돌리면 표시됩니다)</div>';
+  }
+  $('dTitle').textContent='@'+a.name;
+  $('dBody').innerHTML=h;
+  $('detailModal').classList.add('show');
+}
 function openModal(a){
   var m=$('modal');m.classList.add('show');
   $('mTitle').textContent=a?'계정 수정':'계정 추가';
@@ -283,13 +330,15 @@ document.addEventListener('click',function(e){
   if(t.id==='todayBtn'){$('date').value=todayKST();changeDate(todayKST());return;}
   if(t.id==='themeBtn'){toggleTheme();return;}
   if(t.id==='backupBtn'){backupMenu();return;}
-  if(act==='pick'){var id=t.getAttribute('data-id');if(usedMap()[id]!==undefined)return;picked=(picked===id)?null:id;render();return;}
+  if(act==='detail'){openDetail(t.getAttribute('data-id'));return;}
   if(act==='type'){setType(t.getAttribute('data-id'),t.getAttribute('data-t'));return;}
   if(act==='edit'){openModal(acctById(t.getAttribute('data-id')));return;}
   if(act==='clear'){clearSlot(+t.getAttribute('data-mi'),+t.getAttribute('data-si'));return;}
   if(act==='delmat'){removeMaterial(+t.getAttribute('data-mi'));return;}
   var slot=t.closest('.slot');
   if(slot&&picked){place(picked,+slot.getAttribute('data-mi'),+slot.getAttribute('data-si'));return;}
+  var acctEl=t.closest('.acct');
+  if(acctEl&&!t.closest('button')){var aid=acctEl.getAttribute('data-aid');if(usedMap()[aid]===undefined){picked=(picked===aid)?null:aid;render();}return;}
 });
 document.addEventListener('dragstart',function(e){var c=e.target.closest?e.target.closest('.acct'):null;if(c&&c.getAttribute('draggable')==='true'){e.dataTransfer.setData('text/plain',c.dataset.aid);e.dataTransfer.effectAllowed='move';}});
 document.addEventListener('dragover',function(e){var s=e.target.closest?e.target.closest('.slot'):null;if(s){e.preventDefault();s.classList.add('over');}});
@@ -299,6 +348,8 @@ document.addEventListener('drop',function(e){var s=e.target.closest?e.target.clo
 $('mType').addEventListener('click',function(e){if(e.target.dataset.t){Array.prototype.forEach.call(this.children,function(b){b.classList.remove('on');});e.target.classList.add('on');}});
 $('mCancel').addEventListener('click',closeModal);
 $('modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+$('dClose').addEventListener('click',function(){$('detailModal').classList.remove('show');});
+$('detailModal').addEventListener('click',function(e){if(e.target===this)this.classList.remove('show');});
 $('mSave').addEventListener('click',function(){
   var name=$('mName').value.trim().replace(/^@/,'');if(!name){toast('계정명을 입력하세요');return;}
   var price=parseInt($('mPrice').value,10);if(isNaN(price))price=0;
