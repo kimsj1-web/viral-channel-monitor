@@ -45,7 +45,10 @@ button.ghost{border:none;background:transparent;color:var(--muted);padding:2px 6
 .sec h2 .n{color:var(--muted);font-weight:400;font-size:12px}
 .cols{display:block}
 .col{margin-bottom:16px}
-.listbox{display:flex;flex-flow:column wrap;align-content:flex-start;max-height:560px;overflow-x:auto;overflow-y:hidden;padding-bottom:6px}
+.listbox{display:flex;flex-flow:column wrap;align-content:flex-start;max-height:430px;overflow-x:auto;overflow-y:hidden;padding-bottom:6px}
+.panels{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
+.panel-acc{flex:1 1 560px;min-width:0}
+.panel-mat{flex:1 1 360px;min-width:0}
 .listbox .acct{flex:0 0 auto;width:272px;margin-right:8px}
 .listbox .empty-note{width:220px}
 .col h3{font-size:12px;font-weight:600;margin:0 0 8px;display:flex;align-items:center;gap:6px;color:var(--muted)}
@@ -114,7 +117,8 @@ button.ghost{border:none;background:transparent;color:var(--muted);padding:2px 6
   </div>
   <p class="status" id="status">불러오는 중…</p>
 
-  <div class="sec">
+  <div class="panels">
+  <div class="sec panel-acc">
     <h2>계정 목록 <span class="n">평균 좋아요 많은 순 · 드래그로 배정 · 계정명 클릭 시 상세</span>
       <button class="primary" id="addAcct" style="margin-left:auto">+ 계정 추가</button>
     </h2>
@@ -125,7 +129,7 @@ button.ghost{border:none;background:transparent;color:var(--muted);padding:2px 6
     </div>
   </div>
 
-  <div class="sec">
+  <div class="sec panel-mat">
     <div class="totbar">
       <h2 style="margin:0">소재 배정</h2>
       <div style="margin-left:auto" class="big" id="grand">총 0만원</div>
@@ -133,13 +137,14 @@ button.ghost{border:none;background:transparent;color:var(--muted);padding:2px 6
     </div>
     <div class="mats" id="mats"></div>
   </div>
+  </div>
 </div>
 
 <div class="toast" id="toast"></div>
 <input type="file" id="restoreFile" accept="application/json" style="display:none">
 
 <div class="modal" id="detailModal">
-  <div class="box" style="width:360px">
+  <div class="box" style="width:460px">
     <h3 id="dTitle"></h3>
     <div id="dBody"></div>
     <div class="acts"><button class="primary" id="dClose" style="flex:1">닫기</button></div>
@@ -283,11 +288,19 @@ function sparkLikes(posts){
   if(p.length<2) return '<div style="color:var(--muted);font-size:12px">추이를 그릴 게시물이 부족해요</div>';
   var ys=p.map(function(x){return x.likes;});
   var mn=Math.min.apply(null,ys),mx=Math.max.apply(null,ys),sp=(mx-mn)||1;
-  var w=300,h=64,pad=5,step=(w-pad*2)/(p.length-1);
-  var d=p.map(function(x,i){var px=pad+i*step,py=h-pad-((x.likes-mn)/sp)*(h-pad*2);return px.toFixed(1)+','+py.toFixed(1);}).join(' ');
-  return '<svg width="100%" height="'+h+'" viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none">'
-    +'<polyline points="'+d+'" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg>'
-    +'<div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted)"><span>'+p[0].date+'</span><span>'+p[p.length-1].date+'</span></div>';
+  var w=440,h=120,padX=16,padT=12,padB=24;
+  var step=(w-padX*2)/(p.length-1);
+  function X(i){return padX+i*step;}
+  function Y(v){return (h-padB)-((v-mn)/sp)*(h-padB-padT);}
+  function md(d){var m=/\d{4}-(\d{2})-(\d{2})/.exec(d||'');return m?m[1]+'.'+m[2]:'';}
+  var line=p.map(function(x,i){return X(i).toFixed(1)+','+Y(x.likes).toFixed(1);}).join(' ');
+  var dots=p.map(function(x,i){return '<circle cx="'+X(i).toFixed(1)+'" cy="'+Y(x.likes).toFixed(1)+'" r="4" fill="var(--accent)" stroke="var(--card)" stroke-width="1.5"><title>'+md(x.date)+' · ❤ '+fmt(x.likes)+'</title></circle>';}).join('');
+  var seen={},labels='';
+  p.forEach(function(x,i){var k=md(x.date);if(k&&!seen[k]){seen[k]=1;labels+='<text x="'+X(i).toFixed(1)+'" y="'+(h-7)+'" font-size="9" fill="var(--muted)" text-anchor="middle">'+k+'</text>';}});
+  return '<svg viewBox="0 0 '+w+' '+h+'" style="width:100%;height:auto;overflow:visible">'
+    +'<polyline points="'+line+'" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>'
+    +dots+labels+'</svg>'
+    +'<div style="font-size:11px;color:var(--muted);margin-top:2px">꼭짓점에 마우스를 올리면 날짜·좋아요 수가 떠요</div>';
 }
 function openDetail(id){
   var a=acctById(id); if(!a) return;
