@@ -1,0 +1,845 @@
+{
+  "updated_at": "2026-11-03T00:47:17.614093+00:00",
+  "updated_kst": "2026-11-03 09:48",
+  "lookback_days": 7,
+  "channels": [
+    {
+      "username": "lime.now",
+      "followers": 28134,
+      "posts_7d": 50,
+      "avg_likes": 2637,
+      "avg_comments": 88,
+      "avg_engagement": 2725,
+      "eng_rate": 9.69,
+      "trend_pct": null,
+      "error": null
+    },
+    {
+      "username": "apple_enter",
+      "followers": 16187,
+      "posts_7d": 42,
+      "avg_likes": 906,
+      "avg_comments": 23,
+      "avg_engagement": 929,
+      "eng_rate": 5.74,
+      "trend_pct": -47.9,
+      "error": null
+    },
+    {
+      "username": "zzalqueen",
+      "followers": 35227,
+      "posts_7d": 40,
+      "avg_likes": 1674,
+      "avg_comments": 54,
+      "avg_engagement": 1728,
+      "eng_rate": 4.91,
+      "trend_pct": -16.1,
+      "error": null
+    },
+    {
+      "username": "pink_idolly",
+      "followers": 22842,
+      "posts_7d": 39,
+      "avg_likes": 972,
+      "avg_comments": 11,
+      "avg_engagement": 983,
+      "eng_rate": 4.31,
+      "trend_pct": -91.3,
+      "error": null
+    },
+    {
+      "username": "humorphim",
+      "followers": 21720,
+      "posts_7d": 32,
+      "avg_likes": 745,
+      "avg_comments": 26,
+      "avg_engagement": 771,
+      "eng_rate": 3.55,
+      "trend_pct": 10.0,
+      "error": null
+    },
+    {
+      "username": "ho1y_time",
+      "followers": 31456,
+      "posts_7d": 14,
+      "avg_likes": 1036,
+      "avg_comments": 4,
+      "avg_engagement": 1040,
+      "eng_rate": 3.31,
+      "trend_pct": 93.0,
+      "error": null
+    },
+    {
+      "username": "pink_humor25",
+      "followers": 44612,
+      "posts_7d": 39,
+      "avg_likes": 775,
+      "avg_comments": 22,
+      "avg_engagement": 797,
+      "eng_rate": 1.79,
+      "trend_pct": 122.6,
+      "error": null
+    },
+    {
+      "username": "happyhappy_pick",
+      "followers": 74156,
+      "posts_7d": 43,
+      "avg_likes": 805,
+      "avg_comments": 26,
+      "avg_engagement": 831,
+      "eng_rate": 1.12,
+      "trend_pct": -72.0,
+      "error": null
+    },
+    {
+      "username": "flower_pyeong",
+      "followers": 15081,
+      "posts_7d": 14,
+      "avg_likes": 123,
+      "avg_comments": 3,
+      "avg_engagement": 126,
+      "eng_rate": 0.83,
+      "trend_pct": -23.9,
+      "error": null
+    },
+    {
+      "username": "anavocado12345",
+      "followers": 35586,
+      "posts_7d": 12,
+      "avg_likes": 283,
+      "avg_comments": 14,
+      "avg_engagement": 297,
+      "eng_rate": 0.83,
+      "trend_pct": 209.7,
+      "error": null
+    },
+    {
+      "username": "guliguli_humor",
+      "followers": 54078,
+      "posts_7d": 49,
+      "avg_likes": 435,
+      "avg_comments": 9,
+      "avg_engagement": 444,
+      "eng_rate": 0.82,
+      "trend_pct": 156.4,
+      "error": null
+    },
+    {
+      "username": "humor_yonggari",
+      "followers": 70975,
+      "posts_7d": 37,
+      "avg_likes": 516,
+      "avg_comments": 43,
+      "avg_engagement": 559,
+      "eng_rate": 0.79,
+      "trend_pct": 114.5,
+      "error": null
+    },
+    {
+      "username": "happy__pyeong",
+      "followers": 32154,
+      "posts_7d": 14,
+      "avg_likes": 234,
+      "avg_comments": 16,
+      "avg_engagement": 250,
+      "eng_rate": 0.78,
+      "trend_pct": 27.3,
+      "error": null
+    },
+    {
+      "username": "365_hot",
+      "followers": 89833,
+      "posts_7d": 39,
+      "avg_likes": 644,
+      "avg_comments": 52,
+      "avg_engagement": 696,
+      "eng_rate": 0.77,
+      "trend_pct": -23.3,
+      "error": null
+    },
+    {
+      "username": "ourdays_pick",
+      "followers": 100584,
+      "posts_7d": 32,
+      "avg_likes": 733,
+      "avg_comments": 30,
+      "avg_engagement": 763,
+      "eng_rate": 0.76,
+      "trend_pct": 433.3,
+      "error": null
+    },
+    {
+      "username": "mukja_fun",
+      "followers": 87347,
+      "posts_7d": 35,
+      "avg_likes": 576,
+      "avg_comments": 40,
+      "avg_engagement": 616,
+      "eng_rate": 0.71,
+      "trend_pct": -41.4,
+      "error": null
+    },
+    {
+      "username": "yes__jam_",
+      "followers": 70195,
+      "posts_7d": 29,
+      "avg_likes": 402,
+      "avg_comments": 30,
+      "avg_engagement": 432,
+      "eng_rate": 0.62,
+      "trend_pct": 3.8,
+      "error": null
+    },
+    {
+      "username": "jolly__humor",
+      "followers": 57013,
+      "posts_7d": 7,
+      "avg_likes": 286,
+      "avg_comments": 3,
+      "avg_engagement": 289,
+      "eng_rate": 0.51,
+      "trend_pct": 14.8,
+      "error": null
+    },
+    {
+      "username": "hachuping_humor",
+      "followers": 48322,
+      "posts_7d": 10,
+      "avg_likes": 217,
+      "avg_comments": 3,
+      "avg_engagement": 219,
+      "eng_rate": 0.45,
+      "trend_pct": 1.5,
+      "error": null
+    },
+    {
+      "username": "kutbba101",
+      "followers": 72553,
+      "posts_7d": 37,
+      "avg_likes": 283,
+      "avg_comments": 38,
+      "avg_engagement": 321,
+      "eng_rate": 0.44,
+      "trend_pct": 51.5,
+      "error": null
+    },
+    {
+      "username": "tree.tving",
+      "followers": 58813,
+      "posts_7d": 4,
+      "avg_likes": 240,
+      "avg_comments": 2,
+      "avg_engagement": 242,
+      "eng_rate": 0.41,
+      "trend_pct": 0.6,
+      "error": null
+    },
+    {
+      "username": "luna.besty",
+      "followers": 62539,
+      "posts_7d": 5,
+      "avg_likes": 253,
+      "avg_comments": 3,
+      "avg_engagement": 256,
+      "eng_rate": 0.41,
+      "trend_pct": -5.1,
+      "error": null
+    },
+    {
+      "username": "two_pyeong",
+      "followers": 28040,
+      "posts_7d": 13,
+      "avg_likes": 113,
+      "avg_comments": 2,
+      "avg_engagement": 115,
+      "eng_rate": 0.41,
+      "trend_pct": -36.3,
+      "error": null
+    },
+    {
+      "username": "nato.humor",
+      "followers": 65956,
+      "posts_7d": 11,
+      "avg_likes": 269,
+      "avg_comments": 3,
+      "avg_engagement": 272,
+      "eng_rate": 0.41,
+      "trend_pct": 7.0,
+      "error": null
+    },
+    {
+      "username": "luna.humor",
+      "followers": 102280,
+      "posts_7d": 11,
+      "avg_likes": 404,
+      "avg_comments": 4,
+      "avg_engagement": 408,
+      "eng_rate": 0.4,
+      "trend_pct": 6.0,
+      "error": null
+    },
+    {
+      "username": "good_tip_magazine",
+      "followers": 102934,
+      "posts_7d": 15,
+      "avg_likes": 368,
+      "avg_comments": 3,
+      "avg_engagement": 371,
+      "eng_rate": 0.36,
+      "trend_pct": -0.1,
+      "error": null
+    },
+    {
+      "username": "wikitrip.kr",
+      "followers": 25029,
+      "posts_7d": 13,
+      "avg_likes": 83,
+      "avg_comments": 5,
+      "avg_engagement": 88,
+      "eng_rate": 0.35,
+      "trend_pct": -79.5,
+      "error": null
+    },
+    {
+      "username": "malangping_zzal",
+      "followers": 111160,
+      "posts_7d": 10,
+      "avg_likes": 390,
+      "avg_comments": 3,
+      "avg_engagement": 394,
+      "eng_rate": 0.35,
+      "trend_pct": 3.4,
+      "error": null
+    },
+    {
+      "username": "hahahohokiki6814",
+      "followers": 73963,
+      "posts_7d": 24,
+      "avg_likes": 224,
+      "avg_comments": 35,
+      "avg_engagement": 259,
+      "eng_rate": 0.35,
+      "trend_pct": -2.3,
+      "error": null
+    },
+    {
+      "username": "nato.tip",
+      "followers": 57132,
+      "posts_7d": 5,
+      "avg_likes": 189,
+      "avg_comments": 3,
+      "avg_engagement": 192,
+      "eng_rate": 0.34,
+      "trend_pct": -1.7,
+      "error": null
+    },
+    {
+      "username": "ddonutping_zzal",
+      "followers": 108201,
+      "posts_7d": 12,
+      "avg_likes": 369,
+      "avg_comments": 3,
+      "avg_engagement": 372,
+      "eng_rate": 0.34,
+      "trend_pct": -1.9,
+      "error": null
+    },
+    {
+      "username": "nato.zzal",
+      "followers": 49831,
+      "posts_7d": 7,
+      "avg_likes": 160,
+      "avg_comments": 2,
+      "avg_engagement": 162,
+      "eng_rate": 0.33,
+      "trend_pct": -25.7,
+      "error": null
+    },
+    {
+      "username": "nato.iove",
+      "followers": 34435,
+      "posts_7d": 4,
+      "avg_likes": 109,
+      "avg_comments": 1,
+      "avg_engagement": 110,
+      "eng_rate": 0.32,
+      "trend_pct": -27.8,
+      "error": null
+    },
+    {
+      "username": "sksk1sksk0",
+      "followers": 101154,
+      "posts_7d": 35,
+      "avg_likes": 294,
+      "avg_comments": 23,
+      "avg_engagement": 316,
+      "eng_rate": 0.31,
+      "trend_pct": -61.1,
+      "error": null
+    },
+    {
+      "username": "humor_ssul",
+      "followers": 81760,
+      "posts_7d": 16,
+      "avg_likes": 236,
+      "avg_comments": 13,
+      "avg_engagement": 249,
+      "eng_rate": 0.3,
+      "trend_pct": -55.4,
+      "error": null
+    },
+    {
+      "username": "mamy014",
+      "followers": 93154,
+      "posts_7d": 27,
+      "avg_likes": 240,
+      "avg_comments": 38,
+      "avg_engagement": 278,
+      "eng_rate": 0.3,
+      "trend_pct": 58.7,
+      "error": null
+    },
+    {
+      "username": "mukddoonge",
+      "followers": 70673,
+      "posts_7d": 32,
+      "avg_likes": 178,
+      "avg_comments": 22,
+      "avg_engagement": 199,
+      "eng_rate": 0.28,
+      "trend_pct": -41.1,
+      "error": null
+    },
+    {
+      "username": "text_pyeong",
+      "followers": 36216,
+      "posts_7d": 14,
+      "avg_likes": 93,
+      "avg_comments": 2,
+      "avg_engagement": 95,
+      "eng_rate": 0.26,
+      "trend_pct": -80.5,
+      "error": null
+    },
+    {
+      "username": "smile_king_s2",
+      "followers": 84317,
+      "posts_7d": 29,
+      "avg_likes": 200,
+      "avg_comments": 11,
+      "avg_engagement": 211,
+      "eng_rate": 0.25,
+      "trend_pct": -61.5,
+      "error": null
+    },
+    {
+      "username": "good_n_growth",
+      "followers": 95659,
+      "posts_7d": 14,
+      "avg_likes": 222,
+      "avg_comments": 11,
+      "avg_engagement": 233,
+      "eng_rate": 0.24,
+      "trend_pct": 18.5,
+      "error": null
+    },
+    {
+      "username": "some2lve",
+      "followers": 163719,
+      "posts_7d": 42,
+      "avg_likes": 383,
+      "avg_comments": 9,
+      "avg_engagement": 392,
+      "eng_rate": 0.24,
+      "trend_pct": 34.2,
+      "error": null
+    },
+    {
+      "username": "kkang_funny",
+      "followers": 28109,
+      "posts_7d": 50,
+      "avg_likes": 49,
+      "avg_comments": 9,
+      "avg_engagement": 58,
+      "eng_rate": 0.21,
+      "trend_pct": null,
+      "error": null
+    },
+    {
+      "username": "one_day_humor_diary",
+      "followers": 95986,
+      "posts_7d": 45,
+      "avg_likes": 130,
+      "avg_comments": 10,
+      "avg_engagement": 140,
+      "eng_rate": 0.15,
+      "trend_pct": 165.2,
+      "error": null
+    },
+    {
+      "username": "luv_l0v_0",
+      "followers": 25015,
+      "posts_7d": 13,
+      "avg_likes": 36,
+      "avg_comments": 1,
+      "avg_engagement": 37,
+      "eng_rate": 0.15,
+      "trend_pct": -80.2,
+      "error": null
+    },
+    {
+      "username": "pisik_2",
+      "followers": 117925,
+      "posts_7d": 43,
+      "avg_likes": 167,
+      "avg_comments": 11,
+      "avg_engagement": 178,
+      "eng_rate": 0.15,
+      "trend_pct": -61.0,
+      "error": null
+    },
+    {
+      "username": "laugh.34",
+      "followers": 138154,
+      "posts_7d": 19,
+      "avg_likes": 111,
+      "avg_comments": 3,
+      "avg_engagement": 114,
+      "eng_rate": 0.08,
+      "trend_pct": -77.1,
+      "error": null
+    },
+    {
+      "username": "pangpang_one",
+      "error": "Invalid user id"
+    },
+    {
+      "username": "AYO",
+      "error": "Invalid user id"
+    }
+  ],
+  "history": {
+    "humor_yonggari": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.79,
+        "avg_engagement": 559
+      }
+    ],
+    "humor_ssul": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.3,
+        "avg_engagement": 249
+      }
+    ],
+    "365_hot": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.77,
+        "avg_engagement": 696
+      }
+    ],
+    "mukja_fun": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.71,
+        "avg_engagement": 616
+      }
+    ],
+    "happy__pyeong": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.78,
+        "avg_engagement": 250
+      }
+    ],
+    "good_n_growth": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.24,
+        "avg_engagement": 233
+      }
+    ],
+    "mamy014": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.3,
+        "avg_engagement": 278
+      }
+    ],
+    "mukddoonge": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.28,
+        "avg_engagement": 199
+      }
+    ],
+    "yes__jam_": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.62,
+        "avg_engagement": 432
+      }
+    ],
+    "pink_humor25": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 1.79,
+        "avg_engagement": 797
+      }
+    ],
+    "sksk1sksk0": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.31,
+        "avg_engagement": 316
+      }
+    ],
+    "pink_idolly": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 4.31,
+        "avg_engagement": 983
+      }
+    ],
+    "luna.humor": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.4,
+        "avg_engagement": 408
+      }
+    ],
+    "kutbba101": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.44,
+        "avg_engagement": 321
+      }
+    ],
+    "kkang_funny": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.21,
+        "avg_engagement": 58
+      }
+    ],
+    "apple_enter": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 5.74,
+        "avg_engagement": 929
+      }
+    ],
+    "text_pyeong": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.26,
+        "avg_engagement": 95
+      }
+    ],
+    "nato.zzal": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.33,
+        "avg_engagement": 162
+      }
+    ],
+    "hachuping_humor": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.45,
+        "avg_engagement": 219
+      }
+    ],
+    "zzalqueen": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 4.91,
+        "avg_engagement": 1728
+      }
+    ],
+    "nato.tip": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.34,
+        "avg_engagement": 192
+      }
+    ],
+    "some2lve": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.24,
+        "avg_engagement": 392
+      }
+    ],
+    "one_day_humor_diary": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.15,
+        "avg_engagement": 140
+      }
+    ],
+    "wikitrip.kr": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.35,
+        "avg_engagement": 88
+      }
+    ],
+    "luv_l0v_0": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.15,
+        "avg_engagement": 37
+      }
+    ],
+    "jolly__humor": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.51,
+        "avg_engagement": 289
+      }
+    ],
+    "smile_king_s2": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.25,
+        "avg_engagement": 211
+      }
+    ],
+    "laugh.34": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.08,
+        "avg_engagement": 114
+      }
+    ],
+    "nato.iove": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.32,
+        "avg_engagement": 110
+      }
+    ],
+    "pisik_2": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.15,
+        "avg_engagement": 178
+      }
+    ],
+    "tree.tving": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.41,
+        "avg_engagement": 242
+      }
+    ],
+    "flower_pyeong": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.83,
+        "avg_engagement": 126
+      }
+    ],
+    "luna.besty": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.41,
+        "avg_engagement": 256
+      }
+    ],
+    "two_pyeong": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.41,
+        "avg_engagement": 115
+      }
+    ],
+    "malangping_zzal": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.35,
+        "avg_engagement": 394
+      }
+    ],
+    "humorphim": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 3.55,
+        "avg_engagement": 771
+      }
+    ],
+    "nato.humor": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.41,
+        "avg_engagement": 272
+      }
+    ],
+    "anavocado12345": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.83,
+        "avg_engagement": 297
+      }
+    ],
+    "guliguli_humor": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.82,
+        "avg_engagement": 444
+      }
+    ],
+    "ddonutping_zzal": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.34,
+        "avg_engagement": 372
+      }
+    ],
+    "happyhappy_pick": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 1.12,
+        "avg_engagement": 831
+      }
+    ],
+    "hahahohokiki6814": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.35,
+        "avg_engagement": 259
+      }
+    ],
+    "ho1y_time": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 3.31,
+        "avg_engagement": 1040
+      }
+    ],
+    "good_tip_magazine": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.36,
+        "avg_engagement": 371
+      }
+    ],
+    "lime.now": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 9.69,
+        "avg_engagement": 2725
+      }
+    ],
+    "ourdays_pick": [
+      {
+        "date": "2026-11-03",
+        "eng_rate": 0.76,
+        "avg_engagement": 763
+      }
+    ]
+  }
+}
