@@ -100,6 +100,8 @@ button.ghost{border:none;background:transparent;color:var(--muted);padding:2px 6
 .seg button{flex:1}
 .seg button.on{background:var(--accent);border-color:var(--accent);color:#fff}
 .empty-note{color:var(--muted);font-size:13px;padding:6px 0}
+.charttip{position:fixed;z-index:70;background:var(--head);color:#fff;font-size:12px;font-weight:600;padding:5px 9px;border-radius:8px;pointer-events:none;opacity:0;transition:opacity .08s;white-space:nowrap;transform:translate(-50%,-135%)}
+.charttip.show{opacity:1}
 </style>
 </head>
 <body>
@@ -141,6 +143,7 @@ button.ghost{border:none;background:transparent;color:var(--muted);padding:2px 6
 </div>
 
 <div class="toast" id="toast"></div>
+<div class="charttip" id="dTip"></div>
 <input type="file" id="restoreFile" accept="application/json" style="display:none">
 
 <div class="modal" id="detailModal">
@@ -209,7 +212,7 @@ function usedMap(){var map={};if(!PLAN)return map;PLAN.materials.forEach(functio
 
 function loadEfficiency(){
   fetch('./data.json?_='+Date.now()).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){
-    (d.channels||[]).forEach(function(c){ if(c.username) EFF[c.username]={rate:c.eng_rate,trend:c.trend_pct,likes:c.avg_likes,posts:c.posts||[]}; });
+    (d.channels||[]).forEach(function(c){ if(c.username) EFF[c.username]={rate:c.eng_rate,trend:c.trend_pct,likes:c.avg_likes,followers:c.followers,posts:c.posts||[]}; });
     $('freshness').textContent='참여율 '+(d.updated_kst||'')+' 기준';
     render();
   }).catch(function(){
@@ -231,8 +234,7 @@ function setType(id,t){var a=acctById(id);if(!a)return;a.type=t;saveAccounts();r
 
 function rateHTML(name){
   var e=EFF[name]; if(!e||e.likes==null) return '';
-  var tr=''; if(e.trend!=null){tr=e.trend>=0?'<span class="tr up">▲'+e.trend.toFixed(0)+'%</span>':'<span class="tr down">▼'+e.trend.toFixed(0)+'%</span>';}
-  return '<span class="rate">❤ '+Number(e.likes).toLocaleString()+'</span>'+tr;
+  return '<span class="rate">❤ '+Number(e.likes).toLocaleString()+'</span>';
 }
 function sortByEff(a,b){
   var ra=(EFF[a.name]&&EFF[a.name].likes!=null)?EFF[a.name].likes:-1;
@@ -294,7 +296,9 @@ function sparkLikes(posts){
   function Y(v){return (h-padB)-((v-mn)/sp)*(h-padB-padT);}
   function md(d){var m=/\d{4}-(\d{2})-(\d{2})/.exec(d||'');return m?m[1]+'.'+m[2]:'';}
   var line=p.map(function(x,i){return X(i).toFixed(1)+','+Y(x.likes).toFixed(1);}).join(' ');
-  var dots=p.map(function(x,i){return '<circle cx="'+X(i).toFixed(1)+'" cy="'+Y(x.likes).toFixed(1)+'" r="4" fill="var(--accent)" stroke="var(--card)" stroke-width="1.5"><title>'+md(x.date)+' · ❤ '+fmt(x.likes)+'</title></circle>';}).join('');
+  var dots=p.map(function(x,i){var cx=X(i).toFixed(1),cy=Y(x.likes).toFixed(1);
+    return '<circle cx="'+cx+'" cy="'+cy+'" r="4" fill="var(--accent)" stroke="var(--card)" stroke-width="1.5" style="pointer-events:none"/>'
+      +'<circle cx="'+cx+'" cy="'+cy+'" r="11" fill="transparent" data-likes="'+fmt(x.likes)+'" data-date="'+md(x.date)+'" style="cursor:pointer"/>';}).join('');
   var seen={},labels='';
   p.forEach(function(x,i){var k=md(x.date);if(k&&!seen[k]){seen[k]=1;labels+='<text x="'+X(i).toFixed(1)+'" y="'+(h-7)+'" font-size="9" fill="var(--muted)" text-anchor="middle">'+k+'</text>';}});
   return '<svg viewBox="0 0 '+w+' '+h+'" style="width:100%;height:auto;overflow:visible">'
@@ -309,6 +313,7 @@ function openDetail(id){
   var top=posts.slice().sort(function(x,y){return (y.likes||0)-(x.likes||0);}).slice(0,5);
   var h='';
   h+='<div style="font-size:13px;color:var(--muted);margin-bottom:6px">'
+    +(e.followers!=null?'팔로워 <b style="color:var(--text)">'+fmt(e.followers)+'</b> · ':'')
     +'참여율 <b style="color:var(--text)">'+(e.rate!=null?e.rate.toFixed(2)+'%':'—')+'</b>'
     +' · 평균 좋아요(7일) <b style="color:var(--text)">'+(e.likes!=null?fmt(e.likes):'—')+'</b></div>';
   h+='<div style="font-size:12px;font-weight:700;margin:14px 0 4px">최근 7일 좋아요 추이</div>'+sparkLikes(posts);
@@ -363,6 +368,10 @@ $('mCancel').addEventListener('click',closeModal);
 $('modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
 $('dClose').addEventListener('click',function(){$('detailModal').classList.remove('show');});
 $('detailModal').addEventListener('click',function(e){if(e.target===this)this.classList.remove('show');});
+function tipAt(e,c){var tip=$('dTip');tip.textContent=c.getAttribute('data-date')+' · ❤ '+c.getAttribute('data-likes');tip.style.left=e.clientX+'px';tip.style.top=e.clientY+'px';tip.classList.add('show');}
+document.addEventListener('mouseover',function(e){var c=e.target.closest?e.target.closest('circle[data-likes]'):null;if(c)tipAt(e,c);});
+document.addEventListener('mousemove',function(e){if(!$('dTip').classList.contains('show'))return;var c=e.target.closest?e.target.closest('circle[data-likes]'):null;if(c){tipAt(e,c);}else{$('dTip').classList.remove('show');}});
+document.addEventListener('mouseout',function(e){var c=e.target.closest?e.target.closest('circle[data-likes]'):null;if(c)$('dTip').classList.remove('show');});
 $('mSave').addEventListener('click',function(){
   var name=$('mName').value.trim().replace(/^@/,'');if(!name){toast('계정명을 입력하세요');return;}
   var price=parseInt($('mPrice').value,10);if(isNaN(price))price=0;
