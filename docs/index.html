@@ -186,6 +186,7 @@ button.ghost{border:none;background:transparent;color:var(--muted);padding:2px 6
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.0/dist/umd/supabase.js"></script>
 <script>
 "use strict";
 var DEFAULT_MATERIALS=6, SLOTS_PER=4;
@@ -197,6 +198,11 @@ var SEED=[
  {name:"guliguli_humor",price:10},{name:"happy__pyeong",price:6},{name:"pangpang_one",price:13}
 ];
 var ACCOUNTS=[], DATE=todayKST(), PLAN=null, picked=null, EFF={};
+/* ===== 공유 저장(Supabase) 설정 — 이 두 값만 본인 프로젝트 것으로 ===== */
+var SUPA_URL="https://nmsrzdlgmaaqqcalfbhr.supabase.co";
+var SUPA_KEY="sb_publishable_ZWCmMNsV1La-yMawjhzUtg_FWQp7-O1";
+var SB=window.supabase.createClient(SUPA_URL,SUPA_KEY);
+var lastAccJson="",lastPlanJson="";
 var $=function(id){return document.getElementById(id);};
 
 function todayKST(){var d=new Date(Date.now()+9*3600*1000);return d.toISOString().slice(0,10);}
@@ -208,14 +214,37 @@ function toast(m){var t=$('toast');t.textContent=m;t.classList.add('show');clear
 function lsGet(k,d){try{return JSON.parse(localStorage.getItem(k)||'null')||d;}catch(e){return d;}}
 function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 
-function loadAccounts(){
-  var a=lsGet('cm_accounts',null);
-  if(!a){ a=SEED.map(function(s){return {id:uid(),name:s.name,type:'none',price:s.price};}); lsSet('cm_accounts',a); }
+async function dbGet(k){var r=await SB.from('store').select('v').eq('k',k).maybeSingle();if(r.error)throw r.error;return r.data?r.data.v:null;}
+async function dbSet(k,v){var r=await SB.from('store').upsert({k:k,v:v});if(r.error){toast('저장 실패 — 네트워크/권한 확인');}}
+async function migrateLocalIfAny(){
+  var local=lsGet('cm_accounts',null);
+  if(local&&local.length){
+    await dbSet('accounts',local);
+    for(var i=0;i<localStorage.length;i++){var lk=localStorage.key(i);if(lk&&lk.indexOf('cm_plan_')===0){var p=lsGet(lk,null);if(p)await dbSet('plan:'+lk.slice(8),p);}}
+    return local;
+  }
+  return null;
+}
+async function loadAccounts(){
+  var a=await dbGet('accounts');
+  if(!a||!a.length){ a=await migrateLocalIfAny()||[]; }
   ACCOUNTS=a;
 }
-function saveAccounts(){ lsSet('cm_accounts',ACCOUNTS); }
-function loadPlan(){ PLAN=lsGet('cm_plan_'+DATE,null)||emptyPlan(DATE); }
-function savePlan(){ lsSet('cm_plan_'+DATE,PLAN); }
+function saveAccounts(){ lastAccJson=JSON.stringify(ACCOUNTS); dbSet('accounts',ACCOUNTS); }
+async function loadPlan(){ PLAN=await dbGet('plan:'+DATE)||emptyPlan(DATE); }
+function savePlan(){ lastPlanJson=JSON.stringify(PLAN); dbSet('plan:'+DATE,PLAN); }
+async function refreshFromDb(){
+  try{
+    var a=await dbGet('accounts');var aj=JSON.stringify(a||[]);
+    if(aj!==lastAccJson){lastAccJson=aj;ACCOUNTS=a||[];renderAccounts();}
+    var p=await dbGet('plan:'+DATE);var pj=JSON.stringify(p||emptyPlan(DATE));
+    if(pj!==lastPlanJson){lastPlanJson=pj;PLAN=p||emptyPlan(DATE);renderPlan();}
+  }catch(e){}
+}
+function startSync(){
+  try{SB.channel('store-sync').on('postgres_changes',{event:'*',schema:'public',table:'store'},function(){refreshFromDb();}).subscribe();}catch(e){}
+  setInterval(refreshFromDb,7000);
+}
 
 function emptyPlan(date){var m=[];for(var i=0;i<DEFAULT_MATERIALS;i++){m.push({id:uid(),slots:new Array(SLOTS_PER).fill(null)});}return {date:date,materials:m};}
 function acctById(id){for(var i=0;i<ACCOUNTS.length;i++){if(ACCOUNTS[i].id===id)return ACCOUNTS[i];}return null;}
@@ -422,16 +451,16 @@ $('mDelete').addEventListener('click',function(){
   saveAccounts();render();closeModal();
 });
 
-function changeDate(d){DATE=d;picked=null;loadPlan();render();}
+async function changeDate(d){DATE=d;picked=null;PLAN=await dbGet('plan:'+DATE)||emptyPlan(DATE);lastPlanJson=JSON.stringify(PLAN);render();}
 $('date').addEventListener('change',function(){changeDate(this.value||todayKST());});
 
 function toggleTheme(){var r=document.documentElement;var cur=r.getAttribute('data-theme');var next=cur==='dark'?'light':(cur==='light'?'':'dark');if(next)r.setAttribute('data-theme',next);else r.removeAttribute('data-theme');try{localStorage.setItem('cm_theme',next);}catch(e){}}
 try{var th=localStorage.getItem('cm_theme');if(th)document.documentElement.setAttribute('data-theme',th);}catch(e){}
 
-function backupMenu(){
+async function backupMenu(){
   if(confirm('확인 = 백업 파일 내려받기\n취소 = 백업 파일 불러오기(복원)')){
     var data={accounts:ACCOUNTS,plans:{}};
-    for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k.indexOf('cm_plan_')===0)data.plans[k]=lsGet(k,null);}
+    try{var rr=await SB.from('store').select('k,v').like('k','plan:%');(rr.data||[]).forEach(function(row){data.plans[row.k]=row.v;});}catch(e){}
     var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
     var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='channel-planner-backup-'+todayKST()+'.json';a.click();
     toast('백업 파일을 내려받았어요');
@@ -439,18 +468,28 @@ function backupMenu(){
 }
 $('restoreFile').addEventListener('change',function(){
   var f=this.files[0];if(!f)return;var rd=new FileReader();
-  rd.onload=function(){try{var d=JSON.parse(rd.result);
-    if(d.accounts){lsSet('cm_accounts',d.accounts);}
-    if(d.plans){Object.keys(d.plans).forEach(function(k){lsSet(k,d.plans[k]);});}
-    toast('복원 완료 — 새로고침합니다');setTimeout(function(){location.reload();},800);
+  rd.onload=async function(){try{var d=JSON.parse(rd.result);
+    if(d.accounts){await dbSet('accounts',d.accounts);}
+    if(d.plans){var ks=Object.keys(d.plans);for(var i=0;i<ks.length;i++){var k=ks[i];var nk=k.indexOf('cm_plan_')===0?('plan:'+k.slice(8)):k;await dbSet(nk,d.plans[k]);}}
+    toast('복원 완료 — 모두에게 공유됩니다. 새로고침할게요');setTimeout(function(){location.reload();},1000);
   }catch(e){toast('파일을 읽을 수 없어요');}};
   rd.readAsText(f);this.value='';
 });
 
 $('date').value=DATE;
-loadAccounts();loadPlan();render();
-$('status').textContent='이 브라우저에 저장됨 · 효율은 매일 자동 갱신 · 기기 이동은 백업 버튼 사용';
-loadEfficiency();
+$('status').textContent='공유 저장 연결 중…';
+(async function(){
+  try{
+    await loadAccounts(); await loadPlan();
+    lastAccJson=JSON.stringify(ACCOUNTS); lastPlanJson=JSON.stringify(PLAN);
+    render();
+    $('status').textContent='✅ 팀 공유 저장 · 모두 같은 데이터를 봅니다 · 효율은 매일 07시 자동 갱신';
+    startSync();
+  }catch(e){
+    $('status').textContent='⚠️ 공유 저장 연결 실패 — 상단 URL/키 또는 Supabase 정책을 확인하세요';
+  }
+  loadEfficiency();
+})();
 </script>
 </body>
 </html>
