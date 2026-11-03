@@ -1,5 +1,52 @@
-# 모니터링할 인스타그램 채널을 한 줄에 하나씩 적으세요.
+# 모니터링할 인스타그램 채널을 한 줄에 하나씩.
 # '#'로 시작하는 줄은 메모이며 무시됩니다. @ 는 있어도 없어도 됩니다.
 # 공개 + 프로페셔널(비즈니스/크리에이터) 계정만 조회됩니다.
 
+humor_yonggari
+humor_ssul
+365_hot
+mukja_fun
+happy__pyeong
+good_n_growth
+pangpang_one
+AYO
+mamy014
+mukddoonge
+yes__jam_
+pink_humor25
+sksk1sksk0
+pink_idolly
 luna.humor
+kutbba101
+kkang_funny
+apple_enter
+text_pyeong
+nato.zzal
+hachuping_humor
+zzalqueen
+nato.tip
+some2lve
+one_day_humor_diary
+wikitrip.kr
+luv_l0v_0
+jolly__humor
+smile_king_s2
+laugh.34
+nato.iove
+pisik_2
+tree.tving
+flower_pyeong
+luna.besty
+two_pyeong
+malangping_zzal
+humorphim
+nato.humor
+anavocado12345
+guliguli_humor
+ddonutping_zzal
+happyhappy_pick
+hahahohokiki6814
+ho1y_time
+good_tip_magazine
+lime.now
+ourdays_pick
