@@ -27,7 +27,7 @@
 body{margin:0;background:var(--bg);color:var(--text);
   font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",Segoe UI,Roboto,sans-serif;
   padding:env(safe-area-inset-top,0) 14px env(safe-area-inset-bottom,0);font-size:14px;line-height:1.5}
-.wrap{max-width:1080px;margin:0 auto;padding:18px 0 60px}
+.wrap{max-width:none;margin:0;padding:18px 4px 60px}
 h1{font-size:18px;font-weight:600;margin:0}
 .top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:4px}
 .badge{font-size:11px;font-weight:600;color:var(--accent);background:var(--accent-bg);padding:3px 9px;border-radius:999px}
@@ -48,7 +48,7 @@ button.ghost{border:none;background:transparent;color:var(--muted);padding:2px 6
 .listbox{display:flex;flex-flow:column wrap;align-content:flex-start;max-height:430px;overflow-x:auto;overflow-y:hidden;padding-bottom:6px}
 .panels{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
 .panel-acc{flex:1 1 560px;min-width:0}
-.panel-mat{flex:1 1 360px;min-width:0}
+.panel-mat{flex:1 1 420px;min-width:0}
 .listbox .acct{flex:0 0 auto;width:272px;margin-right:8px}
 .listbox .empty-note{width:220px}
 .col h3{font-size:12px;font-weight:600;margin:0 0 8px;display:flex;align-items:center;gap:6px;color:var(--muted)}
@@ -71,7 +71,7 @@ button.ghost{border:none;background:transparent;color:var(--muted);padding:2px 6
 .acct .usedtag{font-size:11px;color:var(--accent);font-weight:600;white-space:nowrap}
 .totbar{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
 .totbar .big{font-size:16px;font-weight:600}
-.mats{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.mats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .mat{border:1px solid var(--border);border-radius:var(--radius);padding:10px;background:var(--card)}
 .mat .mh{display:flex;align-items:center;gap:6px;margin-bottom:8px}
 .mat .mh .lbl{font-weight:600}
