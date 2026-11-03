@@ -84,6 +84,8 @@ button.ghost{border:none;background:transparent;color:var(--muted);padding:2px 6
 .slot .fn{font-weight:500;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .slot .fp{font-size:12px;color:var(--muted)}
 .slot .fr{font-size:12px;font-weight:700}
+.addslot{width:100%;border:1px dashed var(--border);background:transparent;color:var(--muted);border-radius:8px;padding:6px;font-size:12px;margin-top:2px}
+.addslot:hover{border-color:var(--accent);color:var(--accent)}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--head);color:#fff;
   padding:10px 16px;border-radius:10px;font-size:13px;opacity:0;transition:opacity .2s,transform .2s;
   pointer-events:none;z-index:50;max-width:90vw;text-align:center}
@@ -135,6 +137,7 @@ button.ghost{border:none;background:transparent;color:var(--muted);padding:2px 6
     <div class="totbar">
       <h2 style="margin:0">소재 배정</h2>
       <div style="margin-left:auto" class="big" id="grand">총 0만원</div>
+      <button id="textBtn" class="primary">텍스트화</button>
       <button id="addMat">+ 소재 추가</button>
     </div>
     <div class="mats" id="mats"></div>
@@ -151,6 +154,14 @@ button.ghost{border:none;background:transparent;color:var(--muted);padding:2px 6
     <h3 id="dTitle"></h3>
     <div id="dBody"></div>
     <div class="acts"><button class="primary" id="dClose" style="flex:1">닫기</button></div>
+  </div>
+</div>
+
+<div class="modal" id="textModal">
+  <div class="box" style="width:480px">
+    <h3>소재 배정 텍스트</h3>
+    <textarea id="tText" readonly style="width:100%;height:280px;font:13px/1.6 ui-monospace,monospace;color:var(--text);background:var(--slot);border:1px solid var(--border);border-radius:8px;padding:10px;resize:vertical"></textarea>
+    <div class="acts"><button class="primary" id="tCopy" style="flex:1">복사하기</button><button id="tClose">닫기</button></div>
   </div>
 </div>
 
@@ -228,6 +239,7 @@ function place(aid,mi,si){
   PLAN.materials[mi].slots[si]=aid;picked=null;savePlan();render();
 }
 function clearSlot(mi,si){if(!PLAN)return;PLAN.materials[mi].slots[si]=null;savePlan();render();}
+function addSlot(mi){if(!PLAN)return;PLAN.materials[mi].slots.push(null);savePlan();render();}
 function addMaterial(){if(!PLAN)PLAN=emptyPlan(DATE);PLAN.materials.push({id:uid(),slots:new Array(SLOTS_PER).fill(null)});savePlan();render();}
 function removeMaterial(mi){if(!PLAN)return;PLAN.materials.splice(mi,1);savePlan();render();}
 function setType(id,t){var a=acctById(id);if(!a)return;a.type=t;saveAccounts();render();}
@@ -278,13 +290,26 @@ function renderPlan(){
       return '<div class="slot'+(picked?' pickable':'')+'" data-mi="'+mi+'" data-si="'+si+'"><span class="empty">'+(picked?'여기 클릭':'끌어다 놓기')+'</span></div>';
     }).join('');
     grand+=mt;
-    return '<div class="mat"><div class="mh"><span class="lbl">'+letter(mi)+' 소재</span><span class="mt">'+won(mt)+'</span><button class="ghost" data-act="delmat" data-mi="'+mi+'" title="소재 삭제">✕</button></div>'+slots+'</div>';
+    return '<div class="mat"><div class="mh"><span class="lbl">'+letter(mi)+' 소재</span><span class="mt">'+won(mt)+'</span><button class="ghost" data-act="delmat" data-mi="'+mi+'" title="소재 삭제">✕</button></div>'+slots+'<button class="addslot" data-act="addslot" data-mi="'+mi+'">+ 채널 추가</button></div>';
   }).join('');
   $('mats').innerHTML=html;
   $('grand').textContent='총 '+won(grand);
 }
 
 function fmt(n){return Number(n).toLocaleString();}
+function weekdayKr(dstr){var d=new Date(dstr+'T00:00:00');return ['일','월','화','수','목','금','토'][d.getDay()];}
+function genText(){
+  if(!PLAN) return '';
+  var m=/\d{4}-(\d{2})-(\d{2})/.exec(DATE);
+  var head=m?('['+m[1]+m[2]+'('+weekdayKr(DATE)+')]'):DATE;
+  var groups=[];
+  PLAN.materials.forEach(function(mat){
+    var lines=mat.slots.map(function(aid){var a=aid&&acctById(aid);return a?('- '+a.name+' '+won(a.price)):null;}).filter(Boolean);
+    if(lines.length) groups.push(lines.join('\n'));
+  });
+  return head+'\n'+groups.join('\n\n');
+}
+function openTextModal(){$('tText').value=genText();$('textModal').classList.add('show');}
 function sparkLikes(posts){
   var p=(posts||[]).filter(function(x){return x.likes!=null;});
   if(p.length<2) return '<div style="color:var(--muted);font-size:12px">추이를 그릴 게시물이 부족해요</div>';
@@ -345,6 +370,8 @@ document.addEventListener('click',function(e){
   var t=e.target,act=t.getAttribute('data-act');
   if(t.id==='addAcct'){openModal(null);return;}
   if(t.id==='addMat'){addMaterial();return;}
+  if(t.id==='textBtn'){openTextModal();return;}
+  if(act==='addslot'){addSlot(+t.getAttribute('data-mi'));return;}
   if(t.id==='todayBtn'){$('date').value=todayKST();changeDate(todayKST());return;}
   if(t.id==='themeBtn'){toggleTheme();return;}
   if(t.id==='backupBtn'){backupMenu();return;}
@@ -372,6 +399,14 @@ function tipAt(e,c){var tip=$('dTip');tip.textContent=c.getAttribute('data-date'
 document.addEventListener('mouseover',function(e){var c=e.target.closest?e.target.closest('circle[data-likes]'):null;if(c)tipAt(e,c);});
 document.addEventListener('mousemove',function(e){if(!$('dTip').classList.contains('show'))return;var c=e.target.closest?e.target.closest('circle[data-likes]'):null;if(c){tipAt(e,c);}else{$('dTip').classList.remove('show');}});
 document.addEventListener('mouseout',function(e){var c=e.target.closest?e.target.closest('circle[data-likes]'):null;if(c)$('dTip').classList.remove('show');});
+$('tClose').addEventListener('click',function(){$('textModal').classList.remove('show');});
+$('textModal').addEventListener('click',function(e){if(e.target===this)this.classList.remove('show');});
+$('tCopy').addEventListener('click',function(){
+  var ta=$('tText');ta.focus();ta.select();ta.setSelectionRange(0,999999);
+  var ok=function(){toast('복사됐어요');};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(ta.value).then(ok,function(){try{document.execCommand('copy');ok();}catch(e){toast('복사 실패 — 직접 선택해 복사하세요');}});}
+  else{try{document.execCommand('copy');ok();}catch(e){toast('복사 실패 — 직접 선택해 복사하세요');}}
+});
 $('mSave').addEventListener('click',function(){
   var name=$('mName').value.trim().replace(/^@/,'');if(!name){toast('계정명을 입력하세요');return;}
   var price=parseInt($('mPrice').value,10);if(isNaN(price))price=0;
