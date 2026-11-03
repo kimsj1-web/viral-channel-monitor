@@ -25,7 +25,7 @@ PAGE_SIZE = 50
 OUT_PATH = "docs/data.json"
 HISTORY_KEEP = 60       # 추이 그래프용 최근 N일 보관
 KST = dt.timezone(dt.timedelta(hours=9))
-MEDIA_FIELDS = "id,media_type,timestamp,like_count,comments_count"
+MEDIA_FIELDS = "id,media_type,timestamp,permalink,like_count,comments_count"
 
 
 def load_targets():
@@ -114,6 +114,13 @@ def summarize(username, followers, items, now):
     trend = round((avg_eng - prior_eng) / prior_eng * 100, 1) if prior_eng > 0 else None
     eng_rate = round(avg_eng / followers * 100, 2) if followers else None
 
+    posts_out = sorted(
+        [{"likes": it.get("like_count") or 0,
+          "comments": it.get("comments_count") or 0,
+          "date": it["_ts"].astimezone(KST).strftime("%Y-%m-%d"),
+          "permalink": it.get("permalink", "")} for it in recent],
+        key=lambda p: p["date"])[-40:]
+
     return {
         "username": username,
         "followers": followers,
@@ -123,6 +130,7 @@ def summarize(username, followers, items, now):
         "avg_engagement": round(avg_eng),
         "eng_rate": eng_rate,
         "trend_pct": trend,
+        "posts": posts_out,
         "error": None,
     }
 
