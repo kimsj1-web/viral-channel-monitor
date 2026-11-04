@@ -5,10 +5,13 @@
 - 토큰/계정ID는 환경변수(GitHub Secrets)에서 읽음
 - 공개 프로페셔널 채널의 최근 7일 좋아요·댓글 → 평균·참여율·추이 계산
 - 결과를 docs/data.json 에 저장 (대시보드가 읽음)
-- 매일 실행 시 채널별 '일자별 추이'를 history에 누적
+- 개선: 레이트리밋 시 빨리 포기 / 연속 차단 시 조기 중단 /
+        전부 실패하면 기존 data.json 보존(대시보드 안 날아감) /
+        일시 오류 계정은 직전 데이터 유지 / 진행 로그 즉시 출력
 """
 
 import os
+import sys
 import json
 import time
 import datetime as dt
@@ -22,10 +25,18 @@ IG_USER_ID = os.environ["IG_USER_ID"]
 
 LOOKBACK = 7            # 집계 기간(일)
 PAGE_SIZE = 50
+MAX_PAGES = 6          # 채널당 최대 페이지(무한 페이지네이션 방지)
 OUT_PATH = "docs/data.json"
-HISTORY_KEEP = 60       # 추이 그래프용 최근 N일 보관
+HISTORY_KEEP = 60
 KST = dt.timezone(dt.timedelta(hours=9))
 MEDIA_FIELDS = "id,media_type,timestamp,permalink,like_count,comments_count"
+
+RL_CODES = {4, 17, 32, 613, 368}   # 레이트리밋/차단으로 보는 에러 코드
+MAX_RL_STREAK = 5                  # 연속 이만큼 막히면 조기 중단
+
+
+def log(msg):
+    print(msg, flush=True)   # Actions에서 진행 상황이 바로 보이도록 즉시 출력
 
 
 def load_targets():
@@ -41,27 +52,42 @@ def parse_ts(s):
         return None
 
 
-def api_get(params, retries=5):
+def is_rate_limit(err):
+    if not isinstance(err, dict):
+        return False
+    if err.get("code") in RL_CODES:
+        return True
+    msg = str(err.get("message", "")).lower()
+    return ("rate limit" in msg) or ("request limit" in msg) or ("blocked" in msg)
+
+
+def api_get(params, retries=3):
+    """짧은 백오프(3,6초). 레이트리밋이면 재시도, 그 외 에러는 즉시 반환."""
     url = f"https://graph.facebook.com/{GRAPH_VER}/{IG_USER_ID}"
     for i in range(retries):
-        r = requests.get(url, params=params, timeout=30)
+        try:
+            r = requests.get(url, params=params, timeout=30)
+        except requests.RequestException:
+            time.sleep(3)
+            continue
         if r.status_code == 200:
             return r.json()
         err = {}
         try:
             err = r.json().get("error", {})
         except Exception:
-            pass
-        if err.get("code") in (4, 17, 32, 613) or r.status_code == 429:
-            time.sleep(min(90, 5 * (2 ** i)))
+            err = {"message": r.text}
+        if (is_rate_limit(err) or r.status_code == 429) and i < retries - 1:
+            time.sleep(3 * (2 ** i))   # 3, 6
             continue
-        return {"error": err or {"message": r.text}}
-    return {"error": {"message": "max retries exceeded"}}
+        return {"error": err or {"message": "unknown"}}
+    return {"error": {"message": "max retries exceeded", "code": 4}}
 
 
 def fetch(username, since):
-    items, followers, after = [], None, None
-    while True:
+    items, followers, after, pages = [], None, None, 0
+    while pages < MAX_PAGES:
+        pages += 1
         if after:
             bd = (f"business_discovery.username({username})"
                   f"{{media.after({after}).limit({PAGE_SIZE}){{{MEDIA_FIELDS}}}}}")
@@ -70,7 +96,7 @@ def fetch(username, since):
                   f"{{followers_count,media.limit({PAGE_SIZE}){{{MEDIA_FIELDS}}}}}")
         data = api_get({"fields": bd, "access_token": TOKEN})
         if "error" in data:
-            return None, data["error"].get("message", "error")
+            return None, data["error"]
         bdisc = data.get("business_discovery", {})
         if bdisc.get("followers_count") is not None:
             followers = bdisc["followers_count"]
@@ -146,28 +172,62 @@ def main():
     except Exception:
         store = {}
     history = store.get("history", {})
+    prev_ok = {c.get("username"): c for c in store.get("channels", [])
+               if isinstance(c, dict) and not c.get("error") and c.get("followers") is not None}
 
+    targets = load_targets()
+    total = len(targets)
     channels = []
-    for u in load_targets():
+    ok_count = 0
+    rl_streak = 0
+    aborted = False
+
+    for idx, u in enumerate(targets, 1):
+        log(f"[{idx}/{total}] @{u} ...")
         res, err = fetch(u, since)
         if err:
-            channels.append({"username": u, "error": err})
-            print(f"  [!] @{u}: {err}")
+            rl = is_rate_limit(err)
+            rl_streak = rl_streak + 1 if rl else 0
+            msg = err.get("message", "error") if isinstance(err, dict) else str(err)
+            if u in prev_ok:
+                channels.append(prev_ok[u])
+                log(f"    ⚠️ 실패({msg}) → 직전 데이터 유지")
+            else:
+                channels.append({"username": u, "error": msg})
+                log(f"    ⚠️ 실패: {msg}")
+            if rl_streak >= MAX_RL_STREAK:
+                log(f"연속 {rl_streak}회 레이트리밋 → 앱이 막힌 상태로 보여 수집 중단합니다.")
+                for v in targets[idx:]:
+                    if v in prev_ok:
+                        channels.append(prev_ok[v])
+                    else:
+                        channels.append({"username": v, "error": "skipped (rate limited)"})
+                aborted = True
+                break
+            time.sleep(0.5)
             continue
+
+        rl_streak = 0
         s = summarize(u, res["followers"], res["items"], now)
         channels.append(s)
+        ok_count += 1
         pts = [p for p in history.get(u, []) if p.get("date") != today]
         pts.append({"date": today, "eng_rate": s["eng_rate"],
                     "avg_engagement": s["avg_engagement"]})
         history[u] = pts[-HISTORY_KEEP:]
-        print(f"  [ok] @{u}: 참여율 {s['eng_rate']}% / 평균참여 {s['avg_engagement']}")
-        time.sleep(1)
+        log(f"    [ok] 참여율 {s['eng_rate']}% / 평균좋아요 {s['avg_likes']}")
+        time.sleep(0.5)
+
+    # 안전장치: 이번에 새로 성공한 계정이 0개면 기존 data.json 보존(덮어쓰지 않음)
+    if ok_count == 0:
+        log("새로 수집된 계정이 0개입니다(레이트리밋/차단 추정). "
+            "기존 data.json을 보존하고 덮어쓰지 않습니다. 잠시 후 다시 실행하세요.")
+        sys.exit(0)
 
     channels.sort(
         key=lambda c: c.get("eng_rate") if c.get("eng_rate") is not None else -1,
         reverse=True,
     )
-
     out = {
         "updated_at": now.isoformat(),
         "updated_kst": dt.datetime.now(KST).strftime("%Y-%m-%d %H:%M"),
@@ -178,7 +238,8 @@ def main():
     os.makedirs("docs", exist_ok=True)
     with open(OUT_PATH, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=2)
-    print(f"Wrote {OUT_PATH} ({len(channels)} channels)")
+    log(f"완료: {ok_count}/{total} 신규 수집, data.json 저장"
+        + (" (중간 중단됨)" if aborted else ""))
 
 
 if __name__ == "__main__":
