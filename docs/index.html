@@ -138,6 +138,7 @@ button.ghost{border:none;background:transparent;color:var(--muted);padding:2px 6
       <h2 style="margin:0">소재 배정</h2>
       <div style="margin-left:auto" class="big" id="grand">총 0만원</div>
       <button id="textBtn" class="primary">텍스트화</button>
+      <button id="pkgBtn" onclick="location.href='package.html?date='+encodeURIComponent(DATE)">📦 패키징</button>
       <button id="addMat">+ 소재 추가</button>
     </div>
     <div class="mats" id="mats"></div>
@@ -343,12 +344,12 @@ function weekdayKr(dstr){var d=new Date(dstr+'T00:00:00');return ['일','월','�
 function genTextBySojae(){
   if(!PLAN) return '';
   var m=/\d{4}-(\d{2})-(\d{2})/.exec(DATE);
-  var head=m?('['+m[1]+m[2]+'('+weekdayKr(DATE)+')]'):DATE;
-  var groups=[];
+  var groups=[], grand=0;
   PLAN.materials.forEach(function(mat){
-    var lines=mat.slots.map(function(aid){var a=aid&&acctById(aid);return a?('- '+a.name+' '+won(a.price)):null;}).filter(Boolean);
+    var lines=mat.slots.map(function(aid){var a=aid&&acctById(aid);if(!a)return null;grand+=(a.price||0);return '- '+a.name+' '+won(a.price);}).filter(Boolean);
     if(lines.length) groups.push(lines.join('\n'));
   });
+  var head=(m?('['+m[1]+m[2]+'('+weekdayKr(DATE)+')]'):DATE)+' '+won(grand);
   return head+'\n'+groups.join('\n\n');
 }
 function companyOf(name){return COMPANY_BY_ACCOUNT[name]||'(업체 미지정)';}
@@ -360,7 +361,7 @@ function genTextByCompany(){
       var a=aid&&acctById(aid); if(!a) return;
       var co=companyOf(a.name);
       if(!byco[co]){byco[co]=[];order.push(co);}
-      byco[co].push(a.name+' '+won(a.price));
+      byco[co].push('- '+a.name+' '+won(a.price));
     });
   });
   return order.map(function(co){return '['+co+']\n'+byco[co].join('\n');}).join('\n\n');
