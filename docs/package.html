@@ -99,7 +99,7 @@ a.back{color:var(--accent);text-decoration:none;font-size:13px}
   <div class="muted" id="footInfo">—</div>
   <div class="grow"></div>
   <div class="prog" id="prog"><i></i></div>
-  <button class="primary" id="zipBtn" style="padding:9px 20px;font-weight:700">ZIP 생성 &amp; 다운로드</button>
+  <button class="primary" id="zipBtn" style="padding:9px 20px;font-weight:700">전체 소재 ZIP 생성</button>
 </div>
 <div class="toast" id="toast"></div>
 
@@ -208,7 +208,8 @@ function render(){
     }).join('');
 
     return '<div class="mat">'+
-      '<h2>'+letter(m.index)+' 소재 <span class="muted" style="font-weight:400">· 배정 '+m.accs.length+'개 계정</span></h2>'+
+      '<h2>'+letter(m.index)+' 소재 <span class="muted" style="font-weight:400">· 배정 '+m.accs.length+'개 계정</span>'+
+        '<button class="sm primary" data-act="zipmat" data-mid="'+m.id+'" style="margin-left:auto">📦 이 소재만 ZIP</button></h2>'+
 
       '<div class="lbl">본문 파일 (이 소재의 모든 계정에 공통 복사됨)</div>'+
       '<div class="drop" data-act="bodydrop" data-mid="'+m.id+'">여기에 본문 파일 끌어다 놓기 / 클릭해서 선택 (예: 2.mp4, 3.png … 88.png)</div>'+
@@ -251,6 +252,7 @@ document.addEventListener('click',function(e){
   else if(act==='addcover'){var s=matState(t.getAttribute('data-mid'));s.covers.push({id:uid(),type:t.getAttribute('data-type'),copy:''});saveState();render();}
   else if(act==='delcover'){var cid=t.getAttribute('data-cid');removeCover(cid);}
   else if(act==='applyall'){applyAll(t.getAttribute('data-mid'));}
+  else if(act==='zipmat'){buildZip(t.getAttribute('data-mid'));}
 });
 document.addEventListener('input',function(e){
   var t=e.target.closest('[data-act]');if(!t)return;var act=t.getAttribute('data-act');
@@ -282,8 +284,9 @@ document.addEventListener('drop',function(e){var d=e.target.closest('.drop');if(
 });
 
 /* ===== ZIP 생성 ===== */
-function validate(){
+function validate(onlyMid){
   var errs=[];var mats=shownMaterials();
+  if(onlyMid)mats=mats.filter(function(m){return m.id===onlyMid;});
   mats.forEach(function(m){
     var L=letter(m.index)+' 소재';var s=matState(m.id);
     if(!(FILES.body[m.id]||[]).length)errs.push(L+': 본문 파일이 없습니다');
@@ -296,12 +299,15 @@ function validate(){
   });
   return errs;
 }
-async function buildZip(){
-  var errs=validate();var box=$('errBox');
+async function buildZip(onlyMid){
+  var errs=validate(onlyMid);var box=$('errBox');
   if(errs.length){box.innerHTML='<b>확인 필요</b><ul>'+errs.map(function(e){return '<li>'+esc(e)+'</li>';}).join('')+'</ul>';box.classList.add('show');box.scrollIntoView({behavior:'smooth',block:'center'});return;}
   box.classList.remove('show');
   var zip=new JSZip();var root=zip.folder('['+mmdd(DATE)+']');
   var mats=shownMaterials();
+  if(onlyMid)mats=mats.filter(function(m){return m.id===onlyMid;});
+  if(!mats.length){toast('압축할 소재가 없습니다');return;}
+  var zipName='['+mmdd(DATE)+'].zip';
   mats.forEach(function(m){
     var s=matState(m.id);var body=FILES.body[m.id]||[];
     m.accs.forEach(function(a){
@@ -317,7 +323,7 @@ async function buildZip(){
   btn.disabled=true;prog.classList.add('show');
   try{
     var blob=await zip.generateAsync({type:'blob',compression:'STORE'},function(md){bar.style.width=(md.percent|0)+'%';});
-    var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='['+mmdd(DATE)+'].zip';document.body.appendChild(a);a.click();a.remove();
+    var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download=zipName;document.body.appendChild(a);a.click();a.remove();
     setTimeout(function(){URL.revokeObjectURL(url);},4000);
     toast('ZIP 생성 완료 — 다운로드를 확인하세요');
   }catch(err){toast('ZIP 생성 실패: '+err.message);}
