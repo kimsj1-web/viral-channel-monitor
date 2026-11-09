@@ -1,17 +1,17 @@
 {
-  "updated_at": "2026-11-09T01:19:13.411817+00:00",
-  "updated_kst": "2026-11-09 10:20",
+  "updated_at": "2026-11-09T02:23:11.183896+00:00",
+  "updated_kst": "2026-11-09 11:24",
   "lookback_days": 7,
   "channels": [
     {
       "username": "apple_enter",
-      "followers": 16321,
+      "followers": 16322,
       "posts_7d": 44,
-      "avg_likes": 1161,
-      "avg_comments": 10,
-      "avg_engagement": 1172,
-      "eng_rate": 7.18,
-      "trend_pct": 37.9,
+      "avg_likes": 1165,
+      "avg_comments": 11,
+      "avg_engagement": 1175,
+      "eng_rate": 7.2,
+      "trend_pct": 38.2,
       "posts": [
         {
           "likes": 199,
@@ -32,13 +32,13 @@
           "permalink": "https://www.instagram.com/p/DfRS9i3gZN7/"
         },
         {
-          "likes": 1486,
-          "comments": 9,
+          "likes": 1490,
+          "comments": 10,
           "date": "2026-11-03",
           "permalink": "https://www.instagram.com/p/DfQ3ftWAWor/"
         },
         {
-          "likes": 1768,
+          "likes": 1773,
           "comments": 3,
           "date": "2026-11-03",
           "permalink": "https://www.instagram.com/p/DfQb_NHgXGz/"
@@ -68,7 +68,7 @@
           "permalink": "https://www.instagram.com/p/DfUE3jcAdjy/"
         },
         {
-          "likes": 989,
+          "likes": 990,
           "comments": 9,
           "date": "2026-11-04",
           "permalink": "https://www.instagram.com/p/DfT-Erygblj/"
@@ -80,7 +80,7 @@
           "permalink": "https://www.instagram.com/p/DfT41ILgQj_/"
         },
         {
-          "likes": 1089,
+          "likes": 1097,
           "comments": 0,
           "date": "2026-11-04",
           "permalink": "https://www.instagram.com/p/DfRS8FCAaaX/"
@@ -98,7 +98,7 @@
           "permalink": "https://www.instagram.com/p/DfWzsEmB6lx/"
         },
         {
-          "likes": 2626,
+          "likes": 2629,
           "comments": 36,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfWi0zRAcXA/"
@@ -128,49 +128,49 @@
           "permalink": "https://www.instagram.com/p/DfVlo1rgVN5/"
         },
         {
-          "likes": 751,
+          "likes": 755,
           "comments": 1,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfZHrNAgWd4/"
         },
         {
-          "likes": 554,
-          "comments": 17,
+          "likes": 556,
+          "comments": 16,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfY5v-PBGTT/"
         },
         {
-          "likes": 3036,
+          "likes": 3037,
           "comments": 17,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfYznHvAZar/"
         },
         {
-          "likes": 1922,
+          "likes": 1926,
           "comments": 10,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfYl0B_gaQh/"
         },
         {
-          "likes": 665,
+          "likes": 666,
           "comments": 1,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfYKX86gQCY/"
         },
         {
-          "likes": 1666,
+          "likes": 1668,
           "comments": 7,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/p/DfcYzHJgcqd/"
         },
         {
-          "likes": 12788,
+          "likes": 12806,
           "comments": 55,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/p/DfcBl7FgYXz/"
         },
         {
-          "likes": 562,
+          "likes": 564,
           "comments": 7,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/p/Dfbz3zvAexc/"
@@ -182,13 +182,13 @@
           "permalink": "https://www.instagram.com/p/DfbYYYHAQBp/"
         },
         {
-          "likes": 930,
+          "likes": 932,
           "comments": 13,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/p/DfbYXarAQ3Z/"
         },
         {
-          "likes": 813,
+          "likes": 814,
           "comments": 27,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/p/DfbKsEFAc7_/"
@@ -206,49 +206,49 @@
           "permalink": "https://www.instagram.com/p/DfavI_aAVL4/"
         },
         {
-          "likes": 244,
+          "likes": 254,
           "comments": 1,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/Dfe0EiCAasy/"
         },
         {
-          "likes": 957,
+          "likes": 968,
           "comments": 5,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/DfembCzASwo/"
         },
         {
-          "likes": 656,
+          "likes": 671,
           "comments": 15,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/DfeYnsWgYqP/"
         },
         {
-          "likes": 202,
+          "likes": 204,
           "comments": 1,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/DfeK3HCgdZh/"
         },
         {
-          "likes": 162,
+          "likes": 163,
           "comments": 2,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/DfdveWtgRvi/"
         },
         {
-          "likes": 691,
+          "likes": 694,
           "comments": 18,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/Dfdhr0kgaVe/"
         },
         {
-          "likes": 2391,
-          "comments": 22,
+          "likes": 2404,
+          "comments": 23,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/DfdT9sBAYIV/"
         },
         {
-          "likes": 62,
+          "likes": 89,
           "comments": 0,
           "date": "2026-11-09",
           "permalink": "https://www.instagram.com/p/Dff40_LAXeb/"
@@ -258,22 +258,22 @@
     },
     {
       "username": "pink_idolly",
-      "followers": 23105,
+      "followers": 23107,
       "posts_7d": 47,
-      "avg_likes": 1509,
+      "avg_likes": 1526,
       "avg_comments": 12,
-      "avg_engagement": 1521,
-      "eng_rate": 6.58,
-      "trend_pct": 218.1,
+      "avg_engagement": 1538,
+      "eng_rate": 6.66,
+      "trend_pct": 221.4,
       "posts": [
         {
-          "likes": 2927,
+          "likes": 2928,
           "comments": 46,
           "date": "2026-11-03",
           "permalink": "https://www.instagram.com/p/DfQzqa1n_MH/"
         },
         {
-          "likes": 1794,
+          "likes": 1798,
           "comments": 18,
           "date": "2026-11-03",
           "permalink": "https://www.instagram.com/p/DfPnm27H1CJ/"
@@ -291,25 +291,25 @@
           "permalink": "https://www.instagram.com/p/DfUIYEHH3Fv/"
         },
         {
-          "likes": 938,
+          "likes": 940,
           "comments": 9,
           "date": "2026-11-04",
           "permalink": "https://www.instagram.com/p/DfUE4E0n9-X/"
         },
         {
-          "likes": 718,
+          "likes": 719,
           "comments": 1,
           "date": "2026-11-04",
           "permalink": "https://www.instagram.com/p/DfUBcaqH-rJ/"
         },
         {
-          "likes": 314,
+          "likes": 315,
           "comments": 1,
           "date": "2026-11-04",
           "permalink": "https://www.instagram.com/p/DfT-BmoH_aV/"
         },
         {
-          "likes": 2804,
+          "likes": 2808,
           "comments": 5,
           "date": "2026-11-04",
           "permalink": "https://www.instagram.com/p/DfT3I6Sn2hZ/"
@@ -321,67 +321,67 @@
           "permalink": "https://www.instagram.com/p/DfTyAggn_PO/"
         },
         {
-          "likes": 1908,
+          "likes": 1912,
           "comments": 46,
           "date": "2026-11-04",
           "permalink": "https://www.instagram.com/p/DfTduepH3f1/"
         },
         {
-          "likes": 236,
+          "likes": 237,
           "comments": 7,
           "date": "2026-11-04",
           "permalink": "https://www.instagram.com/p/DfTGONIH0GW/"
         },
         {
-          "likes": 2116,
+          "likes": 2123,
           "comments": 26,
           "date": "2026-11-04",
           "permalink": "https://www.instagram.com/p/DfSO6zrn6EK/"
         },
         {
-          "likes": 3825,
+          "likes": 3832,
           "comments": 36,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfW3aZZnzbE/"
         },
         {
-          "likes": 400,
+          "likes": 401,
           "comments": 11,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfWwk-Cn8dt/"
         },
         {
-          "likes": 1040,
+          "likes": 1042,
           "comments": 2,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfWpueYn6Yn/"
         },
         {
-          "likes": 784,
+          "likes": 785,
           "comments": 1,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfWi0ENH_ec/"
         },
         {
-          "likes": 1299,
+          "likes": 1300,
           "comments": 13,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfWb7Htn7xg/"
         },
         {
-          "likes": 366,
+          "likes": 371,
           "comments": 1,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfWXJGHnx1o/"
         },
         {
-          "likes": 832,
+          "likes": 833,
           "comments": 2,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfWAiujn_gB/"
         },
         {
-          "likes": 1945,
+          "likes": 1951,
           "comments": 10,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfV8BNTH4Yw/"
@@ -393,7 +393,7 @@
           "permalink": "https://www.instagram.com/p/DfVz62An0Cg/"
         },
         {
-          "likes": 349,
+          "likes": 354,
           "comments": 6,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfZ1ENJH8Ch/"
@@ -405,103 +405,103 @@
           "permalink": "https://www.instagram.com/p/DfZi0Ywn7WI/"
         },
         {
-          "likes": 143,
+          "likes": 144,
           "comments": 3,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfZfN-3n9Of/"
         },
         {
-          "likes": 844,
+          "likes": 847,
           "comments": 4,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfZOf05n_r-/"
         },
         {
-          "likes": 774,
+          "likes": 777,
           "comments": 3,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfZHltKHxVO/"
         },
         {
-          "likes": 194,
+          "likes": 197,
           "comments": 1,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfZC7s8H_rc/"
         },
         {
-          "likes": 2235,
+          "likes": 2238,
           "comments": 46,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfY1Afbn7Xs/"
         },
         {
-          "likes": 2328,
+          "likes": 2387,
           "comments": 10,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/p/DfcLhzyH0dm/"
         },
         {
-          "likes": 494,
-          "comments": 30,
+          "likes": 505,
+          "comments": 31,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/p/Dfbk_JXnzRN/"
         },
         {
-          "likes": 4144,
+          "likes": 4176,
           "comments": 15,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/p/DfbO09dn0xq/"
         },
         {
-          "likes": 493,
+          "likes": 542,
           "comments": 4,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/Dfe4-VSH0BU/"
         },
         {
-          "likes": 283,
+          "likes": 288,
           "comments": 3,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/Dfee4mRHwTa/"
         },
         {
-          "likes": 424,
-          "comments": 1,
+          "likes": 431,
+          "comments": 2,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/DfdoCxAH2jW/"
         },
         {
-          "likes": 445,
+          "likes": 450,
           "comments": 1,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/Dfdkm-An7gc/"
         },
         {
-          "likes": 17722,
+          "likes": 17867,
           "comments": 32,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/DfdbGH8n1S4/"
         },
         {
-          "likes": 4268,
+          "likes": 4292,
           "comments": 40,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/DfcfXtbn38e/"
         },
         {
-          "likes": 19,
+          "likes": 237,
           "comments": 1,
           "date": "2026-11-09",
           "permalink": "https://www.instagram.com/p/DfgEFytn3Nq/"
         },
         {
-          "likes": 191,
+          "likes": 397,
           "comments": 3,
           "date": "2026-11-09",
           "permalink": "https://www.instagram.com/p/Dff4uSxH28S/"
         },
         {
-          "likes": 101,
+          "likes": 108,
           "comments": 2,
           "date": "2026-11-09",
           "permalink": "https://www.instagram.com/p/DffHZGEn4wD/"
@@ -511,16 +511,16 @@
     },
     {
       "username": "zzalqueen",
-      "followers": 35334,
+      "followers": 35335,
       "posts_7d": 37,
-      "avg_likes": 1155,
+      "avg_likes": 1163,
       "avg_comments": 40,
-      "avg_engagement": 1195,
-      "eng_rate": 3.38,
-      "trend_pct": -67.0,
+      "avg_engagement": 1203,
+      "eng_rate": 3.4,
+      "trend_pct": -66.8,
       "posts": [
         {
-          "likes": 657,
+          "likes": 658,
           "comments": 53,
           "date": "2026-11-02",
           "permalink": "https://www.instagram.com/p/DfPW9PsknBl/"
@@ -598,7 +598,7 @@
           "permalink": "https://www.instagram.com/p/DfULoNcGfO0/"
         },
         {
-          "likes": 2290,
+          "likes": 2293,
           "comments": 30,
           "date": "2026-11-04",
           "permalink": "https://www.instagram.com/p/DfUE4ctmd4Q/"
@@ -628,7 +628,7 @@
           "permalink": "https://www.instagram.com/p/DfW3RIPGWwE/"
         },
         {
-          "likes": 4205,
+          "likes": 4207,
           "comments": 19,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfWpsRrmRt9/"
@@ -640,13 +640,13 @@
           "permalink": "https://www.instagram.com/p/DfWNfwBmd9e/"
         },
         {
-          "likes": 3719,
-          "comments": 32,
+          "likes": 3790,
+          "comments": 33,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfZ3XDMmYMV/"
         },
         {
-          "likes": 434,
+          "likes": 435,
           "comments": 191,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfZj3-lmcvC/"
@@ -658,20 +658,20 @@
           "permalink": "https://www.instagram.com/p/DfZZN50GSi7/"
         },
         {
-          "likes": 847,
+          "likes": 850,
           "comments": 5,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfZOdEyGdgM/"
         },
         {
-          "likes": 567,
+          "likes": 568,
           "comments": 25,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfZHj9oGVcM/"
         },
         {
-          "likes": 749,
-          "comments": 30,
+          "likes": 755,
+          "comments": 31,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfY-EuumcG0/"
         },
@@ -688,25 +688,25 @@
           "permalink": "https://www.instagram.com/p/DfXVirHGaye/"
         },
         {
-          "likes": 11144,
-          "comments": 97,
+          "likes": 11186,
+          "comments": 98,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/p/DfcZzRcEm5h/"
         },
         {
-          "likes": 7664,
-          "comments": 314,
+          "likes": 7679,
+          "comments": 315,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/p/DfcHkSUEqVS/"
         },
         {
-          "likes": 1179,
-          "comments": 50,
+          "likes": 1186,
+          "comments": 51,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/p/Dfb4pJgEnfR/"
         },
         {
-          "likes": 121,
+          "likes": 122,
           "comments": 1,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/p/DfbcqWbGcs6/"
@@ -718,25 +718,25 @@
           "permalink": "https://www.instagram.com/p/DfbGy_SSSXS/"
         },
         {
-          "likes": 446,
-          "comments": 16,
+          "likes": 526,
+          "comments": 21,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/Dfe-VuoGdEI/"
         },
         {
-          "likes": 74,
+          "likes": 77,
           "comments": 0,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/DfesTl9GQhe/"
         },
         {
-          "likes": 383,
+          "likes": 427,
           "comments": 3,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/DfeYEv7GeqN/"
         },
         {
-          "likes": 210,
+          "likes": 213,
           "comments": 2,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/Dfd_1GaGR43/"
@@ -745,21 +745,432 @@
       "error": null
     },
     {
-      "username": "lime.now",
-      "followers": 28305,
-      "posts_7d": 50,
-      "avg_likes": 418,
-      "avg_comments": 28,
-      "avg_engagement": 446,
-      "eng_rate": 1.57,
-      "trend_pct": null,
+      "username": "pink_humor25",
+      "followers": 44583,
+      "posts_7d": 44,
+      "avg_likes": 676,
+      "avg_comments": 16,
+      "avg_engagement": 693,
+      "eng_rate": 1.55,
+      "trend_pct": -70.8,
       "posts": [
         {
-          "likes": 130,
+          "likes": 2131,
+          "comments": 30,
+          "date": "2026-11-03",
+          "permalink": "https://www.instagram.com/p/DfSJSUfHXnx/"
+        },
+        {
+          "likes": 199,
+          "comments": 8,
+          "date": "2026-11-03",
+          "permalink": "https://www.instagram.com/p/DfSAT0knUv8/"
+        },
+        {
+          "likes": 522,
+          "comments": 10,
+          "date": "2026-11-03",
+          "permalink": "https://www.instagram.com/p/DfRt4VcnaXR/"
+        },
+        {
+          "likes": 3746,
+          "comments": 34,
+          "date": "2026-11-03",
+          "permalink": "https://www.instagram.com/p/DfRobkAHUt0/"
+        },
+        {
+          "likes": 28,
+          "comments": 19,
+          "date": "2026-11-03",
+          "permalink": "https://www.instagram.com/p/DfReMQXO6Qr/"
+        },
+        {
+          "likes": 542,
+          "comments": 138,
+          "date": "2026-11-03",
+          "permalink": "https://www.instagram.com/p/DfQmGM4E0OO/"
+        },
+        {
+          "likes": 214,
+          "comments": 3,
+          "date": "2026-11-03",
+          "permalink": "https://www.instagram.com/p/DfPrJuKndzz/"
+        },
+        {
+          "likes": 1028,
+          "comments": 4,
+          "date": "2026-11-04",
+          "permalink": "https://www.instagram.com/p/DfUE1_cHVNX/"
+        },
+        {
+          "likes": 387,
+          "comments": 3,
+          "date": "2026-11-04",
+          "permalink": "https://www.instagram.com/p/DfT-A6KnSTm/"
+        },
+        {
+          "likes": 132,
           "comments": 0,
           "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/p/DfToUYogZVz/"
+          "permalink": "https://www.instagram.com/p/DfTpX5nHQSK/"
         },
+        {
+          "likes": 455,
+          "comments": 37,
+          "date": "2026-11-04",
+          "permalink": "https://www.instagram.com/p/DfTe2PPnayz/"
+        },
+        {
+          "likes": 131,
+          "comments": 1,
+          "date": "2026-11-04",
+          "permalink": "https://www.instagram.com/p/DfTN9nQnbV0/"
+        },
+        {
+          "likes": 342,
+          "comments": 2,
+          "date": "2026-11-04",
+          "permalink": "https://www.instagram.com/p/DfTJDHhE1CY/"
+        },
+        {
+          "likes": 39,
+          "comments": 1,
+          "date": "2026-11-04",
+          "permalink": "https://www.instagram.com/p/DfTC7bZkzjw/"
+        },
+        {
+          "likes": 137,
+          "comments": 2,
+          "date": "2026-11-05",
+          "permalink": "https://www.instagram.com/p/DfXG7WuHcZE/"
+        },
+        {
+          "likes": 122,
+          "comments": 1,
+          "date": "2026-11-05",
+          "permalink": "https://www.instagram.com/p/DfWtHw3HT-W/"
+        },
+        {
+          "likes": 135,
+          "comments": 1,
+          "date": "2026-11-05",
+          "permalink": "https://www.instagram.com/p/DfWpunzHStg/"
+        },
+        {
+          "likes": 48,
+          "comments": 5,
+          "date": "2026-11-05",
+          "permalink": "https://www.instagram.com/p/DfWjNLFnbcg/"
+        },
+        {
+          "likes": 146,
+          "comments": 1,
+          "date": "2026-11-05",
+          "permalink": "https://www.instagram.com/p/DfWaUgTHS4v/"
+        },
+        {
+          "likes": 859,
+          "comments": 43,
+          "date": "2026-11-05",
+          "permalink": "https://www.instagram.com/p/DfWG3YrHTTA/"
+        },
+        {
+          "likes": 229,
+          "comments": 10,
+          "date": "2026-11-06",
+          "permalink": "https://www.instagram.com/p/DfZv0GxnQ2c/"
+        },
+        {
+          "likes": 151,
+          "comments": 0,
+          "date": "2026-11-06",
+          "permalink": "https://www.instagram.com/p/DfZjFtSnS4K/"
+        },
+        {
+          "likes": 1032,
+          "comments": 25,
+          "date": "2026-11-06",
+          "permalink": "https://www.instagram.com/p/DfZb_qJHelp/"
+        },
+        {
+          "likes": 157,
+          "comments": 6,
+          "date": "2026-11-06",
+          "permalink": "https://www.instagram.com/p/DfZXITVHdv5/"
+        },
+        {
+          "likes": 4181,
+          "comments": 40,
+          "date": "2026-11-06",
+          "permalink": "https://www.instagram.com/p/DfZHkGrHYUj/"
+        },
+        {
+          "likes": 539,
+          "comments": 24,
+          "date": "2026-11-06",
+          "permalink": "https://www.instagram.com/p/DfZHoiTHVVT/"
+        },
+        {
+          "likes": 818,
+          "comments": 16,
+          "date": "2026-11-06",
+          "permalink": "https://www.instagram.com/p/DfY8F76nWoH/"
+        },
+        {
+          "likes": 388,
+          "comments": 2,
+          "date": "2026-11-06",
+          "permalink": "https://www.instagram.com/p/DfYQ0-2k0Cg/"
+        },
+        {
+          "likes": 44,
+          "comments": 2,
+          "date": "2026-11-07",
+          "permalink": "https://www.instagram.com/p/DfcbKlWncOC/"
+        },
+        {
+          "likes": 190,
+          "comments": 2,
+          "date": "2026-11-07",
+          "permalink": "https://www.instagram.com/p/DfcJAPLnXU8/"
+        },
+        {
+          "likes": 1520,
+          "comments": 9,
+          "date": "2026-11-07",
+          "permalink": "https://www.instagram.com/p/DfbsbC5nT2M/"
+        },
+        {
+          "likes": 1060,
+          "comments": 43,
+          "date": "2026-11-07",
+          "permalink": "https://www.instagram.com/p/DfbcC0snS81/"
+        },
+        {
+          "likes": 104,
+          "comments": 1,
+          "date": "2026-11-07",
+          "permalink": "https://www.instagram.com/p/DfbKPSnHY35/"
+        },
+        {
+          "likes": 240,
+          "comments": 2,
+          "date": "2026-11-08",
+          "permalink": "https://www.instagram.com/p/DffBMWqkfSE/"
+        },
+        {
+          "likes": 349,
+          "comments": 43,
+          "date": "2026-11-08",
+          "permalink": "https://www.instagram.com/p/DfetQu7FOiw/"
+        },
+        {
+          "likes": 1137,
+          "comments": 9,
+          "date": "2026-11-08",
+          "permalink": "https://www.instagram.com/p/Dfed15qlPel/"
+        },
+        {
+          "likes": 380,
+          "comments": 15,
+          "date": "2026-11-08",
+          "permalink": "https://www.instagram.com/p/DfddBi0E_fy/"
+        },
+        {
+          "likes": 16,
+          "comments": 12,
+          "date": "2026-11-09",
+          "permalink": "https://www.instagram.com/p/DfftihnT1Xi/"
+        },
+        {
+          "likes": 417,
+          "comments": 0,
+          "date": "2026-11-09",
+          "permalink": "https://www.instagram.com/p/Dff4KQ-nWyv/"
+        },
+        {
+          "likes": 143,
+          "comments": 2,
+          "date": "2026-11-09",
+          "permalink": "https://www.instagram.com/p/Dffx6saneSd/"
+        }
+      ],
+      "error": null
+    },
+    {
+      "username": "text_pyeong",
+      "followers": 36346,
+      "posts_7d": 11,
+      "avg_likes": 525,
+      "avg_comments": 27,
+      "avg_engagement": 552,
+      "eng_rate": 1.52,
+      "trend_pct": 138.7,
+      "posts": [
+        {
+          "likes": 3447,
+          "comments": 258,
+          "date": "2026-11-02",
+          "permalink": "https://www.instagram.com/p/DfPiK3nCZWe/"
+        },
+        {
+          "likes": 54,
+          "comments": 1,
+          "date": "2026-11-02",
+          "permalink": "https://www.instagram.com/p/DfPFpy1Cbvs/"
+        },
+        {
+          "likes": 50,
+          "comments": 2,
+          "date": "2026-11-03",
+          "permalink": "https://www.instagram.com/p/DfRbX5BCRAx/"
+        },
+        {
+          "likes": 259,
+          "comments": 3,
+          "date": "2026-11-04",
+          "permalink": "https://www.instagram.com/p/DfUaDWSiWYs/"
+        },
+        {
+          "likes": 126,
+          "comments": 8,
+          "date": "2026-11-04",
+          "permalink": "https://www.instagram.com/p/DfT3wcoiTa3/"
+        },
+        {
+          "likes": 28,
+          "comments": 0,
+          "date": "2026-11-05",
+          "permalink": "https://www.instagram.com/p/DfW3h78iR2N/"
+        },
+        {
+          "likes": 892,
+          "comments": 0,
+          "date": "2026-11-05",
+          "permalink": "https://www.instagram.com/p/DfWZxEDicRc/"
+        },
+        {
+          "likes": 31,
+          "comments": 0,
+          "date": "2026-11-06",
+          "permalink": "https://www.instagram.com/p/DfZcTBrCfC9/"
+        },
+        {
+          "likes": 49,
+          "comments": 3,
+          "date": "2026-11-06",
+          "permalink": "https://www.instagram.com/p/DfZBXMBCXyC/"
+        },
+        {
+          "likes": 59,
+          "comments": 0,
+          "date": "2026-11-07",
+          "permalink": "https://www.instagram.com/p/DfcBkNbCadA/"
+        },
+        {
+          "likes": 781,
+          "comments": 19,
+          "date": "2026-11-07",
+          "permalink": "https://www.instagram.com/p/DfbmH0oCV7R/"
+        }
+      ],
+      "error": null
+    },
+    {
+      "username": "flower_pyeong",
+      "followers": 15181,
+      "posts_7d": 12,
+      "avg_likes": 226,
+      "avg_comments": 5,
+      "avg_engagement": 231,
+      "eng_rate": 1.52,
+      "trend_pct": 0.4,
+      "posts": [
+        {
+          "likes": 17,
+          "comments": 0,
+          "date": "2026-11-02",
+          "permalink": "https://www.instagram.com/p/DfPKhjlmmyx/"
+        },
+        {
+          "likes": 13,
+          "comments": 0,
+          "date": "2026-11-02",
+          "permalink": "https://www.instagram.com/p/DfOZusAmsI4/"
+        },
+        {
+          "likes": 48,
+          "comments": 0,
+          "date": "2026-11-03",
+          "permalink": "https://www.instagram.com/p/DfRjuH9miBt/"
+        },
+        {
+          "likes": 13,
+          "comments": 0,
+          "date": "2026-11-03",
+          "permalink": "https://www.instagram.com/p/DfQ8qfTGgCR/"
+        },
+        {
+          "likes": 28,
+          "comments": 0,
+          "date": "2026-11-04",
+          "permalink": "https://www.instagram.com/p/DfT3wGamvMK/"
+        },
+        {
+          "likes": 11,
+          "comments": 12,
+          "date": "2026-11-04",
+          "permalink": "https://www.instagram.com/p/DfTfc70gpax/"
+        },
+        {
+          "likes": 23,
+          "comments": 1,
+          "date": "2026-11-05",
+          "permalink": "https://www.instagram.com/p/DfWdwuKGqWX/"
+        },
+        {
+          "likes": 329,
+          "comments": 17,
+          "date": "2026-11-05",
+          "permalink": "https://www.instagram.com/p/DfWIMJzmmDA/"
+        },
+        {
+          "likes": 18,
+          "comments": 0,
+          "date": "2026-11-06",
+          "permalink": "https://www.instagram.com/p/DfZBT05GjSL/"
+        },
+        {
+          "likes": 9,
+          "comments": 2,
+          "date": "2026-11-06",
+          "permalink": "https://www.instagram.com/p/DfYvha4mqxf/"
+        },
+        {
+          "likes": 23,
+          "comments": 2,
+          "date": "2026-11-07",
+          "permalink": "https://www.instagram.com/p/DfbmG4KGsTl/"
+        },
+        {
+          "likes": 2183,
+          "comments": 27,
+          "date": "2026-11-07",
+          "permalink": "https://www.instagram.com/p/Dfa_LNlGpXJ/"
+        }
+      ],
+      "error": null
+    },
+    {
+      "username": "lime.now",
+      "followers": 28304,
+      "posts_7d": 50,
+      "avg_likes": 403,
+      "avg_comments": 28,
+      "avg_engagement": 430,
+      "eng_rate": 1.52,
+      "trend_pct": null,
+      "posts": [
         {
           "likes": 14,
           "comments": 1,
@@ -791,7 +1202,7 @@
           "permalink": "https://www.instagram.com/p/DfWsiL6D4zp/"
         },
         {
-          "likes": 2410,
+          "likes": 2411,
           "comments": 12,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfWnalqE3_P/"
@@ -869,14 +1280,14 @@
           "permalink": "https://www.instagram.com/p/DfZGDtck4sy/"
         },
         {
-          "likes": 2097,
+          "likes": 2101,
           "comments": 10,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfY7MKtk_Wk/"
         },
         {
-          "likes": 442,
-          "comments": 377,
+          "likes": 443,
+          "comments": 381,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfY0ZxPkyse/"
         },
@@ -893,7 +1304,7 @@
           "permalink": "https://www.instagram.com/p/DfYZ61vj2Ws/"
         },
         {
-          "likes": 101,
+          "likes": 102,
           "comments": 1,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/p/DfbyqCbk8rT/"
@@ -905,7 +1316,7 @@
           "permalink": "https://www.instagram.com/p/DfbmmZHn9xL/"
         },
         {
-          "likes": 162,
+          "likes": 163,
           "comments": 1,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/p/Dfbj8iqEzNV/"
@@ -923,7 +1334,7 @@
           "permalink": "https://www.instagram.com/p/Dfbd3LUibl_/"
         },
         {
-          "likes": 1019,
+          "likes": 1020,
           "comments": 57,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/p/DfbW8tKG3lC/"
@@ -953,8 +1364,8 @@
           "permalink": "https://www.instagram.com/p/DfeOJxPk2Zq/"
         },
         {
-          "likes": 959,
-          "comments": 28,
+          "likes": 1009,
+          "comments": 34,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/DfeHg-Tk04E/"
         },
@@ -965,19 +1376,19 @@
           "permalink": "https://www.instagram.com/p/Dfd_nFjk4Nu/"
         },
         {
-          "likes": 196,
+          "likes": 197,
           "comments": 63,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/DfduGbBm1el/"
         },
         {
-          "likes": 128,
+          "likes": 129,
           "comments": 3,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/DfdjqfAm0ln/"
         },
         {
-          "likes": 165,
+          "likes": 166,
           "comments": 0,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/Dfddvs0mxgv/"
@@ -989,427 +1400,16 @@
           "permalink": "https://www.instagram.com/p/DfdbMYvG9Hm/"
         },
         {
-          "likes": 0,
+          "likes": 9,
           "comments": 0,
+          "date": "2026-11-09",
+          "permalink": "https://www.instagram.com/p/DfgODvkE8S6/"
+        },
+        {
+          "likes": 27,
+          "comments": 1,
           "date": "2026-11-09",
           "permalink": "https://www.instagram.com/p/DfgIrtZD0do/"
-        }
-      ],
-      "error": null
-    },
-    {
-      "username": "pink_humor25",
-      "followers": 44581,
-      "posts_7d": 44,
-      "avg_likes": 667,
-      "avg_comments": 16,
-      "avg_engagement": 682,
-      "eng_rate": 1.53,
-      "trend_pct": -71.2,
-      "posts": [
-        {
-          "likes": 2126,
-          "comments": 29,
-          "date": "2026-11-03",
-          "permalink": "https://www.instagram.com/p/DfSJSUfHXnx/"
-        },
-        {
-          "likes": 198,
-          "comments": 8,
-          "date": "2026-11-03",
-          "permalink": "https://www.instagram.com/p/DfSAT0knUv8/"
-        },
-        {
-          "likes": 522,
-          "comments": 10,
-          "date": "2026-11-03",
-          "permalink": "https://www.instagram.com/p/DfRt4VcnaXR/"
-        },
-        {
-          "likes": 3741,
-          "comments": 34,
-          "date": "2026-11-03",
-          "permalink": "https://www.instagram.com/p/DfRobkAHUt0/"
-        },
-        {
-          "likes": 28,
-          "comments": 19,
-          "date": "2026-11-03",
-          "permalink": "https://www.instagram.com/p/DfReMQXO6Qr/"
-        },
-        {
-          "likes": 542,
-          "comments": 138,
-          "date": "2026-11-03",
-          "permalink": "https://www.instagram.com/p/DfQmGM4E0OO/"
-        },
-        {
-          "likes": 214,
-          "comments": 3,
-          "date": "2026-11-03",
-          "permalink": "https://www.instagram.com/p/DfPrJuKndzz/"
-        },
-        {
-          "likes": 1025,
-          "comments": 4,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/p/DfUE1_cHVNX/"
-        },
-        {
-          "likes": 387,
-          "comments": 3,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/p/DfT-A6KnSTm/"
-        },
-        {
-          "likes": 132,
-          "comments": 0,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/p/DfTpX5nHQSK/"
-        },
-        {
-          "likes": 453,
-          "comments": 37,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/p/DfTe2PPnayz/"
-        },
-        {
-          "likes": 131,
-          "comments": 1,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/p/DfTN9nQnbV0/"
-        },
-        {
-          "likes": 342,
-          "comments": 2,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/p/DfTJDHhE1CY/"
-        },
-        {
-          "likes": 39,
-          "comments": 1,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/p/DfTC7bZkzjw/"
-        },
-        {
-          "likes": 137,
-          "comments": 2,
-          "date": "2026-11-05",
-          "permalink": "https://www.instagram.com/p/DfXG7WuHcZE/"
-        },
-        {
-          "likes": 122,
-          "comments": 1,
-          "date": "2026-11-05",
-          "permalink": "https://www.instagram.com/p/DfWtHw3HT-W/"
-        },
-        {
-          "likes": 135,
-          "comments": 1,
-          "date": "2026-11-05",
-          "permalink": "https://www.instagram.com/p/DfWpunzHStg/"
-        },
-        {
-          "likes": 48,
-          "comments": 5,
-          "date": "2026-11-05",
-          "permalink": "https://www.instagram.com/p/DfWjNLFnbcg/"
-        },
-        {
-          "likes": 146,
-          "comments": 1,
-          "date": "2026-11-05",
-          "permalink": "https://www.instagram.com/p/DfWaUgTHS4v/"
-        },
-        {
-          "likes": 858,
-          "comments": 43,
-          "date": "2026-11-05",
-          "permalink": "https://www.instagram.com/p/DfWG3YrHTTA/"
-        },
-        {
-          "likes": 223,
-          "comments": 10,
-          "date": "2026-11-06",
-          "permalink": "https://www.instagram.com/p/DfZv0GxnQ2c/"
-        },
-        {
-          "likes": 151,
-          "comments": 0,
-          "date": "2026-11-06",
-          "permalink": "https://www.instagram.com/p/DfZjFtSnS4K/"
-        },
-        {
-          "likes": 1024,
-          "comments": 25,
-          "date": "2026-11-06",
-          "permalink": "https://www.instagram.com/p/DfZb_qJHelp/"
-        },
-        {
-          "likes": 157,
-          "comments": 6,
-          "date": "2026-11-06",
-          "permalink": "https://www.instagram.com/p/DfZXITVHdv5/"
-        },
-        {
-          "likes": 4161,
-          "comments": 40,
-          "date": "2026-11-06",
-          "permalink": "https://www.instagram.com/p/DfZHkGrHYUj/"
-        },
-        {
-          "likes": 538,
-          "comments": 24,
-          "date": "2026-11-06",
-          "permalink": "https://www.instagram.com/p/DfZHoiTHVVT/"
-        },
-        {
-          "likes": 816,
-          "comments": 16,
-          "date": "2026-11-06",
-          "permalink": "https://www.instagram.com/p/DfY8F76nWoH/"
-        },
-        {
-          "likes": 385,
-          "comments": 2,
-          "date": "2026-11-06",
-          "permalink": "https://www.instagram.com/p/DfYQ0-2k0Cg/"
-        },
-        {
-          "likes": 44,
-          "comments": 2,
-          "date": "2026-11-07",
-          "permalink": "https://www.instagram.com/p/DfcbKlWncOC/"
-        },
-        {
-          "likes": 188,
-          "comments": 2,
-          "date": "2026-11-07",
-          "permalink": "https://www.instagram.com/p/DfcJAPLnXU8/"
-        },
-        {
-          "likes": 1516,
-          "comments": 9,
-          "date": "2026-11-07",
-          "permalink": "https://www.instagram.com/p/DfbsbC5nT2M/"
-        },
-        {
-          "likes": 1037,
-          "comments": 41,
-          "date": "2026-11-07",
-          "permalink": "https://www.instagram.com/p/DfbcC0snS81/"
-        },
-        {
-          "likes": 104,
-          "comments": 1,
-          "date": "2026-11-07",
-          "permalink": "https://www.instagram.com/p/DfbKPSnHY35/"
-        },
-        {
-          "likes": 187,
-          "comments": 2,
-          "date": "2026-11-08",
-          "permalink": "https://www.instagram.com/p/DffBMWqkfSE/"
-        },
-        {
-          "likes": 259,
-          "comments": 32,
-          "date": "2026-11-08",
-          "permalink": "https://www.instagram.com/p/DfetQu7FOiw/"
-        },
-        {
-          "likes": 1094,
-          "comments": 7,
-          "date": "2026-11-08",
-          "permalink": "https://www.instagram.com/p/Dfed15qlPel/"
-        },
-        {
-          "likes": 367,
-          "comments": 15,
-          "date": "2026-11-08",
-          "permalink": "https://www.instagram.com/p/DfddBi0E_fy/"
-        },
-        {
-          "likes": 15,
-          "comments": 8,
-          "date": "2026-11-09",
-          "permalink": "https://www.instagram.com/p/DfftihnT1Xi/"
-        },
-        {
-          "likes": 313,
-          "comments": 0,
-          "date": "2026-11-09",
-          "permalink": "https://www.instagram.com/p/Dff4KQ-nWyv/"
-        },
-        {
-          "likes": 111,
-          "comments": 2,
-          "date": "2026-11-09",
-          "permalink": "https://www.instagram.com/p/Dffx6saneSd/"
-        }
-      ],
-      "error": null
-    },
-    {
-      "username": "flower_pyeong",
-      "followers": 15181,
-      "posts_7d": 12,
-      "avg_likes": 225,
-      "avg_comments": 5,
-      "avg_engagement": 230,
-      "eng_rate": 1.52,
-      "trend_pct": -0.1,
-      "posts": [
-        {
-          "likes": 17,
-          "comments": 0,
-          "date": "2026-11-02",
-          "permalink": "https://www.instagram.com/p/DfPKhjlmmyx/"
-        },
-        {
-          "likes": 13,
-          "comments": 0,
-          "date": "2026-11-02",
-          "permalink": "https://www.instagram.com/p/DfOZusAmsI4/"
-        },
-        {
-          "likes": 48,
-          "comments": 0,
-          "date": "2026-11-03",
-          "permalink": "https://www.instagram.com/p/DfRjuH9miBt/"
-        },
-        {
-          "likes": 13,
-          "comments": 0,
-          "date": "2026-11-03",
-          "permalink": "https://www.instagram.com/p/DfQ8qfTGgCR/"
-        },
-        {
-          "likes": 27,
-          "comments": 0,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/p/DfT3wGamvMK/"
-        },
-        {
-          "likes": 11,
-          "comments": 12,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/p/DfTfc70gpax/"
-        },
-        {
-          "likes": 23,
-          "comments": 1,
-          "date": "2026-11-05",
-          "permalink": "https://www.instagram.com/p/DfWdwuKGqWX/"
-        },
-        {
-          "likes": 328,
-          "comments": 17,
-          "date": "2026-11-05",
-          "permalink": "https://www.instagram.com/p/DfWIMJzmmDA/"
-        },
-        {
-          "likes": 18,
-          "comments": 0,
-          "date": "2026-11-06",
-          "permalink": "https://www.instagram.com/p/DfZBT05GjSL/"
-        },
-        {
-          "likes": 9,
-          "comments": 2,
-          "date": "2026-11-06",
-          "permalink": "https://www.instagram.com/p/DfYvha4mqxf/"
-        },
-        {
-          "likes": 23,
-          "comments": 2,
-          "date": "2026-11-07",
-          "permalink": "https://www.instagram.com/p/DfbmG4KGsTl/"
-        },
-        {
-          "likes": 2170,
-          "comments": 27,
-          "date": "2026-11-07",
-          "permalink": "https://www.instagram.com/p/Dfa_LNlGpXJ/"
-        }
-      ],
-      "error": null
-    },
-    {
-      "username": "text_pyeong",
-      "followers": 36344,
-      "posts_7d": 11,
-      "avg_likes": 523,
-      "avg_comments": 27,
-      "avg_engagement": 550,
-      "eng_rate": 1.51,
-      "trend_pct": 138.0,
-      "posts": [
-        {
-          "likes": 3435,
-          "comments": 258,
-          "date": "2026-11-02",
-          "permalink": "https://www.instagram.com/p/DfPiK3nCZWe/"
-        },
-        {
-          "likes": 54,
-          "comments": 1,
-          "date": "2026-11-02",
-          "permalink": "https://www.instagram.com/p/DfPFpy1Cbvs/"
-        },
-        {
-          "likes": 50,
-          "comments": 2,
-          "date": "2026-11-03",
-          "permalink": "https://www.instagram.com/p/DfRbX5BCRAx/"
-        },
-        {
-          "likes": 259,
-          "comments": 3,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/p/DfUaDWSiWYs/"
-        },
-        {
-          "likes": 126,
-          "comments": 8,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/p/DfT3wcoiTa3/"
-        },
-        {
-          "likes": 27,
-          "comments": 0,
-          "date": "2026-11-05",
-          "permalink": "https://www.instagram.com/p/DfW3h78iR2N/"
-        },
-        {
-          "likes": 892,
-          "comments": 0,
-          "date": "2026-11-05",
-          "permalink": "https://www.instagram.com/p/DfWZxEDicRc/"
-        },
-        {
-          "likes": 31,
-          "comments": 0,
-          "date": "2026-11-06",
-          "permalink": "https://www.instagram.com/p/DfZcTBrCfC9/"
-        },
-        {
-          "likes": 49,
-          "comments": 3,
-          "date": "2026-11-06",
-          "permalink": "https://www.instagram.com/p/DfZBXMBCXyC/"
-        },
-        {
-          "likes": 57,
-          "comments": 0,
-          "date": "2026-11-07",
-          "permalink": "https://www.instagram.com/p/DfcBkNbCadA/"
-        },
-        {
-          "likes": 778,
-          "comments": 19,
-          "date": "2026-11-07",
-          "permalink": "https://www.instagram.com/p/DfbmH0oCV7R/"
         }
       ],
       "error": null
@@ -1418,14 +1418,14 @@
       "username": "ho1y_time",
       "followers": 31465,
       "posts_7d": 13,
-      "avg_likes": 449,
+      "avg_likes": 451,
       "avg_comments": 2,
-      "avg_engagement": 452,
+      "avg_engagement": 453,
       "eng_rate": 1.44,
       "trend_pct": -69.7,
       "posts": [
         {
-          "likes": 1042,
+          "likes": 1045,
           "comments": 8,
           "date": "2026-11-02",
           "permalink": "https://www.instagram.com/p/DfPgfGiASro/"
@@ -1443,7 +1443,7 @@
           "permalink": "https://www.instagram.com/p/DfRt4vZAQc8/"
         },
         {
-          "likes": 1342,
+          "likes": 1343,
           "comments": 5,
           "date": "2026-11-03",
           "permalink": "https://www.instagram.com/p/DfRdBG-geGs/"
@@ -1455,7 +1455,7 @@
           "permalink": "https://www.instagram.com/p/DfUYRbBAV_2/"
         },
         {
-          "likes": 326,
+          "likes": 329,
           "comments": 0,
           "date": "2026-11-04",
           "permalink": "https://www.instagram.com/p/DfT3yVLAX1S/"
@@ -1467,37 +1467,37 @@
           "permalink": "https://www.instagram.com/p/DfW3nxugVf5/"
         },
         {
-          "likes": 363,
+          "likes": 364,
           "comments": 6,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfWqoCqgd90/"
         },
         {
-          "likes": 272,
+          "likes": 273,
           "comments": 1,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfWYxLaAanI/"
         },
         {
-          "likes": 68,
+          "likes": 69,
           "comments": 1,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfZcvFGAYDj/"
         },
         {
-          "likes": 599,
+          "likes": 602,
           "comments": 1,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfZBSthgY2E/"
         },
         {
-          "likes": 186,
+          "likes": 189,
           "comments": 1,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/p/DfcBkJAAXA3/"
         },
         {
-          "likes": 377,
+          "likes": 379,
           "comments": 3,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/p/DfbmKyrAVnN/"
@@ -1509,11 +1509,11 @@
       "username": "humorphim",
       "followers": 21764,
       "posts_7d": 31,
-      "avg_likes": 207,
+      "avg_likes": 209,
       "avg_comments": 15,
-      "avg_engagement": 222,
-      "eng_rate": 1.02,
-      "trend_pct": -82.7,
+      "avg_engagement": 224,
+      "eng_rate": 1.03,
+      "trend_pct": -82.5,
       "posts": [
         {
           "likes": 22,
@@ -1546,7 +1546,7 @@
           "permalink": "https://www.instagram.com/p/DfR7DzFk_lH/"
         },
         {
-          "likes": 528,
+          "likes": 529,
           "comments": 12,
           "date": "2026-11-03",
           "permalink": "https://www.instagram.com/p/DfRtRp6E6_C/"
@@ -1576,8 +1576,8 @@
           "permalink": "https://www.instagram.com/p/DfUrLt-kxem/"
         },
         {
-          "likes": 1673,
-          "comments": 90,
+          "likes": 1681,
+          "comments": 93,
           "date": "2026-11-04",
           "permalink": "https://www.instagram.com/p/DfUdNlck3Dj/"
         },
@@ -1606,7 +1606,7 @@
           "permalink": "https://www.instagram.com/p/DfWwab3k8Sy/"
         },
         {
-          "likes": 122,
+          "likes": 123,
           "comments": 2,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfWNRBKIAwk/"
@@ -1666,7 +1666,7 @@
           "permalink": "https://www.instagram.com/p/DfcHWd0k7sp/"
         },
         {
-          "likes": 494,
+          "likes": 496,
           "comments": 13,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/p/Dfb4UcYoEnE/"
@@ -1678,13 +1678,13 @@
           "permalink": "https://www.instagram.com/p/Dfbcdw1oOfu/"
         },
         {
-          "likes": 81,
+          "likes": 103,
           "comments": 0,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/Dfe-N76IBJ6/"
         },
         {
-          "likes": 70,
+          "likes": 99,
           "comments": 2,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/DfesI-noFi9/"
@@ -1708,11 +1708,11 @@
       "username": "happyhappy_pick",
       "followers": 74238,
       "posts_7d": 47,
-      "avg_likes": 588,
+      "avg_likes": 592,
       "avg_comments": 28,
-      "avg_engagement": 615,
+      "avg_engagement": 620,
       "eng_rate": 0.83,
-      "trend_pct": -48.1,
+      "trend_pct": -47.7,
       "posts": [
         {
           "likes": 182,
@@ -1721,7 +1721,7 @@
           "permalink": "https://www.instagram.com/p/DfRtx0gmi3Q/"
         },
         {
-          "likes": 5300,
+          "likes": 5310,
           "comments": 210,
           "date": "2026-11-03",
           "permalink": "https://www.instagram.com/p/DfRgDh_Gj_Y/"
@@ -1787,7 +1787,7 @@
           "permalink": "https://www.instagram.com/p/DfTAM02mnOW/"
         },
         {
-          "likes": 621,
+          "likes": 623,
           "comments": 6,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfW3d6eGvn5/"
@@ -1811,7 +1811,7 @@
           "permalink": "https://www.instagram.com/p/DfWi23Qmju7/"
         },
         {
-          "likes": 934,
+          "likes": 935,
           "comments": 21,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfWBF0MGkzn/"
@@ -1841,7 +1841,7 @@
           "permalink": "https://www.instagram.com/p/DfZdVQqGj_y/"
         },
         {
-          "likes": 857,
+          "likes": 859,
           "comments": 14,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfZOgmYGk8M/"
@@ -1853,8 +1853,8 @@
           "permalink": "https://www.instagram.com/p/DfZOiBpGp4C/"
         },
         {
-          "likes": 1039,
-          "comments": 218,
+          "likes": 1041,
+          "comments": 219,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfZIE4VGuB8/"
         },
@@ -1865,7 +1865,7 @@
           "permalink": "https://www.instagram.com/p/DfYlU9cn3-D/"
         },
         {
-          "likes": 388,
+          "likes": 389,
           "comments": 7,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfYXm7fn-gz/"
@@ -1877,7 +1877,7 @@
           "permalink": "https://www.instagram.com/p/DfYJ2GSGjf-/"
         },
         {
-          "likes": 116,
+          "likes": 117,
           "comments": 0,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/p/DfcOw36Gs0_/"
@@ -1901,7 +1901,7 @@
           "permalink": "https://www.instagram.com/p/DfZtkvgA5mz/"
         },
         {
-          "likes": 175,
+          "likes": 177,
           "comments": 3,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/p/Dfa8TKsHzDD/"
@@ -1913,25 +1913,25 @@
           "permalink": "https://www.instagram.com/p/DfauqqaGr9z/"
         },
         {
-          "likes": 70,
+          "likes": 76,
           "comments": 0,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/DfezgWlGhBQ/"
         },
         {
-          "likes": 1633,
+          "likes": 1692,
           "comments": 31,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/Dfel2jamp-N/"
         },
         {
-          "likes": 505,
+          "likes": 521,
           "comments": 29,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/Dfdu5GgmjM5/"
         },
         {
-          "likes": 446,
+          "likes": 456,
           "comments": 12,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/DfdhMIcH_ez/"
@@ -1943,13 +1943,13 @@
           "permalink": "https://www.instagram.com/p/DfdUzKSn3Yh/"
         },
         {
-          "likes": 15,
+          "likes": 50,
           "comments": 0,
           "date": "2026-11-09",
           "permalink": "https://www.instagram.com/p/DfgF_pGHziT/"
         },
         {
-          "likes": 135,
+          "likes": 169,
           "comments": 0,
           "date": "2026-11-09",
           "permalink": "https://www.instagram.com/p/Dff4K-Dmp03/"
@@ -1961,11 +1961,11 @@
       "username": "luv_l0v_0",
       "followers": 25048,
       "posts_7d": 11,
-      "avg_likes": 173,
+      "avg_likes": 174,
       "avg_comments": 14,
-      "avg_engagement": 187,
+      "avg_engagement": 188,
       "eng_rate": 0.75,
-      "trend_pct": 21.1,
+      "trend_pct": 21.8,
       "posts": [
         {
           "likes": 22,
@@ -1974,7 +1974,7 @@
           "permalink": "https://www.instagram.com/p/DfPeCUBCZWF/"
         },
         {
-          "likes": 127,
+          "likes": 129,
           "comments": 0,
           "date": "2026-11-02",
           "permalink": "https://www.instagram.com/p/DfPJ_akifJF/"
@@ -1992,7 +1992,7 @@
           "permalink": "https://www.instagram.com/p/DfUY1N4iQSC/"
         },
         {
-          "likes": 562,
+          "likes": 565,
           "comments": 7,
           "date": "2026-11-04",
           "permalink": "https://www.instagram.com/p/DfT3v4TCTg9/"
@@ -2004,13 +2004,13 @@
           "permalink": "https://www.instagram.com/p/DfW4BFniWbF/"
         },
         {
-          "likes": 885,
+          "likes": 890,
           "comments": 142,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfWc6FtCVmk/"
         },
         {
-          "likes": 31,
+          "likes": 32,
           "comments": 1,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfZmNIoiWu3/"
@@ -2040,14 +2040,14 @@
       "username": "anavocado12345",
       "followers": 35612,
       "posts_7d": 11,
-      "avg_likes": 256,
+      "avg_likes": 257,
       "avg_comments": 7,
-      "avg_engagement": 263,
+      "avg_engagement": 264,
       "eng_rate": 0.74,
-      "trend_pct": -29.2,
+      "trend_pct": -29.0,
       "posts": [
         {
-          "likes": 403,
+          "likes": 408,
           "comments": 6,
           "date": "2026-11-02",
           "permalink": "https://www.instagram.com/p/DfPjmapD8FV/"
@@ -2059,7 +2059,7 @@
           "permalink": "https://www.instagram.com/p/DfPGxwfDwoC/"
         },
         {
-          "likes": 931,
+          "likes": 935,
           "comments": 1,
           "date": "2026-11-03",
           "permalink": "https://www.instagram.com/p/DfRcoLRj9x9/"
@@ -2116,14 +2116,267 @@
       "error": null
     },
     {
+      "username": "guliguli_humor",
+      "followers": 54131,
+      "posts_7d": 48,
+      "avg_likes": 273,
+      "avg_comments": 7,
+      "avg_engagement": 280,
+      "eng_rate": 0.52,
+      "trend_pct": -84.1,
+      "posts": [
+        {
+          "likes": 110,
+          "comments": 0,
+          "date": "2026-11-03",
+          "permalink": "https://www.instagram.com/p/DfQ28_kD94n/"
+        },
+        {
+          "likes": 390,
+          "comments": 2,
+          "date": "2026-11-03",
+          "permalink": "https://www.instagram.com/p/DfQpLUwj4Tz/"
+        },
+        {
+          "likes": 90,
+          "comments": 1,
+          "date": "2026-11-03",
+          "permalink": "https://www.instagram.com/p/DfQbYcKD6hA/"
+        },
+        {
+          "likes": 128,
+          "comments": 1,
+          "date": "2026-11-04",
+          "permalink": "https://www.instagram.com/p/DfUZcYdj9ug/"
+        },
+        {
+          "likes": 132,
+          "comments": 3,
+          "date": "2026-11-04",
+          "permalink": "https://www.instagram.com/p/DfULwH_j3qE/"
+        },
+        {
+          "likes": 104,
+          "comments": 1,
+          "date": "2026-11-04",
+          "permalink": "https://www.instagram.com/p/DfRZOe_D1Sf/"
+        },
+        {
+          "likes": 110,
+          "comments": 0,
+          "date": "2026-11-04",
+          "permalink": "https://www.instagram.com/reel/DfTpbbKhh10/"
+        },
+        {
+          "likes": 75,
+          "comments": 0,
+          "date": "2026-11-04",
+          "permalink": "https://www.instagram.com/p/DfTbrE8D-LU/"
+        },
+        {
+          "likes": 148,
+          "comments": 0,
+          "date": "2026-11-04",
+          "permalink": "https://www.instagram.com/p/DfTN-9qj4J7/"
+        },
+        {
+          "likes": 170,
+          "comments": 10,
+          "date": "2026-11-04",
+          "permalink": "https://www.instagram.com/p/DfTHomoD8kB/"
+        },
+        {
+          "likes": 868,
+          "comments": 4,
+          "date": "2026-11-04",
+          "permalink": "https://www.instagram.com/p/DfTAOdcD8Vp/"
+        },
+        {
+          "likes": 61,
+          "comments": 0,
+          "date": "2026-11-05",
+          "permalink": "https://www.instagram.com/p/DfXJDF-j5bu/"
+        },
+        {
+          "likes": 496,
+          "comments": 14,
+          "date": "2026-11-05",
+          "permalink": "https://www.instagram.com/p/DfW3XkKDz2z/"
+        },
+        {
+          "likes": 141,
+          "comments": 2,
+          "date": "2026-11-05",
+          "permalink": "https://www.instagram.com/p/DfWpvrtjzXt/"
+        },
+        {
+          "likes": 12,
+          "comments": 0,
+          "date": "2026-11-05",
+          "permalink": "https://www.instagram.com/reel/DfWb8yhBxxY/"
+        },
+        {
+          "likes": 442,
+          "comments": 2,
+          "date": "2026-11-05",
+          "permalink": "https://www.instagram.com/p/DfVyyMZj9_5/"
+        },
+        {
+          "likes": 935,
+          "comments": 14,
+          "date": "2026-11-05",
+          "permalink": "https://www.instagram.com/p/DfVk-Cqj33s/"
+        },
+        {
+          "likes": 1542,
+          "comments": 15,
+          "date": "2026-11-06",
+          "permalink": "https://www.instagram.com/p/DfZjDHnD4f-/"
+        },
+        {
+          "likes": 45,
+          "comments": 0,
+          "date": "2026-11-06",
+          "permalink": "https://www.instagram.com/p/DfZVUxiD9nr/"
+        },
+        {
+          "likes": 65,
+          "comments": 1,
+          "date": "2026-11-06",
+          "permalink": "https://www.instagram.com/p/DfZOhSVj_Pt/"
+        },
+        {
+          "likes": 377,
+          "comments": 11,
+          "date": "2026-11-06",
+          "permalink": "https://www.instagram.com/p/DfZHNcUD5Fe/"
+        },
+        {
+          "likes": 296,
+          "comments": 4,
+          "date": "2026-11-06",
+          "permalink": "https://www.instagram.com/p/DfYlRI3j4SO/"
+        },
+        {
+          "likes": 68,
+          "comments": 2,
+          "date": "2026-11-06",
+          "permalink": "https://www.instagram.com/p/DfYXlmnj8zH/"
+        },
+        {
+          "likes": 228,
+          "comments": 3,
+          "date": "2026-11-06",
+          "permalink": "https://www.instagram.com/p/DfYJyuwj0Lq/"
+        },
+        {
+          "likes": 441,
+          "comments": 28,
+          "date": "2026-11-07",
+          "permalink": "https://www.instagram.com/p/DfcBBtUjwa6/"
+        },
+        {
+          "likes": 161,
+          "comments": 4,
+          "date": "2026-11-07",
+          "permalink": "https://www.instagram.com/p/DfbzO2xDwZB/"
+        },
+        {
+          "likes": 1034,
+          "comments": 66,
+          "date": "2026-11-07",
+          "permalink": "https://www.instagram.com/p/DfblhecjxsZ/"
+        },
+        {
+          "likes": 179,
+          "comments": 0,
+          "date": "2026-11-07",
+          "permalink": "https://www.instagram.com/p/DfbX1AUj11A/"
+        },
+        {
+          "likes": 127,
+          "comments": 1,
+          "date": "2026-11-07",
+          "permalink": "https://www.instagram.com/p/DfbKBkRjy14/"
+        },
+        {
+          "likes": 856,
+          "comments": 97,
+          "date": "2026-11-07",
+          "permalink": "https://www.instagram.com/p/Dfa8VgOj_MT/"
+        },
+        {
+          "likes": 130,
+          "comments": 2,
+          "date": "2026-11-07",
+          "permalink": "https://www.instagram.com/p/DfauogYj8Yu/"
+        },
+        {
+          "likes": 656,
+          "comments": 7,
+          "date": "2026-11-08",
+          "permalink": "https://www.instagram.com/p/DffAmwWD8ZH/"
+        },
+        {
+          "likes": 121,
+          "comments": 6,
+          "date": "2026-11-08",
+          "permalink": "https://www.instagram.com/p/DfesoOyD94y/"
+        },
+        {
+          "likes": 128,
+          "comments": 3,
+          "date": "2026-11-08",
+          "permalink": "https://www.instagram.com/p/Dfee5uFD3xW/"
+        },
+        {
+          "likes": 257,
+          "comments": 6,
+          "date": "2026-11-08",
+          "permalink": "https://www.instagram.com/p/DfeRNgQj2ej/"
+        },
+        {
+          "likes": 74,
+          "comments": 1,
+          "date": "2026-11-08",
+          "permalink": "https://www.instagram.com/p/Dfdu6m0j9TB/"
+        },
+        {
+          "likes": 167,
+          "comments": 2,
+          "date": "2026-11-08",
+          "permalink": "https://www.instagram.com/p/DfdhIwRj-qB/"
+        },
+        {
+          "likes": 87,
+          "comments": 0,
+          "date": "2026-11-08",
+          "permalink": "https://www.instagram.com/p/DfdTZUYj6pv/"
+        },
+        {
+          "likes": 55,
+          "comments": 0,
+          "date": "2026-11-09",
+          "permalink": "https://www.instagram.com/p/DfgF7nIj4-R/"
+        },
+        {
+          "likes": 75,
+          "comments": 0,
+          "date": "2026-11-09",
+          "permalink": "https://www.instagram.com/p/Dff4LgEj7V4/"
+        }
+      ],
+      "error": null
+    },
+    {
       "username": "yes__jam_",
       "followers": 70214,
-      "posts_7d": 34,
-      "avg_likes": 345,
+      "posts_7d": 35,
+      "avg_likes": 336,
       "avg_comments": 21,
-      "avg_engagement": 366,
-      "eng_rate": 0.52,
-      "trend_pct": -44.7,
+      "avg_engagement": 356,
+      "eng_rate": 0.51,
+      "trend_pct": -48.7,
       "posts": [
         {
           "likes": 174,
@@ -2132,13 +2385,13 @@
           "permalink": "https://www.instagram.com/reel/DfO6HVMSq5F/"
         },
         {
-          "likes": 158,
+          "likes": 159,
           "comments": 8,
           "date": "2026-11-02",
           "permalink": "https://www.instagram.com/p/DfO2YNSExsb/"
         },
         {
-          "likes": 236,
+          "likes": 237,
           "comments": 87,
           "date": "2026-11-02",
           "permalink": "https://www.instagram.com/p/DfOrxPLE8Wp/"
@@ -2192,7 +2445,7 @@
           "permalink": "https://www.instagram.com/p/DfQyeKWEwxK/"
         },
         {
-          "likes": 2702,
+          "likes": 2704,
           "comments": 314,
           "date": "2026-11-03",
           "permalink": "https://www.instagram.com/p/DfQo-aqEwZB/"
@@ -2258,13 +2511,13 @@
           "permalink": "https://www.instagram.com/p/DfWmJBgE3Gi/"
         },
         {
-          "likes": 906,
+          "likes": 910,
           "comments": 13,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfWX8zwk3-X/"
         },
         {
-          "likes": 123,
+          "likes": 124,
           "comments": 18,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfWMD4hD_-J/"
@@ -2294,7 +2547,7 @@
           "permalink": "https://www.instagram.com/p/DfZNS_6j0dP/"
         },
         {
-          "likes": 1297,
+          "likes": 1298,
           "comments": 10,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfZFnJjD4gx/"
@@ -2306,7 +2559,7 @@
           "permalink": "https://www.instagram.com/p/DfY-wfND_Lx/"
         },
         {
-          "likes": 1094,
+          "likes": 1095,
           "comments": 105,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfY0lWzj98G/"
@@ -2324,7 +2577,13 @@
           "permalink": "https://www.instagram.com/p/DfYUztzj6tJ/"
         },
         {
-          "likes": 18,
+          "likes": 8,
+          "comments": 0,
+          "date": "2026-11-09",
+          "permalink": "https://www.instagram.com/p/DfgLVKeD9Qm/"
+        },
+        {
+          "likes": 33,
           "comments": 0,
           "date": "2026-11-09",
           "permalink": "https://www.instagram.com/p/DfgEWl5D6r7/"
@@ -2333,460 +2592,14 @@
       "error": null
     },
     {
-      "username": "kutbba101",
-      "followers": 72564,
-      "posts_7d": 30,
-      "avg_likes": 337,
-      "avg_comments": 34,
-      "avg_engagement": 371,
-      "eng_rate": 0.51,
-      "trend_pct": 48.1,
-      "posts": [
-        {
-          "likes": 150,
-          "comments": 9,
-          "date": "2026-11-02",
-          "permalink": "https://www.instagram.com/p/DfOufO6ifI7/"
-        },
-        {
-          "likes": 66,
-          "comments": 4,
-          "date": "2026-11-02",
-          "permalink": "https://www.instagram.com/p/DfOl_QaiQEQ/"
-        },
-        {
-          "likes": 873,
-          "comments": 104,
-          "date": "2026-11-02",
-          "permalink": "https://www.instagram.com/p/DfOc69RicG_/"
-        },
-        {
-          "likes": 224,
-          "comments": 41,
-          "date": "2026-11-02",
-          "permalink": "https://www.instagram.com/p/DfONIl5iepj/"
-        },
-        {
-          "likes": 142,
-          "comments": 160,
-          "date": "2026-11-03",
-          "permalink": "https://www.instagram.com/p/DfRU4sKiS2v/"
-        },
-        {
-          "likes": 4511,
-          "comments": 353,
-          "date": "2026-11-03",
-          "permalink": "https://www.instagram.com/p/DfRPD9picDc/"
-        },
-        {
-          "likes": 170,
-          "comments": 24,
-          "date": "2026-11-03",
-          "permalink": "https://www.instagram.com/p/DfRDx3iCXxj/"
-        },
-        {
-          "likes": 98,
-          "comments": 11,
-          "date": "2026-11-03",
-          "permalink": "https://www.instagram.com/p/DfQyW9wiU6k/"
-        },
-        {
-          "likes": 39,
-          "comments": 0,
-          "date": "2026-11-03",
-          "permalink": "https://www.instagram.com/p/DfQlo_rkrBi/"
-        },
-        {
-          "likes": 108,
-          "comments": 25,
-          "date": "2026-11-03",
-          "permalink": "https://www.instagram.com/p/DfQVFYHidTs/"
-        },
-        {
-          "likes": 115,
-          "comments": 4,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/p/DfUTJQ5iess/"
-        },
-        {
-          "likes": 62,
-          "comments": 0,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/reel/DfUIfYXJX3N/"
-        },
-        {
-          "likes": 211,
-          "comments": 22,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/p/DfT1nDRCZBB/"
-        },
-        {
-          "likes": 107,
-          "comments": 1,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/p/DfTltxKCaH-/"
-        },
-        {
-          "likes": 354,
-          "comments": 58,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/p/DfTRsbxku3R/"
-        },
-        {
-          "likes": 862,
-          "comments": 56,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/p/DfTK2-ggQEx/"
-        },
-        {
-          "likes": 0,
-          "comments": 0,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/p/DfS59RMidjg/"
-        },
-        {
-          "likes": 37,
-          "comments": 0,
-          "date": "2026-11-05",
-          "permalink": "https://www.instagram.com/p/DfWkF2YieYd/"
-        },
-        {
-          "likes": 203,
-          "comments": 6,
-          "date": "2026-11-05",
-          "permalink": "https://www.instagram.com/p/DfWZKmUCYEI/"
-        },
-        {
-          "likes": 53,
-          "comments": 0,
-          "date": "2026-11-05",
-          "permalink": "https://www.instagram.com/p/DfWPmfJiazf/"
-        },
-        {
-          "likes": 33,
-          "comments": 1,
-          "date": "2026-11-05",
-          "permalink": "https://www.instagram.com/p/DfV68VDCVl6/"
-        },
-        {
-          "likes": 575,
-          "comments": 61,
-          "date": "2026-11-05",
-          "permalink": "https://www.instagram.com/p/DfVw9ZNEiu5/"
-        },
-        {
-          "likes": 48,
-          "comments": 3,
-          "date": "2026-11-06",
-          "permalink": "https://www.instagram.com/p/DfY_85WCa5q/"
-        },
-        {
-          "likes": 320,
-          "comments": 10,
-          "date": "2026-11-06",
-          "permalink": "https://www.instagram.com/p/DfY4iLTiWvk/"
-        },
-        {
-          "likes": 82,
-          "comments": 16,
-          "date": "2026-11-06",
-          "permalink": "https://www.instagram.com/p/DfYw7kXCR6A/"
-        },
-        {
-          "likes": 164,
-          "comments": 30,
-          "date": "2026-11-06",
-          "permalink": "https://www.instagram.com/p/DfYgjQ9CYJp/"
-        },
-        {
-          "likes": 217,
-          "comments": 0,
-          "date": "2026-11-06",
-          "permalink": "https://www.instagram.com/p/DfYSeucEkgA/"
-        },
-        {
-          "likes": 135,
-          "comments": 3,
-          "date": "2026-11-07",
-          "permalink": "https://www.instagram.com/p/DfcBBxkiWlV/"
-        },
-        {
-          "likes": 139,
-          "comments": 24,
-          "date": "2026-11-07",
-          "permalink": "https://www.instagram.com/p/Dfa2GzbCe1I/"
-        },
-        {
-          "likes": 5,
-          "comments": 0,
-          "date": "2026-11-09",
-          "permalink": "https://www.instagram.com/p/DfgFyw3EoD5/"
-        }
-      ],
-      "error": null
-    },
-    {
-      "username": "guliguli_humor",
-      "followers": 54133,
-      "posts_7d": 48,
-      "avg_likes": 269,
-      "avg_comments": 7,
-      "avg_engagement": 276,
-      "eng_rate": 0.51,
-      "trend_pct": -84.3,
-      "posts": [
-        {
-          "likes": 110,
-          "comments": 0,
-          "date": "2026-11-03",
-          "permalink": "https://www.instagram.com/p/DfQ28_kD94n/"
-        },
-        {
-          "likes": 389,
-          "comments": 2,
-          "date": "2026-11-03",
-          "permalink": "https://www.instagram.com/p/DfQpLUwj4Tz/"
-        },
-        {
-          "likes": 90,
-          "comments": 1,
-          "date": "2026-11-03",
-          "permalink": "https://www.instagram.com/p/DfQbYcKD6hA/"
-        },
-        {
-          "likes": 128,
-          "comments": 1,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/p/DfUZcYdj9ug/"
-        },
-        {
-          "likes": 132,
-          "comments": 3,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/p/DfULwH_j3qE/"
-        },
-        {
-          "likes": 103,
-          "comments": 1,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/p/DfRZOe_D1Sf/"
-        },
-        {
-          "likes": 110,
-          "comments": 0,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/reel/DfTpbbKhh10/"
-        },
-        {
-          "likes": 75,
-          "comments": 0,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/p/DfTbrE8D-LU/"
-        },
-        {
-          "likes": 148,
-          "comments": 0,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/p/DfTN-9qj4J7/"
-        },
-        {
-          "likes": 170,
-          "comments": 10,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/p/DfTHomoD8kB/"
-        },
-        {
-          "likes": 864,
-          "comments": 4,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/p/DfTAOdcD8Vp/"
-        },
-        {
-          "likes": 61,
-          "comments": 0,
-          "date": "2026-11-05",
-          "permalink": "https://www.instagram.com/p/DfXJDF-j5bu/"
-        },
-        {
-          "likes": 495,
-          "comments": 14,
-          "date": "2026-11-05",
-          "permalink": "https://www.instagram.com/p/DfW3XkKDz2z/"
-        },
-        {
-          "likes": 141,
-          "comments": 2,
-          "date": "2026-11-05",
-          "permalink": "https://www.instagram.com/p/DfWpvrtjzXt/"
-        },
-        {
-          "likes": 12,
-          "comments": 0,
-          "date": "2026-11-05",
-          "permalink": "https://www.instagram.com/reel/DfWb8yhBxxY/"
-        },
-        {
-          "likes": 441,
-          "comments": 2,
-          "date": "2026-11-05",
-          "permalink": "https://www.instagram.com/p/DfVyyMZj9_5/"
-        },
-        {
-          "likes": 923,
-          "comments": 14,
-          "date": "2026-11-05",
-          "permalink": "https://www.instagram.com/p/DfVk-Cqj33s/"
-        },
-        {
-          "likes": 1541,
-          "comments": 15,
-          "date": "2026-11-06",
-          "permalink": "https://www.instagram.com/p/DfZjDHnD4f-/"
-        },
-        {
-          "likes": 45,
-          "comments": 0,
-          "date": "2026-11-06",
-          "permalink": "https://www.instagram.com/p/DfZVUxiD9nr/"
-        },
-        {
-          "likes": 65,
-          "comments": 1,
-          "date": "2026-11-06",
-          "permalink": "https://www.instagram.com/p/DfZOhSVj_Pt/"
-        },
-        {
-          "likes": 376,
-          "comments": 11,
-          "date": "2026-11-06",
-          "permalink": "https://www.instagram.com/p/DfZHNcUD5Fe/"
-        },
-        {
-          "likes": 296,
-          "comments": 4,
-          "date": "2026-11-06",
-          "permalink": "https://www.instagram.com/p/DfYlRI3j4SO/"
-        },
-        {
-          "likes": 68,
-          "comments": 2,
-          "date": "2026-11-06",
-          "permalink": "https://www.instagram.com/p/DfYXlmnj8zH/"
-        },
-        {
-          "likes": 225,
-          "comments": 3,
-          "date": "2026-11-06",
-          "permalink": "https://www.instagram.com/p/DfYJyuwj0Lq/"
-        },
-        {
-          "likes": 440,
-          "comments": 28,
-          "date": "2026-11-07",
-          "permalink": "https://www.instagram.com/p/DfcBBtUjwa6/"
-        },
-        {
-          "likes": 161,
-          "comments": 4,
-          "date": "2026-11-07",
-          "permalink": "https://www.instagram.com/p/DfbzO2xDwZB/"
-        },
-        {
-          "likes": 1030,
-          "comments": 64,
-          "date": "2026-11-07",
-          "permalink": "https://www.instagram.com/p/DfblhecjxsZ/"
-        },
-        {
-          "likes": 178,
-          "comments": 0,
-          "date": "2026-11-07",
-          "permalink": "https://www.instagram.com/p/DfbX1AUj11A/"
-        },
-        {
-          "likes": 127,
-          "comments": 1,
-          "date": "2026-11-07",
-          "permalink": "https://www.instagram.com/p/DfbKBkRjy14/"
-        },
-        {
-          "likes": 848,
-          "comments": 97,
-          "date": "2026-11-07",
-          "permalink": "https://www.instagram.com/p/Dfa8VgOj_MT/"
-        },
-        {
-          "likes": 128,
-          "comments": 2,
-          "date": "2026-11-07",
-          "permalink": "https://www.instagram.com/p/DfauogYj8Yu/"
-        },
-        {
-          "likes": 600,
-          "comments": 5,
-          "date": "2026-11-08",
-          "permalink": "https://www.instagram.com/p/DffAmwWD8ZH/"
-        },
-        {
-          "likes": 115,
-          "comments": 6,
-          "date": "2026-11-08",
-          "permalink": "https://www.instagram.com/p/DfesoOyD94y/"
-        },
-        {
-          "likes": 126,
-          "comments": 3,
-          "date": "2026-11-08",
-          "permalink": "https://www.instagram.com/p/Dfee5uFD3xW/"
-        },
-        {
-          "likes": 237,
-          "comments": 6,
-          "date": "2026-11-08",
-          "permalink": "https://www.instagram.com/p/DfeRNgQj2ej/"
-        },
-        {
-          "likes": 71,
-          "comments": 1,
-          "date": "2026-11-08",
-          "permalink": "https://www.instagram.com/p/Dfdu6m0j9TB/"
-        },
-        {
-          "likes": 166,
-          "comments": 2,
-          "date": "2026-11-08",
-          "permalink": "https://www.instagram.com/p/DfdhIwRj-qB/"
-        },
-        {
-          "likes": 87,
-          "comments": 0,
-          "date": "2026-11-08",
-          "permalink": "https://www.instagram.com/p/DfdTZUYj6pv/"
-        },
-        {
-          "likes": 8,
-          "comments": 0,
-          "date": "2026-11-09",
-          "permalink": "https://www.instagram.com/p/DfgF7nIj4-R/"
-        },
-        {
-          "likes": 55,
-          "comments": 0,
-          "date": "2026-11-09",
-          "permalink": "https://www.instagram.com/p/Dff4LgEj7V4/"
-        }
-      ],
-      "error": null
-    },
-    {
       "username": "humor_yonggari",
-      "followers": 70997,
+      "followers": 70968,
       "posts_7d": 35,
-      "avg_likes": 332,
+      "avg_likes": 336,
       "avg_comments": 20,
-      "avg_engagement": 352,
+      "avg_engagement": 356,
       "eng_rate": 0.5,
-      "trend_pct": -51.6,
+      "trend_pct": -47.5,
       "posts": [
         {
           "likes": 57,
@@ -2813,12 +2626,6 @@
           "permalink": "https://www.instagram.com/p/DfOavWlEyP6/"
         },
         {
-          "likes": 88,
-          "comments": 1,
-          "date": "2026-11-02",
-          "permalink": "https://www.instagram.com/p/DfOMjxsk0UA/"
-        },
-        {
           "likes": 380,
           "comments": 2,
           "date": "2026-11-03",
@@ -2837,7 +2644,7 @@
           "permalink": "https://www.instagram.com/p/DfRHepokzNZ/"
         },
         {
-          "likes": 29,
+          "likes": 30,
           "comments": 21,
           "date": "2026-11-03",
           "permalink": "https://www.instagram.com/p/DfRA8uUE4eA/"
@@ -2873,7 +2680,7 @@
           "permalink": "https://www.instagram.com/p/DfT9f-Fk-h1/"
         },
         {
-          "likes": 2090,
+          "likes": 2091,
           "comments": 30,
           "date": "2026-11-04",
           "permalink": "https://www.instagram.com/p/DfT2SyPk5lU/"
@@ -2922,12 +2729,12 @@
         },
         {
           "likes": 929,
-          "comments": 155,
+          "comments": 156,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfWeTgMk8VY/"
         },
         {
-          "likes": 117,
+          "likes": 118,
           "comments": 21,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfWVNd9kxaq/"
@@ -2945,7 +2752,7 @@
           "permalink": "https://www.instagram.com/p/DfV5uwigWzC/"
         },
         {
-          "likes": 117,
+          "likes": 118,
           "comments": 7,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfVeugfExHT/"
@@ -2963,38 +2770,44 @@
           "permalink": "https://www.instagram.com/p/DfY2wK6k9X1/"
         },
         {
-          "likes": 1556,
+          "likes": 1559,
           "comments": 30,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfYvy9TgUcF/"
         },
         {
-          "likes": 849,
-          "comments": 49,
+          "likes": 859,
+          "comments": 50,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfYfiziE7Qk/"
         },
         {
-          "likes": 419,
+          "likes": 428,
           "comments": 8,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfYTqLDEyjQ/"
         },
         {
-          "likes": 232,
+          "likes": 233,
           "comments": 6,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/p/Dfa2BJEgasq/"
         },
         {
-          "likes": 45,
+          "likes": 46,
           "comments": 3,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/DfeP9IuEw0n/"
         },
         {
-          "likes": 24,
+          "likes": 16,
           "comments": 1,
+          "date": "2026-11-09",
+          "permalink": "https://www.instagram.com/p/DfgKxH7kwJD/"
+        },
+        {
+          "likes": 227,
+          "comments": 6,
           "date": "2026-11-09",
           "permalink": "https://www.instagram.com/p/DfgBhTUkxtG/"
         }
@@ -3002,14 +2815,207 @@
       "error": null
     },
     {
+      "username": "kutbba101",
+      "followers": 72564,
+      "posts_7d": 30,
+      "avg_likes": 330,
+      "avg_comments": 33,
+      "avg_engagement": 363,
+      "eng_rate": 0.5,
+      "trend_pct": 45.3,
+      "posts": [
+        {
+          "likes": 150,
+          "comments": 9,
+          "date": "2026-11-02",
+          "permalink": "https://www.instagram.com/p/DfOufO6ifI7/"
+        },
+        {
+          "likes": 66,
+          "comments": 4,
+          "date": "2026-11-02",
+          "permalink": "https://www.instagram.com/p/DfOl_QaiQEQ/"
+        },
+        {
+          "likes": 873,
+          "comments": 104,
+          "date": "2026-11-02",
+          "permalink": "https://www.instagram.com/p/DfOc69RicG_/"
+        },
+        {
+          "likes": 142,
+          "comments": 160,
+          "date": "2026-11-03",
+          "permalink": "https://www.instagram.com/p/DfRU4sKiS2v/"
+        },
+        {
+          "likes": 4511,
+          "comments": 353,
+          "date": "2026-11-03",
+          "permalink": "https://www.instagram.com/p/DfRPD9picDc/"
+        },
+        {
+          "likes": 171,
+          "comments": 24,
+          "date": "2026-11-03",
+          "permalink": "https://www.instagram.com/p/DfRDx3iCXxj/"
+        },
+        {
+          "likes": 98,
+          "comments": 11,
+          "date": "2026-11-03",
+          "permalink": "https://www.instagram.com/p/DfQyW9wiU6k/"
+        },
+        {
+          "likes": 39,
+          "comments": 0,
+          "date": "2026-11-03",
+          "permalink": "https://www.instagram.com/p/DfQlo_rkrBi/"
+        },
+        {
+          "likes": 108,
+          "comments": 25,
+          "date": "2026-11-03",
+          "permalink": "https://www.instagram.com/p/DfQVFYHidTs/"
+        },
+        {
+          "likes": 115,
+          "comments": 4,
+          "date": "2026-11-04",
+          "permalink": "https://www.instagram.com/p/DfUTJQ5iess/"
+        },
+        {
+          "likes": 62,
+          "comments": 0,
+          "date": "2026-11-04",
+          "permalink": "https://www.instagram.com/reel/DfUIfYXJX3N/"
+        },
+        {
+          "likes": 211,
+          "comments": 22,
+          "date": "2026-11-04",
+          "permalink": "https://www.instagram.com/p/DfT1nDRCZBB/"
+        },
+        {
+          "likes": 107,
+          "comments": 1,
+          "date": "2026-11-04",
+          "permalink": "https://www.instagram.com/p/DfTltxKCaH-/"
+        },
+        {
+          "likes": 355,
+          "comments": 58,
+          "date": "2026-11-04",
+          "permalink": "https://www.instagram.com/p/DfTRsbxku3R/"
+        },
+        {
+          "likes": 863,
+          "comments": 56,
+          "date": "2026-11-04",
+          "permalink": "https://www.instagram.com/p/DfTK2-ggQEx/"
+        },
+        {
+          "likes": 0,
+          "comments": 0,
+          "date": "2026-11-04",
+          "permalink": "https://www.instagram.com/p/DfS59RMidjg/"
+        },
+        {
+          "likes": 37,
+          "comments": 0,
+          "date": "2026-11-05",
+          "permalink": "https://www.instagram.com/p/DfWkF2YieYd/"
+        },
+        {
+          "likes": 204,
+          "comments": 6,
+          "date": "2026-11-05",
+          "permalink": "https://www.instagram.com/p/DfWZKmUCYEI/"
+        },
+        {
+          "likes": 53,
+          "comments": 0,
+          "date": "2026-11-05",
+          "permalink": "https://www.instagram.com/p/DfWPmfJiazf/"
+        },
+        {
+          "likes": 33,
+          "comments": 1,
+          "date": "2026-11-05",
+          "permalink": "https://www.instagram.com/p/DfV68VDCVl6/"
+        },
+        {
+          "likes": 578,
+          "comments": 61,
+          "date": "2026-11-05",
+          "permalink": "https://www.instagram.com/p/DfVw9ZNEiu5/"
+        },
+        {
+          "likes": 48,
+          "comments": 3,
+          "date": "2026-11-06",
+          "permalink": "https://www.instagram.com/p/DfY_85WCa5q/"
+        },
+        {
+          "likes": 322,
+          "comments": 11,
+          "date": "2026-11-06",
+          "permalink": "https://www.instagram.com/p/DfY4iLTiWvk/"
+        },
+        {
+          "likes": 82,
+          "comments": 16,
+          "date": "2026-11-06",
+          "permalink": "https://www.instagram.com/p/DfYw7kXCR6A/"
+        },
+        {
+          "likes": 164,
+          "comments": 30,
+          "date": "2026-11-06",
+          "permalink": "https://www.instagram.com/p/DfYgjQ9CYJp/"
+        },
+        {
+          "likes": 217,
+          "comments": 0,
+          "date": "2026-11-06",
+          "permalink": "https://www.instagram.com/p/DfYSeucEkgA/"
+        },
+        {
+          "likes": 136,
+          "comments": 3,
+          "date": "2026-11-07",
+          "permalink": "https://www.instagram.com/p/DfcBBxkiWlV/"
+        },
+        {
+          "likes": 139,
+          "comments": 25,
+          "date": "2026-11-07",
+          "permalink": "https://www.instagram.com/p/Dfa2GzbCe1I/"
+        },
+        {
+          "likes": 4,
+          "comments": 0,
+          "date": "2026-11-09",
+          "permalink": "https://www.instagram.com/p/DfgOkgBibM0/"
+        },
+        {
+          "likes": 20,
+          "comments": 3,
+          "date": "2026-11-09",
+          "permalink": "https://www.instagram.com/p/DfgFyw3EoD5/"
+        }
+      ],
+      "error": null
+    },
+    {
       "username": "jolly__humor",
-      "followers": 55896,
+      "followers": 55895,
       "posts_7d": 4,
-      "avg_likes": 269,
+      "avg_likes": 270,
       "avg_comments": 4,
-      "avg_engagement": 273,
+      "avg_engagement": 274,
       "eng_rate": 0.49,
-      "trend_pct": -7.5,
+      "trend_pct": -7.4,
       "posts": [
         {
           "likes": 281,
@@ -3030,7 +3036,7 @@
           "permalink": "https://www.instagram.com/p/DfY9tZXoV9s/"
         },
         {
-          "likes": 287,
+          "likes": 290,
           "comments": 5,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfYrp6IIWOV/"
@@ -3040,7 +3046,7 @@
     },
     {
       "username": "tree.tving",
-      "followers": 57253,
+      "followers": 57245,
       "posts_7d": 5,
       "avg_likes": 278,
       "avg_comments": 4,
@@ -3085,11 +3091,11 @@
       "username": "wikitrip.kr",
       "followers": 25032,
       "posts_7d": 11,
-      "avg_likes": 106,
+      "avg_likes": 107,
       "avg_comments": 6,
-      "avg_engagement": 112,
+      "avg_engagement": 113,
       "eng_rate": 0.45,
-      "trend_pct": -60.4,
+      "trend_pct": -60.1,
       "posts": [
         {
           "likes": 60,
@@ -3134,13 +3140,13 @@
           "permalink": "https://www.instagram.com/p/DfWdMFGiRxo/"
         },
         {
-          "likes": 509,
+          "likes": 520,
           "comments": 48,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfZmZ1ECTez/"
         },
         {
-          "likes": 66,
+          "likes": 67,
           "comments": 1,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfZiOlmCZXW/"
@@ -3161,14 +3167,51 @@
       "error": null
     },
     {
-      "username": "mukddoonge",
-      "followers": 70671,
-      "posts_7d": 33,
-      "avg_likes": 286,
-      "avg_comments": 28,
-      "avg_engagement": 314,
+      "username": "hachuping_humor",
+      "followers": 47921,
+      "posts_7d": 4,
+      "avg_likes": 208,
+      "avg_comments": 3,
+      "avg_engagement": 211,
       "eng_rate": 0.44,
-      "trend_pct": 110.8,
+      "trend_pct": -4.8,
+      "posts": [
+        {
+          "likes": 183,
+          "comments": 2,
+          "date": "2026-11-03",
+          "permalink": "https://www.instagram.com/reel/DfSDosBy-CO/"
+        },
+        {
+          "likes": 218,
+          "comments": 4,
+          "date": "2026-11-04",
+          "permalink": "https://www.instagram.com/p/DfUJ7FqkgR6/"
+        },
+        {
+          "likes": 238,
+          "comments": 4,
+          "date": "2026-11-05",
+          "permalink": "https://www.instagram.com/reel/DfV6GF5ysiE/"
+        },
+        {
+          "likes": 193,
+          "comments": 3,
+          "date": "2026-11-06",
+          "permalink": "https://www.instagram.com/reel/DfZZYrhxNlT/"
+        }
+      ],
+      "error": null
+    },
+    {
+      "username": "mukddoonge",
+      "followers": 70674,
+      "posts_7d": 33,
+      "avg_likes": 281,
+      "avg_comments": 23,
+      "avg_engagement": 305,
+      "eng_rate": 0.43,
+      "trend_pct": 89.1,
       "posts": [
         {
           "likes": 124,
@@ -3196,15 +3239,9 @@
         },
         {
           "likes": 499,
-          "comments": 209,
+          "comments": 208,
           "date": "2026-11-02",
           "permalink": "https://www.instagram.com/p/DfOc5k6gYCp/"
-        },
-        {
-          "likes": 197,
-          "comments": 163,
-          "date": "2026-11-02",
-          "permalink": "https://www.instagram.com/p/DfOLhTOgSW1/"
         },
         {
           "likes": 75,
@@ -3273,7 +3310,7 @@
           "permalink": "https://www.instagram.com/reel/DfW9HB1hYhH/"
         },
         {
-          "likes": 587,
+          "likes": 589,
           "comments": 4,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/reel/DfWoglkBs8l/"
@@ -3303,7 +3340,7 @@
           "permalink": "https://www.instagram.com/p/DfWK7p4AS3H/"
         },
         {
-          "likes": 25,
+          "likes": 26,
           "comments": 2,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfV61hrgcYb/"
@@ -3321,7 +3358,7 @@
           "permalink": "https://www.instagram.com/p/DfVeu_dAQTK/"
         },
         {
-          "likes": 168,
+          "likes": 169,
           "comments": 1,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfZEQh1gQ4h/"
@@ -3333,19 +3370,19 @@
           "permalink": "https://www.instagram.com/p/DfY9ULugeq4/"
         },
         {
-          "likes": 1074,
+          "likes": 1079,
           "comments": 16,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfYyYBUgfOY/"
         },
         {
-          "likes": 1546,
-          "comments": 113,
+          "likes": 1551,
+          "comments": 116,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfYgHnqgSb4/"
         },
         {
-          "likes": 1381,
+          "likes": 1382,
           "comments": 130,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfYT3Y6AWTF/"
@@ -3363,7 +3400,13 @@
           "permalink": "https://www.instagram.com/p/DfeqWOdgd8V/"
         },
         {
-          "likes": 25,
+          "likes": 21,
+          "comments": 0,
+          "date": "2026-11-09",
+          "permalink": "https://www.instagram.com/p/DfgJ61lAYeA/"
+        },
+        {
+          "likes": 30,
           "comments": 2,
           "date": "2026-11-09",
           "permalink": "https://www.instagram.com/p/DfgAwggASeT/"
@@ -3372,51 +3415,14 @@
       "error": null
     },
     {
-      "username": "hachuping_humor",
-      "followers": 47921,
-      "posts_7d": 4,
-      "avg_likes": 208,
-      "avg_comments": 3,
-      "avg_engagement": 211,
-      "eng_rate": 0.44,
-      "trend_pct": -4.9,
-      "posts": [
-        {
-          "likes": 183,
-          "comments": 2,
-          "date": "2026-11-03",
-          "permalink": "https://www.instagram.com/reel/DfSDosBy-CO/"
-        },
-        {
-          "likes": 218,
-          "comments": 4,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/p/DfUJ7FqkgR6/"
-        },
-        {
-          "likes": 237,
-          "comments": 4,
-          "date": "2026-11-05",
-          "permalink": "https://www.instagram.com/reel/DfV6GF5ysiE/"
-        },
-        {
-          "likes": 193,
-          "comments": 3,
-          "date": "2026-11-06",
-          "permalink": "https://www.instagram.com/reel/DfZZYrhxNlT/"
-        }
-      ],
-      "error": null
-    },
-    {
       "username": "hana.humor",
-      "followers": 101461,
+      "followers": 101460,
       "posts_7d": 4,
       "avg_likes": 430,
       "avg_comments": 4,
-      "avg_engagement": 433,
+      "avg_engagement": 434,
       "eng_rate": 0.43,
-      "trend_pct": 2.1,
+      "trend_pct": 2.2,
       "posts": [
         {
           "likes": 427,
@@ -3437,7 +3443,7 @@
           "permalink": "https://www.instagram.com/p/DfZMd8uEybc/"
         },
         {
-          "likes": 478,
+          "likes": 480,
           "comments": 3,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/DfeYn9ck4Sx/"
@@ -3447,7 +3453,7 @@
     },
     {
       "username": "luna.besty",
-      "followers": 62146,
+      "followers": 62145,
       "posts_7d": 9,
       "avg_likes": 256,
       "avg_comments": 4,
@@ -3514,13 +3520,13 @@
     },
     {
       "username": "luna.humor",
-      "followers": 102005,
+      "followers": 102004,
       "posts_7d": 10,
-      "avg_likes": 411,
+      "avg_likes": 414,
       "avg_comments": 5,
-      "avg_engagement": 416,
+      "avg_engagement": 419,
       "eng_rate": 0.41,
-      "trend_pct": 0.2,
+      "trend_pct": 0.9,
       "posts": [
         {
           "likes": 444,
@@ -3541,7 +3547,7 @@
           "permalink": "https://www.instagram.com/p/DfRYC7xH1wz/"
         },
         {
-          "likes": 405,
+          "likes": 435,
           "comments": 7,
           "date": "2026-11-03",
           "permalink": "https://www.instagram.com/p/DfRDBHBn51W/"
@@ -3587,7 +3593,7 @@
     },
     {
       "username": "nato.humor",
-      "followers": 65637,
+      "followers": 65636,
       "posts_7d": 9,
       "avg_likes": 265,
       "avg_comments": 4,
@@ -3644,7 +3650,7 @@
           "permalink": "https://www.instagram.com/reel/DfZcYszNAbf/"
         },
         {
-          "likes": 242,
+          "likes": 243,
           "comments": 2,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/reel/DfdqTZVhJwf/"
@@ -3654,13 +3660,13 @@
     },
     {
       "username": "good_tip_magazine",
-      "followers": 102349,
+      "followers": 102334,
       "posts_7d": 7,
       "avg_likes": 389,
       "avg_comments": 6,
       "avg_engagement": 395,
       "eng_rate": 0.39,
-      "trend_pct": 1.6,
+      "trend_pct": 1.5,
       "posts": [
         {
           "likes": 598,
@@ -3715,7 +3721,7 @@
       "avg_comments": 5,
       "avg_engagement": 407,
       "eng_rate": 0.39,
-      "trend_pct": 1.0,
+      "trend_pct": 1.1,
       "posts": [
         {
           "likes": 395,
@@ -3778,7 +3784,7 @@
           "permalink": "https://www.instagram.com/p/DfelCYnIFWt/"
         },
         {
-          "likes": 449,
+          "likes": 450,
           "comments": 6,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/DfeZwhNGN2-/"
@@ -3831,13 +3837,13 @@
     },
     {
       "username": "nato.tip",
-      "followers": 56875,
+      "followers": 56873,
       "posts_7d": 9,
       "avg_likes": 214,
       "avg_comments": 3,
       "avg_engagement": 217,
       "eng_rate": 0.38,
-      "trend_pct": -0.3,
+      "trend_pct": -0.2,
       "posts": [
         {
           "likes": 136,
@@ -3864,7 +3870,7 @@
           "permalink": "https://www.instagram.com/p/DfUVEY3EtNX/"
         },
         {
-          "likes": 263,
+          "likes": 264,
           "comments": 4,
           "date": "2026-11-04",
           "permalink": "https://www.instagram.com/p/DfTZrqlks1O/"
@@ -3888,7 +3894,7 @@
           "permalink": "https://www.instagram.com/p/DfYfsJxkraJ/"
         },
         {
-          "likes": 213,
+          "likes": 215,
           "comments": 2,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/p/Dfbzz5ioaii/"
@@ -3898,13 +3904,13 @@
     },
     {
       "username": "ourdays_pick",
-      "followers": 100597,
+      "followers": 100601,
       "posts_7d": 30,
-      "avg_likes": 340,
-      "avg_comments": 29,
-      "avg_engagement": 370,
+      "avg_likes": 345,
+      "avg_comments": 30,
+      "avg_engagement": 375,
       "eng_rate": 0.37,
-      "trend_pct": -57.7,
+      "trend_pct": -57.1,
       "posts": [
         {
           "likes": 183,
@@ -3949,7 +3955,7 @@
           "permalink": "https://www.instagram.com/p/DfRUxbZE2Bv/"
         },
         {
-          "likes": 432,
+          "likes": 433,
           "comments": 115,
           "date": "2026-11-03",
           "permalink": "https://www.instagram.com/p/DfRH7YpE6Ao/"
@@ -3991,7 +3997,7 @@
           "permalink": "https://www.instagram.com/p/DfTMmyAkxy1/"
         },
         {
-          "likes": 1048,
+          "likes": 1049,
           "comments": 132,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfXPM0cE7Z-/"
@@ -4003,7 +4009,7 @@
           "permalink": "https://www.instagram.com/p/DfW-3Cck9MI/"
         },
         {
-          "likes": 226,
+          "likes": 228,
           "comments": 6,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfWpG1_E6gV/"
@@ -4015,13 +4021,13 @@
           "permalink": "https://www.instagram.com/p/DfWoRitE0Tj/"
         },
         {
-          "likes": 1754,
+          "likes": 1755,
           "comments": 144,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfWfjUPkzE2/"
         },
         {
-          "likes": 3849,
+          "likes": 3850,
           "comments": 322,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfV23_rEw89/"
@@ -4033,7 +4039,7 @@
           "permalink": "https://www.instagram.com/p/DfZ0E3xk4e_/"
         },
         {
-          "likes": 141,
+          "likes": 142,
           "comments": 18,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfZN0HME4f0/"
@@ -4063,7 +4069,7 @@
           "permalink": "https://www.instagram.com/p/DfYUZT0E4cq/"
         },
         {
-          "likes": 52,
+          "likes": 56,
           "comments": 3,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/Dfe-B0Ik0ms/"
@@ -4075,14 +4081,14 @@
           "permalink": "https://www.instagram.com/reel/Dfetyw4Bqyx/"
         },
         {
-          "likes": 178,
+          "likes": 179,
           "comments": 3,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/DfdeHp7k20X/"
         },
         {
-          "likes": 32,
-          "comments": 3,
+          "likes": 180,
+          "comments": 15,
           "date": "2026-11-09",
           "permalink": "https://www.instagram.com/p/DfgGNkKE4cL/"
         }
@@ -4091,7 +4097,7 @@
     },
     {
       "username": "nato.iove",
-      "followers": 34246,
+      "followers": 34245,
       "posts_7d": 5,
       "avg_likes": 122,
       "avg_comments": 2,
@@ -4134,7 +4140,7 @@
     },
     {
       "username": "malangping_zzal",
-      "followers": 110241,
+      "followers": 110199,
       "posts_7d": 6,
       "avg_likes": 385,
       "avg_comments": 4,
@@ -4155,7 +4161,7 @@
           "permalink": "https://www.instagram.com/reel/DfPnCqJqpxE/"
         },
         {
-          "likes": 451,
+          "likes": 452,
           "comments": 4,
           "date": "2026-11-04",
           "permalink": "https://www.instagram.com/reel/DfUsbFUKVci/"
@@ -4173,7 +4179,7 @@
           "permalink": "https://www.instagram.com/p/DfWolOtGGIl/"
         },
         {
-          "likes": 354,
+          "likes": 353,
           "comments": 3,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/reel/DfZ0KcoKNTC/"
@@ -4183,7 +4189,7 @@
     },
     {
       "username": "ddonutping_zzal",
-      "followers": 107319,
+      "followers": 107279,
       "posts_7d": 5,
       "avg_likes": 371,
       "avg_comments": 4,
@@ -4226,7 +4232,7 @@
     },
     {
       "username": "pink_fun_diary",
-      "followers": 113219,
+      "followers": 113186,
       "posts_7d": 5,
       "avg_likes": 392,
       "avg_comments": 4,
@@ -4269,7 +4275,7 @@
     },
     {
       "username": "chachaping_zzal",
-      "followers": 107466,
+      "followers": 107422,
       "posts_7d": 7,
       "avg_likes": 363,
       "avg_comments": 4,
@@ -4324,20 +4330,14 @@
     },
     {
       "username": "365_hot",
-      "followers": 89804,
-      "posts_7d": 42,
-      "avg_likes": 284,
+      "followers": 89807,
+      "posts_7d": 43,
+      "avg_likes": 282,
       "avg_comments": 15,
-      "avg_engagement": 299,
+      "avg_engagement": 297,
       "eng_rate": 0.33,
-      "trend_pct": -37.2,
+      "trend_pct": -44.2,
       "posts": [
-        {
-          "likes": 84,
-          "comments": 0,
-          "date": "2026-11-02",
-          "permalink": "https://www.instagram.com/p/DfOzC74k3jC/"
-        },
         {
           "likes": 80,
           "comments": 3,
@@ -4405,7 +4405,7 @@
           "permalink": "https://www.instagram.com/reel/DfUH9OvzYc2/"
         },
         {
-          "likes": 901,
+          "likes": 902,
           "comments": 14,
           "date": "2026-11-04",
           "permalink": "https://www.instagram.com/p/DfT6_LJE7be/"
@@ -4417,7 +4417,7 @@
           "permalink": "https://www.instagram.com/p/DfTtJ5bkwb_/"
         },
         {
-          "likes": 1359,
+          "likes": 1361,
           "comments": 55,
           "date": "2026-11-04",
           "permalink": "https://www.instagram.com/p/DfTkWJYE1Df/"
@@ -4465,13 +4465,13 @@
           "permalink": "https://www.instagram.com/p/DfWxJfEk-vm/"
         },
         {
-          "likes": 272,
+          "likes": 273,
           "comments": 0,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/reel/DfWoiY6RHKv/"
         },
         {
-          "likes": 135,
+          "likes": 136,
           "comments": 0,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfWhBMfE-Ah/"
@@ -4483,7 +4483,7 @@
           "permalink": "https://www.instagram.com/p/DfWRhnck0Yc/"
         },
         {
-          "likes": 2142,
+          "likes": 2145,
           "comments": 12,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfWI-cTEwqt/"
@@ -4555,8 +4555,8 @@
           "permalink": "https://www.instagram.com/p/DfYZxxPk0mo/"
         },
         {
-          "likes": 344,
-          "comments": 9,
+          "likes": 353,
+          "comments": 10,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfYPlUgkziC/"
         },
@@ -4567,8 +4567,14 @@
           "permalink": "https://www.instagram.com/p/DfcBBBzky8q/"
         },
         {
-          "likes": 90,
-          "comments": 5,
+          "likes": 20,
+          "comments": 7,
+          "date": "2026-11-09",
+          "permalink": "https://www.instagram.com/p/DfgMaErE3zW/"
+        },
+        {
+          "likes": 242,
+          "comments": 15,
           "date": "2026-11-09",
           "permalink": "https://www.instagram.com/p/DfgBICiE9Do/"
         }
@@ -4576,14 +4582,99 @@
       "error": null
     },
     {
-      "username": "smile_king_s2",
-      "followers": 84251,
-      "posts_7d": 23,
-      "avg_likes": 254,
+      "username": "humor_ssul",
+      "followers": 81634,
+      "posts_7d": 12,
+      "avg_likes": 238,
       "avg_comments": 23,
-      "avg_engagement": 277,
-      "eng_rate": 0.33,
-      "trend_pct": 10.7,
+      "avg_engagement": 261,
+      "eng_rate": 0.32,
+      "trend_pct": -8.7,
+      "posts": [
+        {
+          "likes": 369,
+          "comments": 133,
+          "date": "2026-11-02",
+          "permalink": "https://www.instagram.com/p/DfOwRmHmSA4/"
+        },
+        {
+          "likes": 1076,
+          "comments": 20,
+          "date": "2026-11-02",
+          "permalink": "https://www.instagram.com/p/DfOcRzPmVE0/"
+        },
+        {
+          "likes": 89,
+          "comments": 2,
+          "date": "2026-11-03",
+          "permalink": "https://www.instagram.com/p/DfRm-zCmfQR/"
+        },
+        {
+          "likes": 190,
+          "comments": 25,
+          "date": "2026-11-03",
+          "permalink": "https://www.instagram.com/p/DfRXH1SGWyM/"
+        },
+        {
+          "likes": 51,
+          "comments": 0,
+          "date": "2026-11-03",
+          "permalink": "https://www.instagram.com/p/DfRK4uqGWCW/"
+        },
+        {
+          "likes": 91,
+          "comments": 36,
+          "date": "2026-11-03",
+          "permalink": "https://www.instagram.com/p/DfQ0dlOGeG-/"
+        },
+        {
+          "likes": 85,
+          "comments": 1,
+          "date": "2026-11-04",
+          "permalink": "https://www.instagram.com/p/DfUPtZtmX-F/"
+        },
+        {
+          "likes": 371,
+          "comments": 3,
+          "date": "2026-11-04",
+          "permalink": "https://www.instagram.com/p/DfT9_MLGV5Y/"
+        },
+        {
+          "likes": 255,
+          "comments": 47,
+          "date": "2026-11-04",
+          "permalink": "https://www.instagram.com/p/DfTUoTpGVz4/"
+        },
+        {
+          "likes": 102,
+          "comments": 5,
+          "date": "2026-11-08",
+          "permalink": "https://www.instagram.com/p/Dfd8ERAmTsw/"
+        },
+        {
+          "likes": 134,
+          "comments": 3,
+          "date": "2026-11-08",
+          "permalink": "https://www.instagram.com/p/Dfdu1kqmWSm/"
+        },
+        {
+          "likes": 45,
+          "comments": 0,
+          "date": "2026-11-09",
+          "permalink": "https://www.instagram.com/p/DfgDWnhmaMa/"
+        }
+      ],
+      "error": null
+    },
+    {
+      "username": "smile_king_s2",
+      "followers": 84250,
+      "posts_7d": 24,
+      "avg_likes": 244,
+      "avg_comments": 22,
+      "avg_engagement": 266,
+      "eng_rate": 0.32,
+      "trend_pct": 21.9,
       "posts": [
         {
           "likes": 70,
@@ -4658,7 +4749,7 @@
           "permalink": "https://www.instagram.com/p/DfW23udFEJp/"
         },
         {
-          "likes": 754,
+          "likes": 756,
           "comments": 96,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfWf_RgFOmw/"
@@ -4712,13 +4803,19 @@
           "permalink": "https://www.instagram.com/reel/Dfbr9fHIL36/"
         },
         {
-          "likes": 10,
+          "likes": 11,
           "comments": 2,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/DfdgDPODyBn/"
         },
         {
-          "likes": 39,
+          "likes": 14,
+          "comments": 3,
+          "date": "2026-11-09",
+          "permalink": "https://www.instagram.com/p/DfgMtumj7Pb/"
+        },
+        {
+          "likes": 42,
           "comments": 4,
           "date": "2026-11-09",
           "permalink": "https://www.instagram.com/p/DffK48fD1IZ/"
@@ -4728,7 +4825,7 @@
     },
     {
       "username": "tree.zzal",
-      "followers": 116642,
+      "followers": 116635,
       "posts_7d": 9,
       "avg_likes": 366,
       "avg_comments": 4,
@@ -4794,105 +4891,14 @@
       "error": null
     },
     {
-      "username": "humor_ssul",
-      "followers": 81634,
-      "posts_7d": 13,
-      "avg_likes": 234,
-      "avg_comments": 22,
-      "avg_engagement": 256,
-      "eng_rate": 0.31,
-      "trend_pct": -12.3,
-      "posts": [
-        {
-          "likes": 368,
-          "comments": 133,
-          "date": "2026-11-02",
-          "permalink": "https://www.instagram.com/p/DfOwRmHmSA4/"
-        },
-        {
-          "likes": 1076,
-          "comments": 20,
-          "date": "2026-11-02",
-          "permalink": "https://www.instagram.com/p/DfOcRzPmVE0/"
-        },
-        {
-          "likes": 197,
-          "comments": 12,
-          "date": "2026-11-02",
-          "permalink": "https://www.instagram.com/p/DfONTxtGeI-/"
-        },
-        {
-          "likes": 89,
-          "comments": 2,
-          "date": "2026-11-03",
-          "permalink": "https://www.instagram.com/p/DfRm-zCmfQR/"
-        },
-        {
-          "likes": 190,
-          "comments": 25,
-          "date": "2026-11-03",
-          "permalink": "https://www.instagram.com/p/DfRXH1SGWyM/"
-        },
-        {
-          "likes": 51,
-          "comments": 0,
-          "date": "2026-11-03",
-          "permalink": "https://www.instagram.com/p/DfRK4uqGWCW/"
-        },
-        {
-          "likes": 91,
-          "comments": 35,
-          "date": "2026-11-03",
-          "permalink": "https://www.instagram.com/p/DfQ0dlOGeG-/"
-        },
-        {
-          "likes": 85,
-          "comments": 1,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/p/DfUPtZtmX-F/"
-        },
-        {
-          "likes": 370,
-          "comments": 3,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/p/DfT9_MLGV5Y/"
-        },
-        {
-          "likes": 255,
-          "comments": 47,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/p/DfTUoTpGVz4/"
-        },
-        {
-          "likes": 100,
-          "comments": 5,
-          "date": "2026-11-08",
-          "permalink": "https://www.instagram.com/p/Dfd8ERAmTsw/"
-        },
-        {
-          "likes": 134,
-          "comments": 3,
-          "date": "2026-11-08",
-          "permalink": "https://www.instagram.com/p/Dfdu1kqmWSm/"
-        },
-        {
-          "likes": 30,
-          "comments": 0,
-          "date": "2026-11-09",
-          "permalink": "https://www.instagram.com/p/DfgDWnhmaMa/"
-        }
-      ],
-      "error": null
-    },
-    {
       "username": "hahahohokiki6814",
-      "followers": 74006,
-      "posts_7d": 22,
-      "avg_likes": 190,
-      "avg_comments": 41,
-      "avg_engagement": 230,
+      "followers": 74003,
+      "posts_7d": 21,
+      "avg_likes": 191,
+      "avg_comments": 37,
+      "avg_engagement": 228,
       "eng_rate": 0.31,
-      "trend_pct": -39.5,
+      "trend_pct": -40.8,
       "posts": [
         {
           "likes": 201,
@@ -4911,12 +4917,6 @@
           "comments": 0,
           "date": "2026-11-02",
           "permalink": "https://www.instagram.com/p/DfOZh01Gl-v/"
-        },
-        {
-          "likes": 173,
-          "comments": 128,
-          "date": "2026-11-02",
-          "permalink": "https://www.instagram.com/p/DfOL22Kn2Ee/"
         },
         {
           "likes": 66,
@@ -4955,8 +4955,8 @@
           "permalink": "https://www.instagram.com/p/DfQpndmn7RN/"
         },
         {
-          "likes": 1140,
-          "comments": 74,
+          "likes": 1141,
+          "comments": 76,
           "date": "2026-11-04",
           "permalink": "https://www.instagram.com/p/DfUitRnmowX/"
         },
@@ -4991,7 +4991,7 @@
           "permalink": "https://www.instagram.com/p/DfWpFbamjER/"
         },
         {
-          "likes": 66,
+          "likes": 67,
           "comments": 8,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfZMeeQmkkm/"
@@ -5003,8 +5003,8 @@
           "permalink": "https://www.instagram.com/p/DfYv6juGthr/"
         },
         {
-          "likes": 694,
-          "comments": 110,
+          "likes": 697,
+          "comments": 111,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfYZBz8Hw7U/"
         },
@@ -5015,14 +5015,14 @@
           "permalink": "https://www.instagram.com/p/DfcOkvfmv5y/"
         },
         {
-          "likes": 44,
+          "likes": 45,
           "comments": 1,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/DfeRGksmocj/"
         },
         {
-          "likes": 3,
-          "comments": 1,
+          "likes": 14,
+          "comments": 8,
           "date": "2026-11-09",
           "permalink": "https://www.instagram.com/p/DfgEao3Hwxv/"
         }
@@ -5030,171 +5030,14 @@
       "error": null
     },
     {
-      "username": "mukja_fun",
-      "followers": 87305,
-      "posts_7d": 24,
-      "avg_likes": 249,
-      "avg_comments": 16,
-      "avg_engagement": 265,
-      "eng_rate": 0.3,
-      "trend_pct": -65.6,
-      "posts": [
-        {
-          "likes": 30,
-          "comments": 1,
-          "date": "2026-11-02",
-          "permalink": "https://www.instagram.com/reel/DfPgk5Uyufl/"
-        },
-        {
-          "likes": 472,
-          "comments": 48,
-          "date": "2026-11-02",
-          "permalink": "https://www.instagram.com/reel/DfPeNuBORp0/"
-        },
-        {
-          "likes": 654,
-          "comments": 1,
-          "date": "2026-11-02",
-          "permalink": "https://www.instagram.com/reel/DfPJpbOOoOl/"
-        },
-        {
-          "likes": 818,
-          "comments": 4,
-          "date": "2026-11-02",
-          "permalink": "https://www.instagram.com/reel/DfO1AdhO0Nt/"
-        },
-        {
-          "likes": 173,
-          "comments": 5,
-          "date": "2026-11-02",
-          "permalink": "https://www.instagram.com/reel/DfOgbsbO3T-/"
-        },
-        {
-          "likes": 552,
-          "comments": 12,
-          "date": "2026-11-02",
-          "permalink": "https://www.instagram.com/reel/DfOLwWwONbo/"
-        },
-        {
-          "likes": 92,
-          "comments": 3,
-          "date": "2026-11-03",
-          "permalink": "https://www.instagram.com/reel/DfRniFguEFq/"
-        },
-        {
-          "likes": 81,
-          "comments": 0,
-          "date": "2026-11-03",
-          "permalink": "https://www.instagram.com/p/DfRnkqKD2sQ/"
-        },
-        {
-          "likes": 1714,
-          "comments": 237,
-          "date": "2026-11-03",
-          "permalink": "https://www.instagram.com/reel/DfRZ1VIuYuV/"
-        },
-        {
-          "likes": 13,
-          "comments": 0,
-          "date": "2026-11-03",
-          "permalink": "https://www.instagram.com/reel/DfRF1nXO1Al/"
-        },
-        {
-          "likes": 16,
-          "comments": 0,
-          "date": "2026-11-03",
-          "permalink": "https://www.instagram.com/reel/DfQyNWNPrte/"
-        },
-        {
-          "likes": 60,
-          "comments": 0,
-          "date": "2026-11-03",
-          "permalink": "https://www.instagram.com/reel/DfQb-jfu2Hg/"
-        },
-        {
-          "likes": 99,
-          "comments": 0,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/p/DfUFZtmElFc/"
-        },
-        {
-          "likes": 228,
-          "comments": 6,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/reel/DfT4dTPy-Dr/"
-        },
-        {
-          "likes": 252,
-          "comments": 0,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/reel/DfTW0MvStCx/"
-        },
-        {
-          "likes": 171,
-          "comments": 3,
-          "date": "2026-11-04",
-          "permalink": "https://www.instagram.com/reel/DfTUIBeS045/"
-        },
-        {
-          "likes": 15,
-          "comments": 0,
-          "date": "2026-11-05",
-          "permalink": "https://www.instagram.com/reel/DfW3_QCO680/"
-        },
-        {
-          "likes": 22,
-          "comments": 2,
-          "date": "2026-11-05",
-          "permalink": "https://www.instagram.com/reel/DfWnGWQSbZE/"
-        },
-        {
-          "likes": 8,
-          "comments": 0,
-          "date": "2026-11-05",
-          "permalink": "https://www.instagram.com/reel/DfV5Jk-yRW2/"
-        },
-        {
-          "likes": 157,
-          "comments": 26,
-          "date": "2026-11-06",
-          "permalink": "https://www.instagram.com/reel/DfYzys0yGDe/"
-        },
-        {
-          "likes": 75,
-          "comments": 3,
-          "date": "2026-11-06",
-          "permalink": "https://www.instagram.com/reel/DfYKW6pORP9/"
-        },
-        {
-          "likes": 47,
-          "comments": 24,
-          "date": "2026-11-08",
-          "permalink": "https://www.instagram.com/reel/DfeVRDuqlp3/"
-        },
-        {
-          "likes": 95,
-          "comments": 0,
-          "date": "2026-11-08",
-          "permalink": "https://www.instagram.com/reel/DfdT_C4u4IY/"
-        },
-        {
-          "likes": 134,
-          "comments": 3,
-          "date": "2026-11-09",
-          "permalink": "https://www.instagram.com/reel/Dff4vtNOg6w/"
-        }
-      ],
-      "error": null
-    },
-    {
       "username": "two_pyeong",
-      "followers": 28014,
+      "followers": 28013,
       "posts_7d": 11,
       "avg_likes": 76,
       "avg_comments": 6,
       "avg_engagement": 81,
       "eng_rate": 0.29,
-      "trend_pct": -43.2,
+      "trend_pct": -43.1,
       "posts": [
         {
           "likes": 103,
@@ -5227,7 +5070,7 @@
           "permalink": "https://www.instagram.com/p/DfT3xZZkqN8/"
         },
         {
-          "likes": 89,
+          "likes": 90,
           "comments": 0,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfW4BY6ku0U/"
@@ -5268,13 +5111,19 @@
     {
       "username": "sksk1sksk0",
       "followers": 101196,
-      "posts_7d": 42,
-      "avg_likes": 233,
-      "avg_comments": 20,
-      "avg_engagement": 253,
-      "eng_rate": 0.25,
-      "trend_pct": -23.3,
+      "posts_7d": 41,
+      "avg_likes": 237,
+      "avg_comments": 21,
+      "avg_engagement": 258,
+      "eng_rate": 0.26,
+      "trend_pct": -15.8,
       "posts": [
+        {
+          "likes": 64,
+          "comments": 18,
+          "date": "2026-11-02",
+          "permalink": "https://www.instagram.com/p/DfOyQKplDyM/"
+        },
         {
           "likes": 94,
           "comments": 89,
@@ -5292,12 +5141,6 @@
           "comments": 22,
           "date": "2026-11-02",
           "permalink": "https://www.instagram.com/p/DfOQrGSndDq/"
-        },
-        {
-          "likes": 113,
-          "comments": 2,
-          "date": "2026-11-02",
-          "permalink": "https://www.instagram.com/p/DfOHbHVHTeU/"
         },
         {
           "likes": 92,
@@ -5354,20 +5197,20 @@
           "permalink": "https://www.instagram.com/p/DfT87K2HUId/"
         },
         {
-          "likes": 90,
+          "likes": 91,
           "comments": 1,
           "date": "2026-11-04",
           "permalink": "https://www.instagram.com/p/DfT0u0GnXf2/"
         },
         {
-          "likes": 38,
+          "likes": 39,
           "comments": 41,
           "date": "2026-11-04",
           "permalink": "https://www.instagram.com/p/DfTsFJZHe56/"
         },
         {
-          "likes": 138,
-          "comments": 224,
+          "likes": 141,
+          "comments": 229,
           "date": "2026-11-04",
           "permalink": "https://www.instagram.com/p/DfTSXWBnTbc/"
         },
@@ -5396,7 +5239,7 @@
           "permalink": "https://www.instagram.com/p/DfW6bPcHdZl/"
         },
         {
-          "likes": 349,
+          "likes": 352,
           "comments": 12,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfWlIrMHRog/"
@@ -5414,7 +5257,7 @@
           "permalink": "https://www.instagram.com/p/DfWOc6THRkx/"
         },
         {
-          "likes": 311,
+          "likes": 313,
           "comments": 13,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfV_ZuIHfVX/"
@@ -5432,7 +5275,7 @@
           "permalink": "https://www.instagram.com/p/DfVetwLnUNf/"
         },
         {
-          "likes": 92,
+          "likes": 94,
           "comments": 1,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfZbBoLHdQ1/"
@@ -5450,31 +5293,31 @@
           "permalink": "https://www.instagram.com/p/DfZIV3ZHTmc/"
         },
         {
-          "likes": 189,
+          "likes": 190,
           "comments": 4,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfY__tjnUHc/"
         },
         {
-          "likes": 504,
+          "likes": 507,
           "comments": 4,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfY3O5snZdA/"
         },
         {
-          "likes": 550,
-          "comments": 106,
+          "likes": 555,
+          "comments": 107,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfYlK2PHcUC/"
         },
         {
-          "likes": 649,
-          "comments": 120,
+          "likes": 650,
+          "comments": 122,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfYdFYynWpG/"
         },
         {
-          "likes": 171,
+          "likes": 174,
           "comments": 7,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/p/DfcBmadnTrG/"
@@ -5486,7 +5329,7 @@
           "permalink": "https://www.instagram.com/p/Dfbys0fn0n7/"
         },
         {
-          "likes": 431,
+          "likes": 433,
           "comments": 9,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/p/DfbmGiTHTO6/"
@@ -5498,7 +5341,7 @@
           "permalink": "https://www.instagram.com/p/DfbYbc9HcGi/"
         },
         {
-          "likes": 299,
+          "likes": 300,
           "comments": 27,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/p/DfbKsDuHSbe/"
@@ -5510,7 +5353,7 @@
           "permalink": "https://www.instagram.com/p/Dfbz2giHSf5/"
         },
         {
-          "likes": 0,
+          "likes": 17,
           "comments": 0,
           "date": "2026-11-09",
           "permalink": "https://www.instagram.com/p/DfgIcnrHW-1/"
@@ -5520,20 +5363,14 @@
     },
     {
       "username": "kkang_funny",
-      "followers": 28074,
+      "followers": 28073,
       "posts_7d": 50,
-      "avg_likes": 58,
+      "avg_likes": 57,
       "avg_comments": 12,
-      "avg_engagement": 70,
+      "avg_engagement": 69,
       "eng_rate": 0.25,
       "trend_pct": null,
       "posts": [
-        {
-          "likes": 17,
-          "comments": 13,
-          "date": "2026-11-03",
-          "permalink": "https://www.instagram.com/p/DfQVJyUEvDZ/"
-        },
         {
           "likes": 10,
           "comments": 0,
@@ -5565,7 +5402,7 @@
           "permalink": "https://www.instagram.com/p/DfT3vPjkkkC/"
         },
         {
-          "likes": 108,
+          "likes": 109,
           "comments": 0,
           "date": "2026-11-04",
           "permalink": "https://www.instagram.com/p/DfTw5p2Ej-x/"
@@ -5727,13 +5564,13 @@
           "permalink": "https://www.instagram.com/p/Dfe7FxrgfLR/"
         },
         {
-          "likes": 22,
+          "likes": 23,
           "comments": 0,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/Dfet26KAYbj/"
         },
         {
-          "likes": 14,
+          "likes": 15,
           "comments": 0,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/DfeUHHPgfb4/"
@@ -5745,7 +5582,7 @@
           "permalink": "https://www.instagram.com/p/DfeJK5-Ac3l/"
         },
         {
-          "likes": 117,
+          "likes": 119,
           "comments": 19,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/Dfda5vRkvmN/"
@@ -5757,14 +5594,20 @@
           "permalink": "https://www.instagram.com/p/DfcgeABEmKA/"
         },
         {
-          "likes": 1,
+          "likes": 0,
+          "comments": 0,
+          "date": "2026-11-09",
+          "permalink": "https://www.instagram.com/p/DfgPCj7kukz/"
+        },
+        {
+          "likes": 3,
           "comments": 0,
           "date": "2026-11-09",
           "permalink": "https://www.instagram.com/p/Dff_mRJklDR/"
         },
         {
           "likes": 6,
-          "comments": 3,
+          "comments": 6,
           "date": "2026-11-09",
           "permalink": "https://www.instagram.com/p/Dffx94xEmOq/"
         }
@@ -5773,13 +5616,13 @@
     },
     {
       "username": "pangpang_one_",
-      "followers": 67037,
+      "followers": 67036,
       "posts_7d": 37,
-      "avg_likes": 111,
+      "avg_likes": 110,
       "avg_comments": 9,
       "avg_engagement": 120,
       "eng_rate": 0.18,
-      "trend_pct": -32.2,
+      "trend_pct": -30.8,
       "posts": [
         {
           "likes": 67,
@@ -5806,12 +5649,6 @@
           "permalink": "https://www.instagram.com/p/DfORYl-E4ln/"
         },
         {
-          "likes": 42,
-          "comments": 0,
-          "date": "2026-11-02",
-          "permalink": "https://www.instagram.com/p/DfOI5ayE7Gv/"
-        },
-        {
           "likes": 36,
           "comments": 0,
           "date": "2026-11-03",
@@ -5830,7 +5667,7 @@
           "permalink": "https://www.instagram.com/p/DfRMPmnkwTB/"
         },
         {
-          "likes": 398,
+          "likes": 399,
           "comments": 13,
           "date": "2026-11-03",
           "permalink": "https://www.instagram.com/p/DfRAxjCE3au/"
@@ -5860,7 +5697,7 @@
           "permalink": "https://www.instagram.com/p/DfTygbCkz4F/"
         },
         {
-          "likes": 190,
+          "likes": 191,
           "comments": 45,
           "date": "2026-11-04",
           "permalink": "https://www.instagram.com/p/DfTp8XtE8B1/"
@@ -5908,13 +5745,13 @@
           "permalink": "https://www.instagram.com/p/DfWPRSIk8IE/"
         },
         {
-          "likes": 584,
+          "likes": 585,
           "comments": 14,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfWH1VsE9gS/"
         },
         {
-          "likes": 91,
+          "likes": 92,
           "comments": 5,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfV-hc3E50V/"
@@ -5926,7 +5763,7 @@
           "permalink": "https://www.instagram.com/p/DfVer67k6KF/"
         },
         {
-          "likes": 108,
+          "likes": 109,
           "comments": 3,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfZT4h8E8dZ/"
@@ -5938,7 +5775,7 @@
           "permalink": "https://www.instagram.com/p/DfZHy7cE32M/"
         },
         {
-          "likes": 217,
+          "likes": 218,
           "comments": 2,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfZAdztE2J7/"
@@ -5974,7 +5811,7 @@
           "permalink": "https://www.instagram.com/p/Dfb0bNoEz1R/"
         },
         {
-          "likes": 37,
+          "likes": 38,
           "comments": 2,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/p/DfbmHXfE3G4/"
@@ -5986,7 +5823,7 @@
           "permalink": "https://www.instagram.com/p/DfbKtOwk2zk/"
         },
         {
-          "likes": 132,
+          "likes": 133,
           "comments": 1,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/p/DfbKqUlE2qI/"
@@ -5998,7 +5835,13 @@
           "permalink": "https://www.instagram.com/p/DfdqSmMkwRM/"
         },
         {
-          "likes": 7,
+          "likes": 4,
+          "comments": 0,
+          "date": "2026-11-09",
+          "permalink": "https://www.instagram.com/p/DfgPRehE_ks/"
+        },
+        {
+          "likes": 24,
           "comments": 0,
           "date": "2026-11-09",
           "permalink": "https://www.instagram.com/p/DfgHdElE0Mn/"
@@ -6008,16 +5851,16 @@
     },
     {
       "username": "mamy014",
-      "followers": 93085,
-      "posts_7d": 39,
-      "avg_likes": 148,
+      "followers": 93086,
+      "posts_7d": 40,
+      "avg_likes": 147,
       "avg_comments": 14,
-      "avg_engagement": 162,
+      "avg_engagement": 161,
       "eng_rate": 0.17,
-      "trend_pct": -25.3,
+      "trend_pct": -31.3,
       "posts": [
         {
-          "likes": 1104,
+          "likes": 1105,
           "comments": 34,
           "date": "2026-11-02",
           "permalink": "https://www.instagram.com/p/DfO1Ucikpzs/"
@@ -6065,7 +5908,7 @@
           "permalink": "https://www.instagram.com/p/DfRG94kj3d1/"
         },
         {
-          "likes": 612,
+          "likes": 614,
           "comments": 54,
           "date": "2026-11-03",
           "permalink": "https://www.instagram.com/p/DfQ_rIbEnoV/"
@@ -6113,7 +5956,7 @@
           "permalink": "https://www.instagram.com/p/DfTQHd0jzKI/"
         },
         {
-          "likes": 509,
+          "likes": 510,
           "comments": 42,
           "date": "2026-11-04",
           "permalink": "https://www.instagram.com/p/DfTISt1ktw2/"
@@ -6131,7 +5974,7 @@
           "permalink": "https://www.instagram.com/p/DfW6lLED4pt/"
         },
         {
-          "likes": 257,
+          "likes": 258,
           "comments": 23,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfWoJ-aD53k/"
@@ -6161,7 +6004,7 @@
           "permalink": "https://www.instagram.com/p/DfV0CMbDws7/"
         },
         {
-          "likes": 144,
+          "likes": 145,
           "comments": 2,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfVexXCj0rX/"
@@ -6215,7 +6058,7 @@
           "permalink": "https://www.instagram.com/p/DfcBnRzD3CB/"
         },
         {
-          "likes": 76,
+          "likes": 77,
           "comments": 8,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/p/DfbmEhMj5L7/"
@@ -6227,7 +6070,7 @@
           "permalink": "https://www.instagram.com/p/DfbsZNdjwlX/"
         },
         {
-          "likes": 275,
+          "likes": 276,
           "comments": 10,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/p/DfbmJdmj-Bg/"
@@ -6245,8 +6088,14 @@
           "permalink": "https://www.instagram.com/p/DfbKp2nDyH7/"
         },
         {
-          "likes": 18,
-          "comments": 1,
+          "likes": 2,
+          "comments": 0,
+          "date": "2026-11-09",
+          "permalink": "https://www.instagram.com/p/DfgNvyVEq7f/"
+        },
+        {
+          "likes": 110,
+          "comments": 15,
           "date": "2026-11-09",
           "permalink": "https://www.instagram.com/p/DfgGZrdkqPe/"
         }
@@ -6255,22 +6104,16 @@
     },
     {
       "username": "some2lve",
-      "followers": 163582,
-      "posts_7d": 41,
-      "avg_likes": 205,
+      "followers": 163581,
+      "posts_7d": 42,
+      "avg_likes": 203,
       "avg_comments": 6,
-      "avg_engagement": 211,
+      "avg_engagement": 209,
       "eng_rate": 0.13,
-      "trend_pct": -28.5,
+      "trend_pct": -35.1,
       "posts": [
         {
-          "likes": 225,
-          "comments": 7,
-          "date": "2026-11-02",
-          "permalink": "https://www.instagram.com/p/DfO6gmIGofA/"
-        },
-        {
-          "likes": 137,
+          "likes": 138,
           "comments": 1,
           "date": "2026-11-02",
           "permalink": "https://www.instagram.com/p/DfO4obamlQl/"
@@ -6324,7 +6167,7 @@
           "permalink": "https://www.instagram.com/p/DfRCd0Pmmyw/"
         },
         {
-          "likes": 112,
+          "likes": 113,
           "comments": 4,
           "date": "2026-11-03",
           "permalink": "https://www.instagram.com/reel/DfQwDMDpbfd/"
@@ -6396,7 +6239,7 @@
           "permalink": "https://www.instagram.com/reel/DfW-rhBqpl3/"
         },
         {
-          "likes": 610,
+          "likes": 611,
           "comments": 8,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/reel/DfW3GPAKiPg/"
@@ -6438,7 +6281,7 @@
           "permalink": "https://www.instagram.com/p/DfVtZ7tkmC-/"
         },
         {
-          "likes": 126,
+          "likes": 127,
           "comments": 1,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfZU5baGllS/"
@@ -6450,7 +6293,7 @@
           "permalink": "https://www.instagram.com/p/DfZHXgPmiPX/"
         },
         {
-          "likes": 306,
+          "likes": 307,
           "comments": 0,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfY-WccmmR1/"
@@ -6474,14 +6317,14 @@
           "permalink": "https://www.instagram.com/p/DfYQeUhEoDh/"
         },
         {
-          "likes": 400,
+          "likes": 401,
           "comments": 9,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/p/Dfb52ivGoul/"
         },
         {
-          "likes": 281,
-          "comments": 8,
+          "likes": 283,
+          "comments": 9,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/p/DfbYjppmqXt/"
         },
@@ -6498,8 +6341,14 @@
           "permalink": "https://www.instagram.com/p/DfeYCliGhsp/"
         },
         {
-          "likes": 171,
+          "likes": 3,
           "comments": 0,
+          "date": "2026-11-09",
+          "permalink": "https://www.instagram.com/p/DfgPk1AmsyJ/"
+        },
+        {
+          "likes": 272,
+          "comments": 3,
           "date": "2026-11-09",
           "permalink": "https://www.instagram.com/p/DfgBwz8EvJ2/"
         }
@@ -6508,16 +6357,16 @@
     },
     {
       "username": "pisik_2",
-      "followers": 117845,
+      "followers": 117843,
       "posts_7d": 35,
-      "avg_likes": 131,
+      "avg_likes": 130,
       "avg_comments": 7,
-      "avg_engagement": 138,
+      "avg_engagement": 137,
       "eng_rate": 0.12,
-      "trend_pct": -38.6,
+      "trend_pct": -39.2,
       "posts": [
         {
-          "likes": 44,
+          "likes": 45,
           "comments": 0,
           "date": "2026-11-02",
           "permalink": "https://www.instagram.com/p/DfPYfuFCTuF/"
@@ -6529,8 +6378,8 @@
           "permalink": "https://www.instagram.com/p/DfO6N28iVoy/"
         },
         {
-          "likes": 250,
-          "comments": 17,
+          "likes": 251,
+          "comments": 18,
           "date": "2026-11-02",
           "permalink": "https://www.instagram.com/p/DfOwDfoiaX8/"
         },
@@ -6547,19 +6396,13 @@
           "permalink": "https://www.instagram.com/p/DfObweric4r/"
         },
         {
-          "likes": 77,
-          "comments": 2,
-          "date": "2026-11-02",
-          "permalink": "https://www.instagram.com/p/DfOLccxCVUO/"
-        },
-        {
           "likes": 51,
           "comments": 10,
           "date": "2026-11-03",
           "permalink": "https://www.instagram.com/p/DfRS_odib2o/"
         },
         {
-          "likes": 220,
+          "likes": 221,
           "comments": 3,
           "date": "2026-11-03",
           "permalink": "https://www.instagram.com/p/DfRI3npCW4y/"
@@ -6583,7 +6426,7 @@
           "permalink": "https://www.instagram.com/p/DfQVMUwiVNC/"
         },
         {
-          "likes": 927,
+          "likes": 929,
           "comments": 8,
           "date": "2026-11-04",
           "permalink": "https://www.instagram.com/p/DfUq68fCbYs/"
@@ -6601,7 +6444,7 @@
           "permalink": "https://www.instagram.com/p/DfT7CSsCdhc/"
         },
         {
-          "likes": 73,
+          "likes": 75,
           "comments": 1,
           "date": "2026-11-04",
           "permalink": "https://www.instagram.com/p/DfTzEn3iU34/"
@@ -6637,13 +6480,13 @@
           "permalink": "https://www.instagram.com/p/DfWx9BjiaXG/"
         },
         {
-          "likes": 452,
+          "likes": 455,
           "comments": 15,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfWo3kACQfC/"
         },
         {
-          "likes": 92,
+          "likes": 93,
           "comments": 1,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfWdqBUCQR6/"
@@ -6667,7 +6510,7 @@
           "permalink": "https://www.instagram.com/p/DfV4YVaCSPp/"
         },
         {
-          "likes": 171,
+          "likes": 172,
           "comments": 0,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfVevF0iSvq/"
@@ -6679,7 +6522,7 @@
           "permalink": "https://www.instagram.com/p/DfZHn0LicDe/"
         },
         {
-          "likes": 41,
+          "likes": 42,
           "comments": 5,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfY-IcSCZ9Z/"
@@ -6691,14 +6534,14 @@
           "permalink": "https://www.instagram.com/p/DfY1bv8CUhF/"
         },
         {
-          "likes": 134,
+          "likes": 135,
           "comments": 4,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfYuylMiUEf/"
         },
         {
-          "likes": 230,
-          "comments": 10,
+          "likes": 233,
+          "comments": 11,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfYY4DbCVPO/"
         },
@@ -6721,7 +6564,13 @@
           "permalink": "https://www.instagram.com/p/Dfa2ADGiadw/"
         },
         {
-          "likes": 6,
+          "likes": 5,
+          "comments": 0,
+          "date": "2026-11-09",
+          "permalink": "https://www.instagram.com/p/DfgOMnbiUP1/"
+        },
+        {
+          "likes": 25,
           "comments": 0,
           "date": "2026-11-09",
           "permalink": "https://www.instagram.com/p/DfgGbm4Dxto/"
@@ -6735,9 +6584,9 @@
       "posts_7d": 12,
       "avg_likes": 35,
       "avg_comments": 1,
-      "avg_engagement": 35,
+      "avg_engagement": 36,
       "eng_rate": 0.11,
-      "trend_pct": -90.4,
+      "trend_pct": -90.3,
       "posts": [
         {
           "likes": 13,
@@ -6758,7 +6607,7 @@
           "permalink": "https://www.instagram.com/p/DfSBLOZj3wO/"
         },
         {
-          "likes": 69,
+          "likes": 71,
           "comments": 1,
           "date": "2026-11-03",
           "permalink": "https://www.instagram.com/p/DfRhPjRj8fl/"
@@ -6800,8 +6649,8 @@
           "permalink": "https://www.instagram.com/p/DfZBWwyjKQx/"
         },
         {
-          "likes": 33,
-          "comments": 0,
+          "likes": 34,
+          "comments": 1,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/p/DfcBj4tD4kS/"
         },
@@ -6816,20 +6665,14 @@
     },
     {
       "username": "one_day_humor_diary",
-      "followers": 95923,
+      "followers": 95916,
       "posts_7d": 50,
-      "avg_likes": 82,
-      "avg_comments": 22,
+      "avg_likes": 81,
+      "avg_comments": 23,
       "avg_engagement": 104,
       "eng_rate": 0.11,
       "trend_pct": null,
       "posts": [
-        {
-          "likes": 23,
-          "comments": 0,
-          "date": "2026-11-03",
-          "permalink": "https://www.instagram.com/p/DfROliQEqBm/"
-        },
         {
           "likes": 16,
           "comments": 1,
@@ -6879,7 +6722,7 @@
           "permalink": "https://www.instagram.com/p/DfUFckokkNP/"
         },
         {
-          "likes": 138,
+          "likes": 137,
           "comments": 19,
           "date": "2026-11-04",
           "permalink": "https://www.instagram.com/p/DfT7HMxkqcM/"
@@ -6892,7 +6735,7 @@
         },
         {
           "likes": 361,
-          "comments": 87,
+          "comments": 88,
           "date": "2026-11-04",
           "permalink": "https://www.instagram.com/p/DfS58yHEnOZ/"
         },
@@ -6957,7 +6800,7 @@
           "permalink": "https://www.instagram.com/p/DfVetwpEjZe/"
         },
         {
-          "likes": 312,
+          "likes": 315,
           "comments": 7,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfZxWFGElpm/"
@@ -6969,7 +6812,7 @@
           "permalink": "https://www.instagram.com/p/DfZnDbDEmhG/"
         },
         {
-          "likes": 108,
+          "likes": 109,
           "comments": 11,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfZcxMsEsvl/"
@@ -7030,19 +6873,19 @@
         },
         {
           "likes": 155,
-          "comments": 17,
+          "comments": 18,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/p/DfaoRApEh1G/"
         },
         {
-          "likes": 97,
-          "comments": 26,
+          "likes": 101,
+          "comments": 27,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/DfevVqnieMO/"
         },
         {
-          "likes": 74,
-          "comments": 62,
+          "likes": 77,
+          "comments": 69,
           "date": "2026-11-08",
           "permalink": "https://www.instagram.com/p/Dfecoy_gLYg/"
         },
@@ -7056,11 +6899,17 @@
           "likes": 6,
           "comments": 0,
           "date": "2026-11-09",
+          "permalink": "https://www.instagram.com/p/DfgMd1EEr_m/"
+        },
+        {
+          "likes": 6,
+          "comments": 0,
+          "date": "2026-11-09",
           "permalink": "https://www.instagram.com/p/Dff8kgYEiu9/"
         },
         {
-          "likes": 57,
-          "comments": 9,
+          "likes": 67,
+          "comments": 12,
           "date": "2026-11-09",
           "permalink": "https://www.instagram.com/p/Dffx9UDkvjZ/"
         }
@@ -7069,13 +6918,13 @@
     },
     {
       "username": "smile_life_s2",
-      "followers": 83017,
+      "followers": 83014,
       "posts_7d": 21,
-      "avg_likes": 70,
+      "avg_likes": 71,
       "avg_comments": 3,
-      "avg_engagement": 73,
+      "avg_engagement": 74,
       "eng_rate": 0.09,
-      "trend_pct": -3.9,
+      "trend_pct": 1.3,
       "posts": [
         {
           "likes": 51,
@@ -7198,8 +7047,8 @@
           "permalink": "https://www.instagram.com/p/Dfb6fwOCbjH/"
         },
         {
-          "likes": 47,
-          "comments": 3,
+          "likes": 67,
+          "comments": 4,
           "date": "2026-11-09",
           "permalink": "https://www.instagram.com/p/Dff_gn8AU5l/"
         }
@@ -7208,11 +7057,11 @@
     },
     {
       "username": "smile_today_s2",
-      "followers": 73869,
+      "followers": 73868,
       "posts_7d": 20,
-      "avg_likes": 55,
+      "avg_likes": 57,
       "avg_comments": 3,
-      "avg_engagement": 58,
+      "avg_engagement": 60,
       "eng_rate": 0.08,
       "trend_pct": -93.8,
       "posts": [
@@ -7313,7 +7162,7 @@
           "permalink": "https://www.instagram.com/p/DfY7ZZ9lOEr/"
         },
         {
-          "likes": 100,
+          "likes": 101,
           "comments": 2,
           "date": "2026-11-06",
           "permalink": "https://www.instagram.com/p/DfY1j0EFAsm/"
@@ -7331,8 +7180,8 @@
           "permalink": "https://www.instagram.com/p/Dfb64pJlIG4/"
         },
         {
-          "likes": 60,
-          "comments": 2,
+          "likes": 104,
+          "comments": 3,
           "date": "2026-11-09",
           "permalink": "https://www.instagram.com/p/Dff_WCfjwnV/"
         }
@@ -7341,13 +7190,13 @@
     },
     {
       "username": "laugh.34",
-      "followers": 138057,
+      "followers": 138055,
       "posts_7d": 20,
       "avg_likes": 92,
       "avg_comments": 3,
-      "avg_engagement": 94,
+      "avg_engagement": 96,
       "eng_rate": 0.07,
-      "trend_pct": -20.6,
+      "trend_pct": -21.1,
       "posts": [
         {
           "likes": 128,
@@ -7410,13 +7259,13 @@
           "permalink": "https://www.instagram.com/p/DfUFMrmkvYP/"
         },
         {
-          "likes": 61,
+          "likes": 62,
           "comments": 16,
           "date": "2026-11-04",
           "permalink": "https://www.instagram.com/p/DfTIYflkhSD/"
         },
         {
-          "likes": 123,
+          "likes": 124,
           "comments": 0,
           "date": "2026-11-05",
           "permalink": "https://www.instagram.com/p/DfW4FiskyVp/"
@@ -7446,13 +7295,13 @@
           "permalink": "https://www.instagram.com/p/DfY8_u9ElU0/"
         },
         {
-          "likes": 17,
+          "likes": 18,
           "comments": 0,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/reel/DfcaEgLygDo/"
         },
         {
-          "likes": 76,
+          "likes": 77,
           "comments": 0,
           "date": "2026-11-07",
           "permalink": "https://www.instagram.com/reel/DfcR_6oys_R/"
@@ -7464,8 +7313,8 @@
           "permalink": "https://www.instagram.com/p/Dfbyt5fElja/"
         },
         {
-          "likes": 27,
-          "comments": 13,
+          "likes": 38,
+          "comments": 18,
           "date": "2026-11-09",
           "permalink": "https://www.instagram.com/p/Dff7DtvkkWA/"
         }
@@ -7508,7 +7357,7 @@
       {
         "date": "2026-11-09",
         "eng_rate": 0.5,
-        "avg_engagement": 352
+        "avg_engagement": 356
       }
     ],
     "humor_ssul": [
@@ -7544,8 +7393,8 @@
       },
       {
         "date": "2026-11-09",
-        "eng_rate": 0.31,
-        "avg_engagement": 256
+        "eng_rate": 0.32,
+        "avg_engagement": 261
       }
     ],
     "365_hot": [
@@ -7582,7 +7431,7 @@
       {
         "date": "2026-11-09",
         "eng_rate": 0.33,
-        "avg_engagement": 299
+        "avg_engagement": 297
       }
     ],
     "mukja_fun": [
@@ -7656,7 +7505,7 @@
       {
         "date": "2026-11-09",
         "eng_rate": 0.11,
-        "avg_engagement": 35
+        "avg_engagement": 36
       }
     ],
     "good_n_growth": [
@@ -7705,7 +7554,7 @@
       {
         "date": "2026-11-09",
         "eng_rate": 0.17,
-        "avg_engagement": 162
+        "avg_engagement": 161
       }
     ],
     "mukddoonge": [
@@ -7741,8 +7590,8 @@
       },
       {
         "date": "2026-11-09",
-        "eng_rate": 0.44,
-        "avg_engagement": 314
+        "eng_rate": 0.43,
+        "avg_engagement": 305
       }
     ],
     "yes__jam_": [
@@ -7778,8 +7627,8 @@
       },
       {
         "date": "2026-11-09",
-        "eng_rate": 0.52,
-        "avg_engagement": 366
+        "eng_rate": 0.51,
+        "avg_engagement": 356
       }
     ],
     "pink_humor25": [
@@ -7815,8 +7664,8 @@
       },
       {
         "date": "2026-11-09",
-        "eng_rate": 1.53,
-        "avg_engagement": 682
+        "eng_rate": 1.55,
+        "avg_engagement": 693
       }
     ],
     "sksk1sksk0": [
@@ -7852,8 +7701,8 @@
       },
       {
         "date": "2026-11-09",
-        "eng_rate": 0.25,
-        "avg_engagement": 253
+        "eng_rate": 0.26,
+        "avg_engagement": 258
       }
     ],
     "pink_idolly": [
@@ -7889,8 +7738,8 @@
       },
       {
         "date": "2026-11-09",
-        "eng_rate": 6.58,
-        "avg_engagement": 1521
+        "eng_rate": 6.66,
+        "avg_engagement": 1538
       }
     ],
     "luna.humor": [
@@ -7927,7 +7776,7 @@
       {
         "date": "2026-11-09",
         "eng_rate": 0.41,
-        "avg_engagement": 416
+        "avg_engagement": 419
       }
     ],
     "kutbba101": [
@@ -7963,8 +7812,8 @@
       },
       {
         "date": "2026-11-09",
-        "eng_rate": 0.51,
-        "avg_engagement": 371
+        "eng_rate": 0.5,
+        "avg_engagement": 363
       }
     ],
     "kkang_funny": [
@@ -8001,7 +7850,7 @@
       {
         "date": "2026-11-09",
         "eng_rate": 0.25,
-        "avg_engagement": 70
+        "avg_engagement": 69
       }
     ],
     "apple_enter": [
@@ -8037,8 +7886,8 @@
       },
       {
         "date": "2026-11-09",
-        "eng_rate": 7.18,
-        "avg_engagement": 1172
+        "eng_rate": 7.2,
+        "avg_engagement": 1175
       }
     ],
     "text_pyeong": [
@@ -8074,8 +7923,8 @@
       },
       {
         "date": "2026-11-09",
-        "eng_rate": 1.51,
-        "avg_engagement": 550
+        "eng_rate": 1.52,
+        "avg_engagement": 552
       }
     ],
     "nato.zzal": [
@@ -8185,8 +8034,8 @@
       },
       {
         "date": "2026-11-09",
-        "eng_rate": 3.38,
-        "avg_engagement": 1195
+        "eng_rate": 3.4,
+        "avg_engagement": 1203
       }
     ],
     "nato.tip": [
@@ -8260,7 +8109,7 @@
       {
         "date": "2026-11-09",
         "eng_rate": 0.13,
-        "avg_engagement": 211
+        "avg_engagement": 209
       }
     ],
     "one_day_humor_diary": [
@@ -8334,7 +8183,7 @@
       {
         "date": "2026-11-09",
         "eng_rate": 0.45,
-        "avg_engagement": 112
+        "avg_engagement": 113
       }
     ],
     "luv_l0v_0": [
@@ -8371,7 +8220,7 @@
       {
         "date": "2026-11-09",
         "eng_rate": 0.75,
-        "avg_engagement": 187
+        "avg_engagement": 188
       }
     ],
     "jolly__humor": [
@@ -8408,7 +8257,7 @@
       {
         "date": "2026-11-09",
         "eng_rate": 0.49,
-        "avg_engagement": 273
+        "avg_engagement": 274
       }
     ],
     "smile_king_s2": [
@@ -8444,8 +8293,8 @@
       },
       {
         "date": "2026-11-09",
-        "eng_rate": 0.33,
-        "avg_engagement": 277
+        "eng_rate": 0.32,
+        "avg_engagement": 266
       }
     ],
     "laugh.34": [
@@ -8482,7 +8331,7 @@
       {
         "date": "2026-11-09",
         "eng_rate": 0.07,
-        "avg_engagement": 94
+        "avg_engagement": 96
       }
     ],
     "nato.iove": [
@@ -8556,7 +8405,7 @@
       {
         "date": "2026-11-09",
         "eng_rate": 0.12,
-        "avg_engagement": 138
+        "avg_engagement": 137
       }
     ],
     "tree.tving": [
@@ -8630,7 +8479,7 @@
       {
         "date": "2026-11-09",
         "eng_rate": 1.52,
-        "avg_engagement": 230
+        "avg_engagement": 231
       }
     ],
     "luna.besty": [
@@ -8777,8 +8626,8 @@
       },
       {
         "date": "2026-11-09",
-        "eng_rate": 1.02,
-        "avg_engagement": 222
+        "eng_rate": 1.03,
+        "avg_engagement": 224
       }
     ],
     "nato.humor": [
@@ -8852,7 +8701,7 @@
       {
         "date": "2026-11-09",
         "eng_rate": 0.74,
-        "avg_engagement": 263
+        "avg_engagement": 264
       }
     ],
     "guliguli_humor": [
@@ -8888,8 +8737,8 @@
       },
       {
         "date": "2026-11-09",
-        "eng_rate": 0.51,
-        "avg_engagement": 276
+        "eng_rate": 0.52,
+        "avg_engagement": 280
       }
     ],
     "ddonutping_zzal": [
@@ -8963,7 +8812,7 @@
       {
         "date": "2026-11-09",
         "eng_rate": 0.83,
-        "avg_engagement": 615
+        "avg_engagement": 620
       }
     ],
     "hahahohokiki6814": [
@@ -9000,7 +8849,7 @@
       {
         "date": "2026-11-09",
         "eng_rate": 0.31,
-        "avg_engagement": 230
+        "avg_engagement": 228
       }
     ],
     "ho1y_time": [
@@ -9037,7 +8886,7 @@
       {
         "date": "2026-11-09",
         "eng_rate": 1.44,
-        "avg_engagement": 452
+        "avg_engagement": 453
       }
     ],
     "good_tip_magazine": [
@@ -9110,8 +8959,8 @@
       },
       {
         "date": "2026-11-09",
-        "eng_rate": 1.57,
-        "avg_engagement": 446
+        "eng_rate": 1.52,
+        "avg_engagement": 430
       }
     ],
     "ourdays_pick": [
@@ -9148,7 +8997,7 @@
       {
         "date": "2026-11-09",
         "eng_rate": 0.37,
-        "avg_engagement": 370
+        "avg_engagement": 375
       }
     ],
     "chachaping_zzal": [
@@ -9212,7 +9061,7 @@
       {
         "date": "2026-11-09",
         "eng_rate": 0.43,
-        "avg_engagement": 433
+        "avg_engagement": 434
       }
     ],
     "nato.tving": [
@@ -9308,7 +9157,7 @@
       {
         "date": "2026-11-09",
         "eng_rate": 0.09,
-        "avg_engagement": 73
+        "avg_engagement": 74
       }
     ],
     "smile_today_s2": [
@@ -9340,7 +9189,7 @@
       {
         "date": "2026-11-09",
         "eng_rate": 0.08,
-        "avg_engagement": 58
+        "avg_engagement": 60
       }
     ],
     "tree.zzal": [
