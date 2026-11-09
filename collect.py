@@ -34,15 +34,57 @@ MEDIA_FIELDS = "id,media_type,timestamp,permalink,like_count,comments_count"
 RL_CODES = {4, 17, 32, 613, 368}   # 레이트리밋/차단으로 보는 에러 코드
 MAX_RL_STREAK = 5                  # 연속 이만큼 막히면 조기 중단
 
+# HTML(플래너)이 계정 목록을 저장하는 Supabase — index.html과 동일 값
+SUPA_URL = "https://nmsrzdlgmaaqqcalfbhr.supabase.co"
+SUPA_KEY = "sb_publishable_ZWCmMNsV1La-yMawjhzUtg_FWQp7-O1"
+
 
 def log(msg):
     print(msg, flush=True)   # Actions에서 진행 상황이 바로 보이도록 즉시 출력
 
 
 def load_targets():
-    with open("channels.txt", encoding="utf-8") as f:
-        return [ln.strip().lstrip("@") for ln in f
-                if ln.strip() and not ln.lstrip().startswith("#")]
+    """수집 대상 목록 = HTML에서 추가한 계정(Supabase) + channels.txt (중복 제거).
+    - HTML에서 계정을 추가하면 다음 수집부터 자동 포함됨(깃허브 수동 편집 불필요).
+    - channels.txt는 수동 보조 목록 겸, Supabase가 안 될 때의 폴백으로 유지.
+    """
+    names, seen = [], set()
+
+    def add(n):
+        n = (n or "").strip().lstrip("@")
+        if n and n not in seen:
+            seen.add(n)
+            names.append(n)
+
+    # 1) HTML에서 추가한 계정 (Supabase store.accounts)
+    try:
+        r = requests.get(
+            f"{SUPA_URL}/rest/v1/store",
+            params={"k": "eq.accounts", "select": "v"},
+            headers={"apikey": SUPA_KEY, "Authorization": f"Bearer {SUPA_KEY}"},
+            timeout=20,
+        )
+        r.raise_for_status()
+        rows = r.json()
+        if rows and isinstance(rows[0].get("v"), list):
+            for a in rows[0]["v"]:
+                add(a.get("name"))
+        log(f"Supabase 계정 {len(names)}개 로드")
+    except Exception as e:
+        log(f"Supabase 로드 실패 → channels.txt로 대체: {e}")
+
+    # 2) channels.txt (수동 보조 목록 / 폴백) — '#'는 주석
+    try:
+        with open("channels.txt", encoding="utf-8") as f:
+            for ln in f:
+                ln = ln.split("#", 1)[0].strip()
+                if ln:
+                    add(ln)
+    except FileNotFoundError:
+        pass
+
+    log(f"수집 대상 총 {len(names)}개")
+    return names
 
 
 def parse_ts(s):
