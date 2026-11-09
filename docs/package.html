@@ -167,10 +167,34 @@ function resolveCoverId(s,acc){
   if(cur&&coverById(s,cur))return cur;
   return defaultCover(s,acc);
 }
+/* 한 소재 안에서 표지는 계정당 1개씩만 — 기존 배정 유지하며 중복 제거 + 빈 계정은 안 쓰인 표지로 자동 채움 */
+function ensureAssign(m){
+  var s=matState(m.id),used={},changed=false;
+  m.accs.forEach(function(a){
+    var cur=s.assign[a.name];
+    if(cur&&coverById(s,cur)&&!used[cur]){used[cur]=true;}
+    else if(cur){delete s.assign[a.name];changed=true;}
+  });
+  m.accs.forEach(function(a){
+    if(s.assign[a.name])return;
+    var want=a.type==='image'?'image':a.type==='text'?'text':null,pick=null,i;
+    if(want)for(i=0;i<s.covers.length;i++){if(s.covers[i].type===want&&!used[s.covers[i].id]){pick=s.covers[i].id;break;}}
+    if(!pick)for(i=0;i<s.covers.length;i++){if(!used[s.covers[i].id]){pick=s.covers[i].id;break;}}
+    if(pick){s.assign[a.name]=pick;used[pick]=true;changed=true;}
+  });
+  return changed;
+}
+/* 소재의 계정→표지 소유 맵 (중복 감지/드롭다운 비활성화용) */
+function ownerMap(m){
+  var s=matState(m.id),owner={};
+  m.accs.forEach(function(a){var cid=resolveCoverId(s,a);if(cid&&!owner[cid])owner[cid]=a.name;});
+  return owner;
+}
 
 function render(){
   var mats=shownMaterials();
   if(!mats.length){$('mats').innerHTML='<p class="muted">이 날짜에 배정된 계정이 없어요. 배정 화면에서 먼저 소재에 계정을 넣어주세요.</p>';footInfo();return;}
+  var syncChanged=false;mats.forEach(function(m){if(ensureAssign(m))syncChanged=true;});if(syncChanged)saveState();
   var html=mats.map(function(m){
     var s=matState(m.id);
     var bodyFiles=FILES.body[m.id]||[];
@@ -196,12 +220,15 @@ function render(){
         up+'</div>';
     }).join('');
 
+    var owner=ownerMap(m);
     var rows=m.accs.map(function(a){
       var rid=resolveCoverId(s,a);
       var chip=a.type==='image'?'<span class="chip img">이미지</span>':a.type==='text'?'<span class="chip txt">텍스트</span>':'<span class="chip non">미설정</span>';
       var opts=s.covers.map(function(c,ci){
         var label=(c.type==='image'?'🖼 ':'📝 ')+(c.copy?c.copy.slice(0,24):'(카피 없음) '+(ci+1));
-        return '<option value="'+c.id+'"'+(c.id===rid?' selected':'')+'>'+esc(label)+'</option>';
+        var takenByOther=owner[c.id]&&owner[c.id]!==a.name;
+        if(takenByOther)label+=' (이미 배정됨)';
+        return '<option value="'+c.id+'"'+(c.id===rid?' selected':'')+(takenByOther?' disabled':'')+'>'+esc(label)+'</option>';
       }).join('');
       return '<div class="assignrow"><span class="nm">@'+esc(a.name)+'</span>'+chip+
         '<select data-act="assign" data-mid="'+m.id+'" data-name="'+esc(a.name)+'">'+opts+'</select></div>';
@@ -262,7 +289,10 @@ document.addEventListener('input',function(e){
 });
 document.addEventListener('change',function(e){
   var t=e.target.closest('[data-act]');if(!t)return;var act=t.getAttribute('data-act');
-  if(act==='assign'){var s=matState(t.getAttribute('data-mid'));s.assign[t.getAttribute('data-name')]=t.value;saveState();render();}
+  if(act==='assign'){var mid=t.getAttribute('data-mid'),nm=t.getAttribute('data-name'),s=matState(mid);
+    var m=shownMaterials().filter(function(x){return x.id===mid;})[0];var own=m?ownerMap(m):{};
+    if(own[t.value]&&own[t.value]!==nm){toast('이미 @'+own[t.value]+' 에 배정된 카피예요');render();return;}
+    s.assign[nm]=t.value;saveState();render();}
   else if(act==='covertype'){setCover(t.getAttribute('data-cid'),'type',t.value);saveState();render();}
   else if(act==='copybody'){var src=t.value;if(src){FILES.body[t.getAttribute('data-mid')]=(FILES.body[src]||[]).slice();render();}}
 });
@@ -288,14 +318,17 @@ function validate(onlyMid){
   var errs=[];var mats=shownMaterials();
   if(onlyMid)mats=mats.filter(function(m){return m.id===onlyMid;});
   mats.forEach(function(m){
-    var L=letter(m.index)+' 소재';var s=matState(m.id);
+    var L=letter(m.index)+' 소재';var s=matState(m.id);ensureAssign(m);
     if(!(FILES.body[m.id]||[]).length)errs.push(L+': 본문 파일이 없습니다');
+    var seen={},dup=false;
     m.accs.forEach(function(a){
       var cid=resolveCoverId(s,a);var c=coverById(s,cid);
       if(!c){errs.push(L+' · @'+a.name+': 표지가 배정되지 않았습니다');return;}
+      if(seen[cid])dup=true;else seen[cid]=true;
       if(!c.copy.trim())errs.push(L+' · @'+a.name+': 표지 카피가 비어 있습니다');
       if(c.type==='image'&&!FILES.cover[c.id])errs.push(L+' · @'+a.name+': 이미지 표지인데 이미지 파일이 없습니다');
     });
+    if(dup)errs.push(L+': 같은 표지가 두 계정 이상에 배정됐습니다 (표지를 더 추가하세요)');
   });
   return errs;
 }
