@@ -362,7 +362,7 @@ async function buildZip(onlyMid){
   }catch(err){toast('ZIP 생성 실패: '+err.message);}
   finally{btn.disabled=false;setTimeout(function(){prog.classList.remove('show');bar.style.width='0';},800);}
 }
-$('zipBtn').addEventListener('click',buildZip);
+$('zipBtn').addEventListener('click',function(){buildZip();});
 
 /* ===== 초기화 ===== */
 $('datePick').addEventListener('change',function(){location.href='package.html?date='+encodeURIComponent(this.value);});
