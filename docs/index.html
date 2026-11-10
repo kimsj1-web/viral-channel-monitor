@@ -1,541 +1,388 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>협찬 채널 소재 배정</title>
+<title>협찬 패키징 (ZIP 자동 생성)</title>
 <style>
 :root{
-  --bg:#f6f6f4; --card:#ffffff; --head:#1f2937; --text:#1a1a1a; --muted:#6b7280;
+  --bg:#f6f6f4; --card:#ffffff; --text:#1a1a1a; --muted:#6b7280;
   --border:#e5e7eb; --line:#ececeb; --accent:#4f46e5; --accent-bg:#eef2ff;
   --img:#2563eb; --img-bg:#eff6ff; --txt:#d97706; --txt-bg:#fff7ed;
-  --up:#dc2626; --down:#2563eb; --danger:#dc2626; --radius:10px; --slot:#fafafa;
+  --danger:#dc2626; --ok:#16a34a; --radius:10px; --slot:#fafafa;
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
-  --bg:#161619; --card:#1f2024; --head:#0f1522; --text:#ededed; --muted:#9aa0aa;
+  --bg:#161619; --card:#1f2024; --text:#ededed; --muted:#9aa0aa;
   --border:#2e3036; --line:#26282e; --accent:#a5b4fc; --accent-bg:#232542;
   --img:#60a5fa; --img-bg:#17233b; --txt:#fbbf24; --txt-bg:#2a2112;
-  --up:#f87171; --down:#60a5fa; --danger:#f87171; --slot:#191a1e;
+  --danger:#f87171; --ok:#4ade80; --slot:#191a1e;
 }}
-:root[data-theme="dark"]{
-  --bg:#161619; --card:#1f2024; --head:#0f1522; --text:#ededed; --muted:#9aa0aa;
-  --border:#2e3036; --line:#26282e; --accent:#a5b4fc; --accent-bg:#232542;
-  --img:#60a5fa; --img-bg:#17233b; --txt:#fbbf24; --txt-bg:#2a2112;
-  --up:#f87171; --down:#60a5fa; --danger:#f87171; --slot:#191a1e;
-}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);
   font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",Segoe UI,Roboto,sans-serif;
   padding:env(safe-area-inset-top,0) 14px env(safe-area-inset-bottom,0);font-size:14px;line-height:1.5}
-.wrap{max-width:none;margin:0;padding:18px 4px 60px}
+.wrap{max-width:1400px;margin:0 auto;padding:18px 4px 80px}
+#mats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+@media(max-width:860px){#mats{grid-template-columns:1fr}}
 h1{font-size:18px;font-weight:600;margin:0}
 .top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:4px}
 .badge{font-size:11px;font-weight:600;color:var(--accent);background:var(--accent-bg);padding:3px 9px;border-radius:999px}
 .status{font-size:12px;color:var(--muted);margin:0 0 16px}
 .bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-left:auto}
-input[type=date],input[type=text],input[type=number]{font:inherit;color:var(--text);background:var(--card);
+input[type=date],input[type=text],textarea,select{font:inherit;color:var(--text);background:var(--card);
   border:1px solid var(--border);border-radius:8px;padding:6px 9px}
+textarea{width:100%;resize:vertical;line-height:1.5}
 button{font:inherit;cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--text);
   border-radius:8px;padding:6px 11px}
 button:hover{border-color:var(--accent)}
 button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
-button.ghost{border:none;background:transparent;color:var(--muted);padding:2px 6px}
-.sec{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:16px}
-.sec h2{font-size:14px;font-weight:600;margin:0 0 10px;display:flex;align-items:center;gap:8px}
-.sec h2 .n{color:var(--muted);font-weight:400;font-size:12px}
-.cols{display:block}
-.col{margin-bottom:16px}
-.listbox{display:flex;flex-flow:column wrap;align-content:flex-start;max-height:430px;overflow-x:auto;overflow-y:hidden;padding-bottom:6px}
-.panels{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
-.panel-acc{flex:1 1 560px;min-width:0}
-.panel-mat{flex:1 1 420px;min-width:0}
-.listbox .acct{flex:0 0 auto;width:272px;margin-right:8px}
-.listbox .empty-note{width:220px}
-.col h3{font-size:12px;font-weight:600;margin:0 0 8px;display:flex;align-items:center;gap:6px;color:var(--muted)}
+button.ghost{border:none;background:transparent;color:var(--muted);padding:2px 7px}
+button.sm{padding:3px 8px;font-size:12px}
+.mat{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:0}
+.mat>h2{font-size:15px;font-weight:700;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.lbl{display:inline-block;font-size:12px;font-weight:700;color:var(--muted);margin:14px 0 6px}
 .chip{display:inline-block;font-size:11px;padding:1px 7px;border-radius:999px;font-weight:600}
 .chip.img{color:var(--img);background:var(--img-bg)}
 .chip.txt{color:var(--txt);background:var(--txt-bg)}
 .chip.non{color:var(--muted);background:var(--line)}
-.acct{display:flex;align-items:center;gap:7px;padding:7px 9px;border:1px solid var(--border);border-radius:8px;
-  margin-bottom:7px;background:var(--card);cursor:grab}
-.acct[draggable=true]:active{cursor:grabbing}
-.acct.used{opacity:.45;cursor:default}
-.acct.picked{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-bg)}
-.acct .nm{font-weight:500;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.acct .rate{font-weight:700;font-size:13px;white-space:nowrap}
-.acct .tr{font-size:11px;font-weight:600;white-space:nowrap}
-.acct .up{color:var(--up)}.acct .down{color:var(--down)}
-.acct .pr{font-size:12px;color:var(--muted);white-space:nowrap}
-.acct .tg{display:flex;gap:3px}
-.acct .tg button{padding:1px 6px;font-size:11px;border-radius:999px;line-height:1.6}
-.acct .usedtag{font-size:11px;color:var(--accent);font-weight:600;white-space:nowrap}
-.totbar{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
-.totbar .big{font-size:16px;font-weight:600}
-.mats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.mat{border:1px solid var(--border);border-radius:var(--radius);padding:10px;background:var(--card)}
-.mat .mh{display:flex;align-items:center;gap:6px;margin-bottom:8px}
-.mat .mh .lbl{font-weight:600}
-.mat .mh .mt{margin-left:auto;font-size:12px;color:var(--muted);font-weight:600}
-.slot{border:1.5px dashed var(--border);border-radius:8px;padding:8px 9px;margin-bottom:7px;min-height:42px;
-  display:flex;align-items:center;gap:8px;background:var(--slot)}
-.slot.over{border-color:var(--accent);background:var(--accent-bg)}
-.slot.pickable{border-style:solid;border-color:var(--accent);cursor:pointer}
-.slot .empty{color:var(--muted);font-size:12px}
-.slot .fn{font-weight:500;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.slot .fp{font-size:12px;color:var(--muted)}
-.slot .fr{font-size:12px;font-weight:700}
-.addslot{width:100%;border:1px dashed var(--border);background:transparent;color:var(--muted);border-radius:8px;padding:6px;font-size:12px;margin-top:2px}
-.addslot:hover{border-color:var(--accent);color:var(--accent)}
-.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--head);color:#fff;
-  padding:10px 16px;border-radius:10px;font-size:13px;opacity:0;transition:opacity .2s,transform .2s;
-  pointer-events:none;z-index:50;max-width:90vw;text-align:center}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(-4px)}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:60;padding:16px}
-.modal.show{display:flex}
-.modal .box{background:var(--card);border-radius:14px;padding:18px;width:320px;max-width:100%}
-.modal h3{margin:0 0 12px;font-size:15px}
-.modal label{display:block;font-size:12px;color:var(--muted);margin:10px 0 4px}
-.modal input{width:100%}
-.modal .acts{display:flex;gap:8px;margin-top:16px}
-.modal .acts .primary{flex:1}
-.seg{display:flex;gap:6px}
-.seg button{flex:1}
-.seg button.on{background:var(--accent);border-color:var(--accent);color:#fff}
-.empty-note{color:var(--muted);font-size:13px;padding:6px 0}
-.charttip{position:fixed;z-index:70;background:var(--head);color:#fff;font-size:12px;font-weight:600;padding:5px 9px;border-radius:8px;pointer-events:none;opacity:0;transition:opacity .08s;white-space:nowrap;transform:translate(-50%,-135%)}
-.charttip.show{opacity:1}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:720px){.grid2{grid-template-columns:1fr}}
+.drop{border:1.5px dashed var(--border);border-radius:8px;padding:12px;text-align:center;color:var(--muted);
+  background:var(--slot);cursor:pointer;font-size:13px}
+.drop.hot{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
+.filelist{margin:6px 0 0;font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px}
+.filelist .f{background:var(--line);border-radius:6px;padding:2px 7px;display:inline-flex;align-items:center;gap:6px}
+.covers{display:flex;flex-direction:column;gap:10px}
+.cover{border:1px solid var(--border);border-radius:8px;padding:10px;background:var(--slot)}
+.cover .ch{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.cover textarea{min-height:46px}
+.cover .thumb{width:40px;height:40px;border-radius:6px;object-fit:cover;border:1px solid var(--border);background:var(--card)}
+.assignrow{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.assignrow:last-child{border-bottom:none}
+.assignrow .nm{font-weight:600;min-width:150px}
+.assignrow select{flex:1;min-width:160px}
+.hintbad{color:var(--danger);font-size:12px}
+.foot{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--border);
+  padding:10px 16px calc(10px + env(safe-area-inset-bottom,0));display:flex;align-items:center;gap:12px;z-index:20}
+.foot .grow{flex:1}
+.prog{height:6px;background:var(--line);border-radius:999px;overflow:hidden;flex:1;max-width:280px;display:none}
+.prog.show{display:block}
+.prog>i{display:block;height:100%;width:0;background:var(--accent);transition:width .15s}
+.toast{position:fixed;left:50%;bottom:76px;transform:translateX(-50%) translateY(20px);background:#111827;color:#fff;
+  padding:9px 16px;border-radius:999px;font-size:13px;opacity:0;pointer-events:none;transition:.25s;z-index:40}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.errbox{background:var(--txt-bg);border:1px solid var(--txt);color:var(--txt);border-radius:8px;padding:10px 12px;font-size:13px;margin-bottom:12px;display:none}
+.errbox.show{display:block}
+.errbox ul{margin:6px 0 0;padding-left:18px}
+a.back{color:var(--accent);text-decoration:none;font-size:13px}
+.muted{color:var(--muted)}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.0/dist/umd/supabase.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
 <body>
 <div class="wrap">
   <div class="top">
-    <h1>협찬 채널 소재 배정</h1>
-    <span class="badge" id="freshness">참여율 매일 07:00 갱신</span>
+    <h1>📦 협찬 패키징</h1><span class="badge">ZIP 자동 생성</span>
     <div class="bar">
-      <button class="ghost" id="themeBtn" title="테마">◐</button>
-      <button id="backupBtn" title="백업/복원">백업</button>
-      <label style="font-size:12px;color:var(--muted)">날짜</label>
-      <input type="date" id="date">
-      <button id="todayBtn">오늘</button>
+      <a class="back" href="index.html">← 배정 화면</a>
+      <input type="date" id="datePick">
     </div>
   </div>
   <p class="status" id="status">불러오는 중…</p>
 
-  <div class="panels">
-  <div class="sec panel-acc">
-    <h2>계정 목록 <span class="n">평균 좋아요 많은 순 · 드래그로 배정 · 계정명 클릭 시 상세</span>
-      <button class="primary" id="addAcct" style="margin-left:auto">+ 계정 추가</button>
-    </h2>
-    <div class="cols">
-      <div class="col"><h3><span class="chip img">이미지 썸네일</span></h3><div class="listbox" id="colImg"></div></div>
-      <div class="col"><h3><span class="chip txt">텍스트 썸네일</span></h3><div class="listbox" id="colTxt"></div></div>
-      <div class="col"><h3><span class="chip non">미설정</span></h3><div class="listbox" id="colNon"></div></div>
-    </div>
-  </div>
-
-  <div class="sec panel-mat">
-    <div class="totbar">
-      <h2 style="margin:0">소재 배정</h2>
-      <div style="margin-left:auto" class="big" id="grand">총 0만원</div>
-      <button id="textBtn" class="primary">텍스트화</button>
-      <button id="pkgBtn" onclick="location.href='package.html?date='+encodeURIComponent(DATE)">📦 패키징</button>
-      <button id="addMat">+ 소재 추가</button>
-    </div>
-    <div class="mats" id="mats"></div>
-  </div>
-  </div>
+  <div class="errbox" id="errBox"></div>
+  <div id="mats"></div>
 </div>
 
+<div class="foot">
+  <div class="muted" id="footInfo">—</div>
+  <div class="grow"></div>
+  <div class="prog" id="prog"><i></i></div>
+  <button id="zipBtn" style="padding:9px 16px">전체 소재 ZIP</button>
+  <button class="primary" id="zipSelBtn" style="padding:9px 20px;font-weight:700">선택 소재 ZIP 생성</button>
+</div>
 <div class="toast" id="toast"></div>
-<div class="charttip" id="dTip"></div>
-<input type="file" id="restoreFile" accept="application/json" style="display:none">
 
-<div class="modal" id="detailModal">
-  <div class="box" style="width:460px">
-    <h3 id="dTitle"></h3>
-    <div id="dBody"></div>
-    <div class="acts"><button class="primary" id="dClose" style="flex:1">닫기</button></div>
-  </div>
-</div>
-
-<div class="modal" id="textModal">
-  <div class="box" style="width:760px;max-width:100%">
-    <h3>소재 배정 텍스트</h3>
-    <div style="display:flex;gap:12px;flex-wrap:wrap">
-      <div style="flex:1 1 300px;min-width:0">
-        <div style="font-size:12px;font-weight:700;margin-bottom:4px;color:var(--muted)">소재별</div>
-        <textarea id="tTextL" readonly style="width:100%;height:300px;font:13px/1.6 ui-monospace,monospace;color:var(--text);background:var(--slot);border:1px solid var(--border);border-radius:8px;padding:10px;resize:vertical"></textarea>
-        <button class="primary" id="tCopyL" style="width:100%;margin-top:6px">소재별 복사</button>
-      </div>
-      <div style="flex:1 1 300px;min-width:0">
-        <div style="font-size:12px;font-weight:700;margin-bottom:4px;color:var(--muted)">업체별</div>
-        <textarea id="tTextR" readonly style="width:100%;height:300px;font:13px/1.6 ui-monospace,monospace;color:var(--text);background:var(--slot);border:1px solid var(--border);border-radius:8px;padding:10px;resize:vertical"></textarea>
-        <button class="primary" id="tCopyR" style="width:100%;margin-top:6px">업체별 복사</button>
-      </div>
-    </div>
-    <div class="acts"><button id="tClose" style="flex:1">닫기</button></div>
-  </div>
-</div>
-
-<div class="modal" id="modal">
-  <div class="box">
-    <h3 id="mTitle">계정 추가</h3>
-    <label>계정명</label>
-    <input type="text" id="mName" placeholder="예: luna.humor" autocomplete="off">
-    <label>썸네일 유형</label>
-    <div class="seg" id="mType">
-      <button data-t="image">이미지</button>
-      <button data-t="text">텍스트</button>
-      <button data-t="none">미설정</button>
-    </div>
-    <label>단가 (만원)</label>
-    <input type="number" id="mPrice" min="0" step="1" placeholder="예: 10">
-    <div class="acts">
-      <button id="mDelete" class="ghost" style="color:var(--danger)">삭제</button>
-      <button class="primary" id="mSave">저장</button>
-      <button id="mCancel">취소</button>
-    </div>
-  </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.0/dist/umd/supabase.js"></script>
 <script>
-"use strict";
-var DEFAULT_MATERIALS=6, SLOTS_PER=4;
-/* 최초 1회 시드 (localStorage 비어있을 때만). 이후엔 편집값이 유지됨 */
-var SEED=[
- {name:"nato.humor",price:20},{name:"zzalqueen",price:15},{name:"hahahohokiki6814",price:10},
- {name:"anavocado12345",price:6},{name:"ddonutping_zzal",price:25},{name:"smile_king_s2",price:9},
- {name:"sksk1sksk0",price:13},{name:"text_pyeong",price:6},{name:"luna.humor",price:25},
- {name:"guliguli_humor",price:10},{name:"happy__pyeong",price:6},{name:"pangpang_one",price:13}
-];
-var ACCOUNTS=[], DATE=todayKST(), PLAN=null, picked=null, EFF={};
-/* 팝업에서 입력한 업체명(계정→업체). Supabase로 팀 공유 — 하드코딩 표보다 우선 */
-var COMPANY_OVERRIDE={}, lastCoJson='{}';
-/* ===== 공유 저장(Supabase) 설정 — 이 두 값만 본인 프로젝트 것으로 ===== */
+/* ===== Supabase (index.html과 동일 값) ===== */
 var SUPA_URL="https://nmsrzdlgmaaqqcalfbhr.supabase.co";
 var SUPA_KEY="sb_publishable_ZWCmMNsV1La-yMawjhzUtg_FWQp7-O1";
 var SB=window.supabase.createClient(SUPA_URL,SUPA_KEY);
-var lastAccJson="",lastPlanJson="";
-/* 계정 → 업체명 매핑 (업체명.xlsx 기준) */
-var COMPANY_BY_ACCOUNT={"mamy014":"굿띵투유","365_hot":"굿띵투유","mukddoonge":"굿띵투유","yes__jam_":"굿띵투유","humor_ssul":"굿띵투유","pink_humor25":"업크루","sksk1sksk0":"굿띵투유","pink_idolly":"업크루","luna.humor":"루나앤코코","kutbba101":"굿띵투유","kkang_funny":"트렌드 연구소","apple_enter":"업크루","text_pyeong":"동후작가","nato.zzal":"루나앤코코","happy__pyeong":"동후작가","pangpang_one":"굿띵투유","hachuping_humor":"루나앤코코","zzalqueen":"업크루","nato.tip":"루나앤코코","some2lve":"아택","one_day_humor_diary":"굿띵투유","wikitrip.kr":"동후작가","luv_l0v_0":"동후작가","jolly__humor":"루나앤코코","smile_king_s2":"아택","laugh.34":"굿띵투유","nato.iove":"루나앤코코","pisik_2":"굿띵투유","tree.tving":"루나앤코코","flower_pyeong":"동후작가","humor_yonggari":"굿띵투유","luna.besty":"루나앤코코","two_pyeong":"동후작가","malangping_zzal":"루나앤코코","humorphim":"업크루","nato.humor":"루나앤코코","anavocado12345":"동후작가","guliguli_humor":"업크루","ddonutping_zzal":"루나앤코코","happyhappy_pick":"업크루","hahahohokiki6814":"굿띵투유","ho1y_time":"동후작가","good_tip_magazine":"루나앤코코","lime.now":"스튜디오 엔터","ourdays_pick":"아택","celeb_lunar":"잼스튜디오","celeb.holi":"잼스튜디오","celeb.mon":"잼스튜디오","news_goodgood":"잼스튜디오","news_comcom":"잼스튜디오","newws_ess":"잼스튜디오","glitter_artistic":"잼스튜디오","artistic_okay":"잼스튜디오","artistic_popp":"잼스튜디오","artistic_rainboww":"잼스튜디오","news_esc":"잼스튜디오","news.se.kr":"잼스튜디오","nuna_tommi":"잼스튜디오","nuna_yomiyam":"잼스튜디오","nuna.laview":"잼스튜디오","nuna.mannaja":"잼스튜디오","edaily.googoo":"잼스튜디오","edaily.hoohoo":"잼스튜디오","e.daily_fox":"잼스튜디오","edaily.vovo":"잼스튜디오","0n1y0ne10ve":"잼스튜디오","enter.jennifer":"잼스튜디오","_shank.hahaha":"잼스튜디오","_pepa.hahaha":"잼스튜디오","_aerophone.hahaha":"잼스튜디오","idor_loveeeer":"잼스튜디오","idor_stalker":"잼스튜디오","idor_only":"잼스튜디오","idor_draap":"잼스튜디오","oppa.mannaja":"잼스튜디오","oppa.moheaa":"잼스튜디오","oppa.garm":"잼스튜디오","oppa.manna":"잼스튜디오","oppa.bogopa":"잼스튜디오","oppa.ttott":"잼스튜디오","lallalll.llallla":"잼스튜디오","oppa_good0good":"잼스튜디오","oppa_okdoki":"잼스튜디오","oppa.laview":"잼스튜디오","enter.babyy":"잼스튜디오","enter.tiana":"잼스튜디오","time_holy":"굿띵투유","entertainment_yonggari":"굿띵투유","wingk_eujuneun_halu":"굿띵투유","mukja_fun":"굿띵투유","Mukddoonge":"굿띵투유","theone_issue_":"굿띵투유","eattt.zin":"굿띵투유","today_quest":"굿띵투유","oyes__blue":"굿띵투유","pangpang_one_":"굿띵투유","u_tub_save":"굿띵투유","humor__seoul":"굿띵투유","365_real":"굿띵투유","kikikikiki0403":"굿띵투유","hoho_cutie_":"굿띵투유","sanai_tv":"굿띵투유","humor_11st":"굿띵투유","soso___zzal":"굿띵투유","matzzip.zoa":"굿띵투유","muk_hungry":"굿띵투유","haappy__smile":"굿띵투유","ssapsori__yonggari":"굿띵투유","graegaja":"굿띵투유","jjangfan":"굿띵투유","y_oominyy":"굿띵투유","humor_endorphin":"굿띵투유","good__day_today":"굿띵투유","love_noljagram":"굿띵투유","lulu__sky_":"굿띵투유","days__green":"굿띵투유","masitgoon":"굿띵투유","today.zzal":"굿띵투유","sanai_issue":"굿띵투유","minha_drama_diary":"굿띵투유","humor_bean":"굿띵투유","bibim___bap":"굿띵투유","365_zone":"굿띵투유","days__pink":"굿띵투유","humor___cok":"굿띵투유","le___monan":"굿띵투유","nyam_moomoo":"굿띵투유","nyom.yomi":"굿띵투유","_lilys_home":"★ 신규","_beauty_picks":"★ 신규","tem.duck":"★ 신규","김현수":"★ 신규","웃긴영상":"★ 신규","486__humor":"★ 신규","rkenrgksgodqhr7":"★ 신규","laugh_bbang":"★ 신규","healing.zip":"★ 신규","threepit_4":"★ 신규","deepdeep_dukhoo":"★ 신규","jjalgongjang":"★ 신규","dopamine_mp4":"★ 신규","kkul___tteok":"★ 신규","humani_3":"★ 신규","uzzzza_":"★ 신규","issue.jolly":"★ 신규","pick.___.pick":"★ 신규","noop.now":"★ 신규","moonmoon.actor":"★ 신규","enjoy_hit11":"★ 신규","tem.tory_":"★ 신규","deepdeep_beauty":"★ 신규","zzintem_spot":"★ 신규","five_star_item":"★ 신규","picknstar":"★ 신규","셀럽온":"★ 신규","쇼핑이멀전시":"★ 신규","미모지상주의":"★ 신규","언니파우치":"★ 신규","꿀단지왕국":"★ 신규","패션 수집가":"★ 신규","news.exitexit":"★ 신규","screenissue_best":"★ 신규","buzzfactory19":"★ 신규","chal___tteok":"★ 신규","reporter_daram":"★ 신규","healing_enter_":"★ 신규","ding.issue":"★ 신규","K-POPPOPCORN":"★ 신규","ruby_kikiki":"와이트라이브","tiger_enter":"와이트라이브","happy_global_zip":"와이트라이브","issue_pororo":"와이트라이브","issue_petty":"와이트라이브","maltese_kikiki":"와이트라이브","shorts_otaku":"와이트라이브","platinum_humor_.zip":"와이트라이브","hus_kiki":"와이트라이브","cherry__joy_0_0":"와이트라이브","coffee_humor_zip":"와이트라이브","issue_loopy":"와이트라이브","neo9ri_zip":"와이트라이브","goose.zzal":"와이트라이브","tree_humor_zip":"와이트라이브","issue_hacker":"와이트라이브","strawberry__joy_0_0":"와이트라이브","avocado_fun.ny":"와이트라이브","fairy_humor_zip":"와이트라이브","apple_fun.ny":"와이트라이브","capybara_kikiki":"와이트라이브","4makfox_zip":"와이트라이브","zzal.panda":"와이트라이브","soccer_enjoy__":"와이트라이브","humor__slide":"와이트라이브","tiffany_kikiki":"와이트라이브","silver_humor_zip":"와이트라이브","issue_eddy":"와이트라이브","cooo_kiki":"와이트라이브","watermelon__joy_0_0":"와이트라이브","apple__joy_0_0":"와이트라이브","fish.zzal":"와이트라이브","basketball_enjoy__":"와이트라이브","hound_kikiki":"와이트라이브","blueberry_fun.ny":"와이트라이브","goodsongs.zip":"와이트라이브","worldmasterpiece1000":"와이트라이브","cast__tv":"트렌드 연구소","mey_moons":"트렌드 연구소","sey_moon":"트렌드 연구소","today__list":"트렌드 연구소","satan__more":"트렌드 연구소","besty_moon":"트렌드 연구소","vogo__pop":"트렌드 연구소","zoom__tv":"트렌드 연구소","frenddoo_tv":"트렌드 연구소","satan__zzal":"트렌드 연구소","purple_tv_":"트렌드 연구소","fooding.gg":"트렌드 연구소","day_smile_humor":"트렌드 연구소","youngees_":"트렌드 연구소","ssokku_tv":"트렌드 연구소","muk_mmin":"트렌드 연구소","tmi_black":"트렌드 연구소","theone_humor_":"트렌드 연구소","days_purple":"트렌드 연구소","quote_zzal":"트렌드 연구소","7dayz_black":"트렌드 연구소","7dayz_white":"트렌드 연구소","one_star_video":"기존","luna.player":"기존","luna.djing":"기존","hana.zzal":"기존","dotori_channel":"기존","comedy.1989__":"기존","showing_box":"기존","tving_box":"기존","dding_box":"기존","tteokbokki__zip":"기존","bibimbap__zip":"기존","yozmhumor":"기존","달달 이슈":"기존","미니홈피":"기존","big_talk_kiki":"기존","핫뉴스":"기존","mymemoryplaylist":"PF Company","daily_ipduck":"PF Company","wiki_sound":"PF Company","nmnl_zip":"PF Company","kikii_zip":"PF Company","onair_daily":"PF Company","new._.stagram":"PF Company","cakey_music_shop":"PF Company","ssul.music":"PF Company","dailymews_":"PF Company","ssue_playlist":"PF Company","love.on.pop":"PF Company","hh_studi5":"PF Company","kitty_pop.zip":"PF Company","ipduck_studio":"PF Company","스마일 오구오구":"아택","smile_haha_s2":"아택","smile_nyang_s2":"아택","nuna_enter":"누나엔터","nuna.coco":"누나엔터","nuna.ruru":"누나엔터","장미향같은웃음원하신가요?":"업크루","pink__issue":"업크루","musimko_why":"업크루","kuk_snack":"킨다그로스","풉스낵":"킨다그로스","웁스낵":"킨다그로스","워너Bee":"확인필요","kpop_reporter_daram":"확인필요","delicious_good12":"확인필요","Z2_commerce":"Z2company","z2_global":"Z2company","lululala_blue":"humani_3","favo.rite2312":"humani_3","ringdingdongri":"기존채널","02_pick":"기존채널","datecourse123":"피드코리아","my_good_tip":"피드코리아","matdori._.humor":"(광고 피드가 대부분, 최근 평균 좋아요 수 저조)","chobo_sorry":"(최근 게시물 - 작년)","z2_feeling":"biz","dopamin_archive":"도파민 아카이브","_enter.random":"사용불가","artistic.thu":"스튜디오 엔터","unni_enter":"스튜디오엔터","himag__":"하이매거진","your.best.ott":"핫띵즈","trend_know_":"기타/개인","two.zzal":"기타/개인","time_enter":"기타/개인","z2_ssul":"기타/개인","zzal.zup":"기타/개인","laughingsalon":"기타/개인","yozmbbang":"기타/개인","i.dol_cute":"기타/개인","i.dol_issue":"기타/개인","365days_sat":"기타/개인","illll_lllll_llll":"기타/개인","i.dol_lime":"기타/개인","lululala.yello":"기타/개인","seven.zzal":"기타/개인","dungmulnung":"기타/개인","camu.zzal":"기타/개인","365days_mon":"기타/개인","i.dol_love":"기타/개인","lllll_lllli_llll":"기타/개인","six.zzal":"기타/개인","kkilkkil.enter":"기타/개인","snake.zzal":"기타/개인","artistic.sun":"기타/개인","enter_feb":"기타/개인","pig.zzal":"기타/개인","arra_yummy":"기타/개인","365days_thu":"기타/개인","red.zzal":"기타/개인","five.zzal":"기타/개인","lululala.lime":"기타/개인","enter_sarang":"기타/개인","yomyom.z":"기타/개인","joayotem":"기타/개인","mat.zzua":"기타/개인","sheep.zzal":"기타/개인","sky.zzal":"기타/개인","tmi_green":"기타/개인","three.zzal":"기타/개인","tmi_blue":"기타/개인","_king_enter":"기타/개인","green.zzal":"기타/개인","horse.zzal":"기타/개인","lllll_lllll_llil":"기타/개인","enter_lulu":"기타/개인","happy.happy1004":"기타/개인","lllll_llill_llll":"기타/개인","minari.now":"기타/개인","artistic.sat":"기타/개인","halbi.zzal":"기타/개인","summer.zzal":"기타/개인","tmi_yello":"기타/개인","lllll_lllll_lill":"기타/개인","pink.zzal":"기타/개인","enter_mar":"기타/개인","grape.zzal":"기타/개인","winter.zzal":"기타/개인","chicken.zzal":"기타/개인","one.zzal":"기타/개인","four.zzal":"기타/개인","semo.zzal":"기타/개인","artistic.mon":"기타/개인","dragon.zzal":"기타/개인","for_ur_happy":"기타/개인","lllll_lllll_illl":"기타/개인","orange.zzal":"기타/개인","norang.zzal":"기타/개인","enter_lime":"기타/개인","nine.zzal":"기타/개인","enter_pink":"기타/개인","enter_purple":"기타/개인","lllll_lllll_llli":"기타/개인","the.qoo_tem":"기타/개인","enter_jan":"기타/개인","jjokpa.now":"기타/개인","fall.zzal":"기타/개인","mingd_nyam":"기타/개인","ooi.now":"기타/개인","piggy.zzang":"기타/개인","melon.zzal":"기타/개인","tmi_red":"기타/개인","lllll_illll_llll":"기타/개인","enter_yellow":"기타/개인","gochu.now":"기타/개인","spring.zzal":"기타/개인","kkalkkal.enter":"기타/개인","mukdunge":"기타/개인","sangchu.now":"기타/개인","babayotem":"기타/개인","nemo.zzal":"기타/개인","daepa.now":"기타/개인","enter_green":"기타/개인","zzisuuuu_":"기타/개인","issue._.check":"기타/개인","hanol_issue":"기타/개인","fast_than_.fast":"기타/개인","dolmang9_":"기타/개인","healing._.video":"기타/개인","zzal_legend":"기타/개인","busan_realtime":"기타/개인","ssosso.humor":"기타/개인","supermemememememememememe":"기타/개인","bbangbbanghumor":"기타/개인","antkdrjawja":"기타/개인","twitter.archive":"기타/개인","kimmimi_1127":"기타/개인","mam.memeandme":"기타/개인","laugh_sto":"기타/개인","mz_haha_":"기타/개인","smile_today_s2":"기타/개인","flower_words03":"기타/개인","smile_life_s2":"기타/개인","lifebookcase":"동후작가","z2_best":"기타/개인","celeb.healing":"기타/개인","ennie_pyeong":"기타/개인","z2_story":"기타/개인","z2_issue":"기타/개인","z2_humor":"기타/개인","lifes.zip":"기타/개인","100000xhumor":"기타/개인","legend_tving":"기타/개인","today_word.kr":"기타/개인","huduck_zip":"기타/개인","huduck_wang":"기타/개인","huduck_challenge":"기타/개인","huduck_zzal":"기타/개인","ssosso.happy":"기타/개인","issue.ping0_0":"기타/개인","shorts_pia":"기타/개인","lululala.lim":"기타/개인","유머클립":"기타/개인","칰스매거진":"기타/개인","구리이슈":"기타/개인","이슈체크":"기타/개인","스크린이슈":"기타/개인","movie.followme":"기타/개인","issue_lounge_":"기타/개인","k._.dpm":"기타/개인","jamjamissue_":"기타/개인","meme_bbang00":"기타/개인","mongddang_00":"기타/개인","1_music_sound":"기타/개인","myhoney_salim":"기타/개인","gamsung_crater":"기타/개인","palette_red_":"기타/개인","official_jam_haru":"기타/개인","hotmix.zip":"기타/개인","mini_tving":"기타/개인","reelchin.nom":"기타/개인","1qns_duddlf":"기타/개인","𝘰𝘬2_𝘩𝘶𝘮𝘰𝘳":"기타/개인","486__comedy":"기타/개인","486__music":"기타/개인","3sec_trend":"기타/개인","enter_capybara":"기타/개인","kimhyunsoo0582":"기타/개인","k_poppopcorn":"기타/개인","boldpage.kr":"기타/개인","_goyouu":"기타/개인","snt25_blue":"기타/개인","_no_out":"기타/개인","i_dole__":"기타/개인","muzic.kr":"기타/개인","jjal_jju":"기타/개인","ok2_soso":"기타/개인","beagle_beagle012":"기타/개인","caresmile123":"기타/개인","trend__palette_":"기타/개인","_itsmyedit":"기타/개인","jjalivery.enter":"기타/개인","kmeme.lab":"기타/개인","hott.sauce_":"기타/개인","muziik.time":"기타/개인","힐링무비":"기타/개인","huduck_issue":"기타/개인","cutie_zzal":"기타/개인","냥군냥군":"기타/개인","huduck_gamja":"기타/개인","book_pyeong":"기타/개인","ii_pyeong":"기타/개인","inssa_humor":"기타/개인","ted_comic":"기타/개인","today_issue_":"기타/개인","girls_yuzem":"기타/개인","today_humor_":"기타/개인","girls_comecome":"기타/개인","chachaping_zzal":"루나앤코코","hana.humor":"루나앤코코","nato.tving":"루나앤코코","pink_fun_diary":"루나앤코코","tree.zzal":"루나앤코코","nato.funny":"루나앤코코","nato.healing":"루나앤코코","hanjan5940":"동후작가"};
-var $=function(id){return document.getElementById(id);};
 
-function todayKST(){var d=new Date(Date.now()+9*3600*1000);return d.toISOString().slice(0,10);}
-function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
-function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
-function won(n){return (n==null?0:n)+'만원';}
-function letter(i){return String.fromCharCode(65+i);}
+var $=function(id){return document.getElementById(id);};
 function toast(m){var t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('show');},2200);}
-function lsGet(k,d){try{return JSON.parse(localStorage.getItem(k)||'null')||d;}catch(e){return d;}}
-function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function todayKST(){var d=new Date(Date.now()+9*3600*1000);return d.toISOString().slice(0,10);}
+function mmdd(dstr){var m=/\d{4}-(\d{2})-(\d{2})/.exec(dstr||'');return m?m[1]+'.'+m[2]:dstr;}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
+function extOf(name){var m=/\.([a-z0-9]+)$/i.exec(name||'');return m?m[1].toLowerCase():'png';}
+
+var DATE=todayKST(), ACCOUNTS=[], PLAN=null;
+/* 텍스트 상태(캡션/해시태그/표지카피/배정)는 날짜별로 localStorage에 저장 — 파일은 세션 메모리에만 */
+var STATE={materials:{}};
+/* 메모리 보관 파일: body[mid]=[File...], cover[coverId]=File */
+var FILES={body:{},cover:{}};
+/* ZIP 포함 선택(세션) : materialId -> true */
+var SEL={};
 
 async function dbGet(k){var r=await SB.from('store').select('v').eq('k',k).maybeSingle();if(r.error)throw r.error;return r.data?r.data.v:null;}
-async function dbSet(k,v){var r=await SB.from('store').upsert({k:k,v:v});if(r.error){toast('저장 실패 — 네트워크/권한 확인');}}
-async function migrateLocalIfAny(){
-  var local=lsGet('cm_accounts',null);
-  if(local&&local.length){
-    await dbSet('accounts',local);
-    for(var i=0;i<localStorage.length;i++){var lk=localStorage.key(i);if(lk&&lk.indexOf('cm_plan_')===0){var p=lsGet(lk,null);if(p)await dbSet('plan:'+lk.slice(8),p);}}
-    return local;
-  }
-  return null;
-}
-async function loadAccounts(){
-  var a=await dbGet('accounts');
-  if(!a||!a.length){ a=await migrateLocalIfAny()||[]; }
-  ACCOUNTS=a;
-}
-function saveAccounts(){ lastAccJson=JSON.stringify(ACCOUNTS); dbSet('accounts',ACCOUNTS); }
-async function loadPlan(){ PLAN=await dbGet('plan:'+DATE)||emptyPlan(DATE); }
-function savePlan(){ lastPlanJson=JSON.stringify(PLAN); dbSet('plan:'+DATE,PLAN); }
-async function refreshFromDb(){
-  try{
-    var a=await dbGet('accounts');var aj=JSON.stringify(a||[]);
-    if(aj!==lastAccJson){lastAccJson=aj;ACCOUNTS=a||[];renderAccounts();}
-    var p=await dbGet('plan:'+DATE);var pj=JSON.stringify(p||emptyPlan(DATE));
-    if(pj!==lastPlanJson){lastPlanJson=pj;PLAN=p||emptyPlan(DATE);renderPlan();}
-    var co=await dbGet('company_overrides');var cj=JSON.stringify(co||{});
-    if(cj!==lastCoJson){lastCoJson=cj;COMPANY_OVERRIDE=co||{};}
-  }catch(e){}
-}
-function startSync(){
-  try{SB.channel('store-sync').on('postgres_changes',{event:'*',schema:'public',table:'store'},function(){refreshFromDb();}).subscribe();}catch(e){}
-  setInterval(refreshFromDb,7000);
-}
-
-function emptyPlan(date){var m=[];for(var i=0;i<DEFAULT_MATERIALS;i++){m.push({id:uid(),slots:new Array(SLOTS_PER).fill(null)});}return {date:date,materials:m};}
 function acctById(id){for(var i=0;i<ACCOUNTS.length;i++){if(ACCOUNTS[i].id===id)return ACCOUNTS[i];}return null;}
-function usedMap(){var map={};if(!PLAN)return map;PLAN.materials.forEach(function(m,mi){m.slots.forEach(function(aid){if(aid)map[aid]=mi;});});return map;}
+function stKey(){return 'pkg:'+DATE;}
+function loadState(){try{STATE=JSON.parse(localStorage.getItem(stKey())||'null')||{materials:{}};}catch(e){STATE={materials:{}};}if(!STATE.materials)STATE.materials={};}
+function saveState(){try{localStorage.setItem(stKey(),JSON.stringify(STATE));}catch(e){}}
 
-function loadEfficiency(){
-  fetch('./data.json?_='+Date.now()).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){
-    (d.channels||[]).forEach(function(c){ if(c.username) EFF[c.username]={rate:c.eng_rate,trend:c.trend_pct,likes:c.avg_likes,followers:c.followers,posts:c.posts||[]}; });
-    $('freshness').textContent='참여율 '+(d.updated_kst||'')+' 기준';
-    render();
-  }).catch(function(){
-    $('freshness').textContent='참여율 데이터 없음 (수집 1회 후 표시)';
-  });
-}
-
-function place(aid,mi,si){
-  if(!PLAN)PLAN=emptyPlan(DATE);
-  var used=usedMap();
-  if(used[aid]!==undefined&&used[aid]!==mi){var a=acctById(aid);toast('⚠️ '+(a?('@'+a.name):'이 계정')+' — 이미 '+letter(used[aid])+' 소재에 선정했어요');return;}
-  if(used[aid]===mi){toast('이미 이 소재에 있어요');return;}
-  PLAN.materials[mi].slots[si]=aid;picked=null;savePlan();render();
-}
-function clearSlot(mi,si){if(!PLAN)return;PLAN.materials[mi].slots[si]=null;savePlan();render();}
-function addSlot(mi){if(!PLAN)return;PLAN.materials[mi].slots.push(null);savePlan();render();}
-function addMaterial(){if(!PLAN)PLAN=emptyPlan(DATE);PLAN.materials.push({id:uid(),slots:new Array(SLOTS_PER).fill(null)});savePlan();render();}
-function removeMaterial(mi){if(!PLAN)return;PLAN.materials.splice(mi,1);savePlan();render();}
-function setType(id,t){var a=acctById(id);if(!a)return;a.type=t;saveAccounts();render();}
-
-function rateHTML(name){
-  var e=EFF[name]; if(!e||e.likes==null) return '';
-  return '<span class="rate">❤ '+Number(e.likes).toLocaleString()+'</span>';
-}
-function sortByEff(a,b){
-  var ra=(EFF[a.name]&&EFF[a.name].likes!=null)?EFF[a.name].likes:-1;
-  var rb=(EFF[b.name]&&EFF[b.name].likes!=null)?EFF[b.name].likes:-1;
-  if(rb!==ra)return rb-ra; return a.name.localeCompare(b.name);
-}
-function render(){renderAccounts();renderPlan();}
-function renderAccounts(){
-  var used=usedMap(), b={image:[],text:[],none:[]};
-  ACCOUNTS.forEach(function(a){(b[a.type]||b.none).push(a);});
-  b.image.sort(sortByEff);b.text.sort(sortByEff);b.none.sort(sortByEff);
-  function card(a){
-    var u=used[a.id]!==undefined;
-    var tg=a.type==='none'?'<div class="tg"><button data-act="type" data-id="'+a.id+'" data-t="image">이미지</button><button data-act="type" data-id="'+a.id+'" data-t="text">텍스트</button></div>':'';
-    var right=u?'<span class="usedtag">'+letter(used[a.id])+' 사용중</span>':'';
-    return '<div class="acct'+(u?' used':'')+(picked===a.id?' picked':'')+'" data-aid="'+a.id+'" draggable="'+(!u)+'">'
-      +'<span class="nm" data-act="detail" data-id="'+a.id+'">@'+esc(a.name)+'</span>'
-      +rateHTML(a.name)
-      +'<span class="pr">'+won(a.price)+'</span>'+tg+right
-      +'<button class="ghost" data-act="edit" data-id="'+a.id+'" title="수정">⋯</button></div>';
+/* 소재별 상태 보장 (없으면 표지 2이미지+2텍스트로 기본 생성) */
+function matState(mid){
+  var s=STATE.materials[mid];
+  if(!s){
+    s={caption:'와 대박이다 ㄷㄷ',hashtag:'#유머 #이슈 #유행 #나폴리맛피아',covers:[],assign:{}};
+    s.covers.push({id:uid(),type:'image',copy:''});
+    s.covers.push({id:uid(),type:'image',copy:''});
+    s.covers.push({id:uid(),type:'text',copy:''});
+    s.covers.push({id:uid(),type:'text',copy:''});
+    STATE.materials[mid]=s;
   }
-  function fill(el,arr,msg){el.innerHTML=arr.length?arr.map(card).join(''):'<div class="empty-note">'+msg+'</div>';}
-  fill($('colImg'),b.image,'아직 없어요');
-  fill($('colTxt'),b.text,'아직 없어요');
-  fill($('colNon'),b.none,'전부 유형이 지정됐어요 👍');
+  if(!s.assign)s.assign={};
+  if(!s.covers)s.covers=[];
+  return s;
 }
-function renderPlan(){
-  if(!PLAN)PLAN=emptyPlan(DATE);
-  var grand=0;
-  var html=PLAN.materials.map(function(m,mi){
-    var mt=0;
-    var slots=m.slots.map(function(aid,si){
-      if(aid){var a=acctById(aid);
-        if(a){mt+=(a.price||0);
-          var chip=a.type==='image'?'<span class="chip img">이미지</span>':a.type==='text'?'<span class="chip txt">텍스트</span>':'<span class="chip non">미설정</span>';
-          var e=EFF[a.name]; var fr=(e&&e.likes!=null)?'<span class="fr">❤ '+Number(e.likes).toLocaleString()+'</span>':'';
-          return '<div class="slot" data-mi="'+mi+'" data-si="'+si+'"><span class="fn">@'+esc(a.name)+'</span>'+chip+fr+'<span class="fp">'+won(a.price)+'</span><button class="ghost" data-act="clear" data-mi="'+mi+'" data-si="'+si+'">✕</button></div>';
-        }
-        return '<div class="slot" data-mi="'+mi+'" data-si="'+si+'"><span class="empty">삭제된 계정</span><button class="ghost" data-act="clear" data-mi="'+mi+'" data-si="'+si+'">✕</button></div>';
-      }
-      return '<div class="slot'+(picked?' pickable':'')+'" data-mi="'+mi+'" data-si="'+si+'"><span class="empty">'+(picked?'여기 클릭':'끌어다 놓기')+'</span></div>';
+function coverById(s,cid){for(var i=0;i<s.covers.length;i++){if(s.covers[i].id===cid)return s.covers[i];}return null;}
+
+/* 배정된 소재만 (슬롯에 계정이 1개 이상) */
+function shownMaterials(){
+  if(!PLAN)return [];
+  return PLAN.materials.map(function(m,i){
+    var accs=(m.slots||[]).map(acctById).filter(Boolean);
+    return {id:m.id,index:i,accs:accs};
+  }).filter(function(m){return m.accs.length>0;});
+}
+function letter(i){return String.fromCharCode(65+i);}
+
+/* 계정 기본 표지 선택: 계정 유형과 같은 타입의 첫 표지 */
+function defaultCover(s,acc){
+  var want=acc.type==='image'?'image':acc.type==='text'?'text':null;
+  if(want){for(var i=0;i<s.covers.length;i++){if(s.covers[i].type===want)return s.covers[i].id;}}
+  return s.covers.length?s.covers[0].id:'';
+}
+function resolveCoverId(s,acc){
+  var cur=s.assign[acc.name];
+  if(cur&&coverById(s,cur))return cur;
+  return defaultCover(s,acc);
+}
+/* 한 소재 안에서 표지는 계정당 1개씩만 — 기존 배정 유지하며 중복 제거 + 빈 계정은 안 쓰인 표지로 자동 채움 */
+function ensureAssign(m){
+  var s=matState(m.id),used={},changed=false;
+  m.accs.forEach(function(a){
+    var cur=s.assign[a.name];
+    if(cur&&coverById(s,cur)){used[cur]=true;}           // 유효한 배정은 중복이어도 그대로 존중
+    else if(cur){delete s.assign[a.name];changed=true;}  // 삭제된 표지를 가리키면 정리
+  });
+  m.accs.forEach(function(a){                             // 빈 계정만 기본값으로 채움(가급적 안 겹치게)
+    if(s.assign[a.name])return;
+    var want=a.type==='image'?'image':a.type==='text'?'text':null,pick=null,i;
+    if(want)for(i=0;i<s.covers.length;i++){if(s.covers[i].type===want&&!used[s.covers[i].id]){pick=s.covers[i].id;break;}}
+    if(!pick)for(i=0;i<s.covers.length;i++){if(!used[s.covers[i].id]){pick=s.covers[i].id;break;}}
+    if(!pick)pick=defaultCover(s,a);                      // 남는 표지가 없으면 기본(중복 허용)
+    if(pick){s.assign[a.name]=pick;used[pick]=true;changed=true;}
+  });
+  return changed;
+}
+/* 소재의 계정→표지 소유 맵 (중복 감지/드롭다운 비활성화용) */
+function ownerMap(m){
+  var s=matState(m.id),owner={};
+  m.accs.forEach(function(a){var cid=resolveCoverId(s,a);if(cid&&!owner[cid])owner[cid]=a.name;});
+  return owner;
+}
+
+function render(){
+  var mats=shownMaterials();
+  if(!mats.length){$('mats').innerHTML='<p class="muted">이 날짜에 배정된 계정이 없어요. 배정 화면에서 먼저 소재에 계정을 넣어주세요.</p>';footInfo();return;}
+  var syncChanged=false;mats.forEach(function(m){if(ensureAssign(m))syncChanged=true;});if(syncChanged)saveState();
+  var html=mats.map(function(m){
+    var s=matState(m.id);
+    var bodyFiles=FILES.body[m.id]||[];
+    var bf=bodyFiles.length?bodyFiles.map(function(f,i){return '<span class="f">'+esc(f.name)+' <button class="ghost" data-act="delbody" data-mid="'+m.id+'" data-i="'+i+'">✕</button></span>';}).join(''):'<span class="muted">업로드된 본문 파일 없음</span>';
+    var otherOpts=mats.filter(function(x){return x.id!==m.id&&(FILES.body[x.id]||[]).length;})
+      .map(function(x){return '<option value="'+x.id+'">'+letter(x.index)+' 소재 본문 복사</option>';}).join('');
+    var copyBodySel=otherOpts?'<select data-act="copybody" data-mid="'+m.id+'"><option value="">다른 소재 본문 복사…</option>'+otherOpts+'</select>':'';
+
+    var covers=s.covers.map(function(c){
+      var isImg=c.type==='image';
+      var file=FILES.cover[c.id];
+      var thumb=file?'<img class="thumb" src="'+URL.createObjectURL(file)+'">':'';
+      var up=isImg?('<div class="drop" data-act="coverdrop" data-cid="'+c.id+'">'+(file?('✓ '+esc(file.name)):'표지 이미지 끌어다 놓기 / 클릭')+'</div>'):'';
+      return '<div class="cover">'+
+        '<div class="ch">'+thumb+
+          '<select data-act="covertype" data-cid="'+c.id+'">'+
+            '<option value="image"'+(isImg?' selected':'')+'>이미지 표지(이미지+카피)</option>'+
+            '<option value="text"'+(!isImg?' selected':'')+'>텍스트 표지(카피만)</option>'+
+          '</select>'+
+          '<button class="ghost sm" data-act="delcover" data-cid="'+c.id+'" title="표지 삭제">✕</button>'+
+        '</div>'+
+        '<textarea data-act="copycopy" data-cid="'+c.id+'" placeholder="표지 카피">'+esc(c.copy)+'</textarea>'+
+        up+'</div>';
     }).join('');
-    grand+=mt;
-    return '<div class="mat"><div class="mh"><span class="lbl">'+letter(mi)+' 소재</span><span class="mt">'+won(mt)+'</span><button class="ghost" data-act="delmat" data-mi="'+mi+'" title="소재 삭제">✕</button></div>'+slots+'<button class="addslot" data-act="addslot" data-mi="'+mi+'">+ 채널 추가</button></div>';
+
+    var owner=ownerMap(m);
+    var rows=m.accs.map(function(a){
+      var rid=resolveCoverId(s,a);
+      var chip=a.type==='image'?'<span class="chip img">이미지</span>':a.type==='text'?'<span class="chip txt">텍스트</span>':'<span class="chip non">미설정</span>';
+      var opts=s.covers.map(function(c,ci){
+        var label=(c.type==='image'?'🖼 ':'📝 ')+(c.copy?c.copy.slice(0,24):'(카피 없음) '+(ci+1));
+        if(owner[c.id]&&owner[c.id]!==a.name)label+=' (사용중)';   // 안내만 — 선택은 가능
+        return '<option value="'+c.id+'"'+(c.id===rid?' selected':'')+'>'+esc(label)+'</option>';
+      }).join('');
+      return '<div class="assignrow"><span class="nm">@'+esc(a.name)+'</span>'+chip+
+        '<select data-act="assign" data-mid="'+m.id+'" data-name="'+esc(a.name)+'">'+opts+'</select></div>';
+    }).join('');
+
+    return '<div class="mat">'+
+      '<h2>'+letter(m.index)+' 소재 <span class="muted" style="font-weight:400">· 배정 '+m.accs.length+'개 계정</span>'+
+        '<label style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;user-select:none">'+
+          '<input type="checkbox" data-act="selmat" data-mid="'+m.id+'"'+(SEL[m.id]?' checked':'')+' style="width:16px;height:16px"> ZIP에 포함</label></h2>'+
+
+      '<div class="lbl">본문 파일 (이 소재의 모든 계정에 공통 복사됨)</div>'+
+      '<div class="drop" data-act="bodydrop" data-mid="'+m.id+'">여기에 본문 파일 끌어다 놓기 / 클릭해서 선택 (예: 2.mp4, 3.png … 88.png)</div>'+
+      '<div class="filelist">'+bf+'</div>'+
+      (copyBodySel?'<div style="margin-top:6px">'+copyBodySel+'</div>':'')+
+
+      '<div class="grid2">'+
+        '<div><div class="lbl">캡션</div><textarea data-act="caption" data-mid="'+m.id+'" style="min-height:52px">'+esc(s.caption)+'</textarea></div>'+
+        '<div><div class="lbl">해시태그</div><textarea data-act="hashtag" data-mid="'+m.id+'" style="min-height:52px">'+esc(s.hashtag)+'</textarea></div>'+
+      '</div>'+
+      '<div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">'+
+        '<button class="sm" data-act="applyall" data-mid="'+m.id+'">이 캡션·해시태그를 전체 소재에 적용</button>'+
+      '</div>'+
+
+      '<div class="lbl">표지 풀 (여기서 만든 표지를 아래에서 계정에 배정)</div>'+
+      '<div class="covers">'+covers+'</div>'+
+      '<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">'+
+        '<button class="sm" data-act="addcover" data-mid="'+m.id+'" data-type="image">+ 이미지 표지</button>'+
+        '<button class="sm" data-act="addcover" data-mid="'+m.id+'" data-type="text">+ 텍스트 표지</button>'+
+      '</div>'+
+
+      '<div class="lbl">계정별 표지 배정</div>'+rows+
+    '</div>';
   }).join('');
   $('mats').innerHTML=html;
-  $('grand').textContent='총 '+won(grand);
+  footInfo();
 }
 
-function fmt(n){return Number(n).toLocaleString();}
-function weekdayKr(dstr){var d=new Date(dstr+'T00:00:00');return ['일','월','화','수','목','금','토'][d.getDay()];}
-function genTextBySojae(){
-  if(!PLAN) return '';
-  var m=/\d{4}-(\d{2})-(\d{2})/.exec(DATE);
-  var groups=[], grand=0;
-  PLAN.materials.forEach(function(mat){
-    var lines=mat.slots.map(function(aid){var a=aid&&acctById(aid);if(!a)return null;grand+=(a.price||0);return '- '+a.name+' '+won(a.price);}).filter(Boolean);
-    if(lines.length) groups.push(lines.join('\n'));
-  });
-  var head=(m?('['+m[1]+m[2]+'('+weekdayKr(DATE)+')]'):DATE)+' '+won(grand);
-  return head+'\n'+groups.join('\n\n');
+function footInfo(){
+  var mats=shownMaterials();var folders=0;mats.forEach(function(m){folders+=m.accs.length;});
+  var selIds=mats.filter(function(m){return SEL[m.id];});
+  $('footInfo').textContent='['+mmdd(DATE)+'] · 소재 '+mats.length+'개 · 폴더(계정) '+folders+'개 · 선택 '+selIds.length+'개';
 }
-function companyOf(name){return COMPANY_OVERRIDE[name]||COMPANY_BY_ACCOUNT[name]||'(업체 미지정)';}
-function genTextByCompany(){
-  if(!PLAN) return '';
-  var order=[],byco={};
-  PLAN.materials.forEach(function(mat){
-    mat.slots.forEach(function(aid){
-      var a=aid&&acctById(aid); if(!a) return;
-      var co=companyOf(a.name);
-      if(!byco[co]){byco[co]=[];order.push(co);}
-      byco[co].push('- '+a.name+' '+won(a.price));
+
+/* ===== 이벤트 ===== */
+document.addEventListener('click',function(e){
+  var t=e.target.closest('[data-act]');if(!t)return;var act=t.getAttribute('data-act');
+  if(act==='bodydrop'){pickFiles(true,function(fs){addBody(t.getAttribute('data-mid'),fs);});}
+  else if(act==='coverdrop'){pickFiles(false,function(fs){if(fs[0]){FILES.cover[t.getAttribute('data-cid')]=fs[0];render();}});}
+  else if(act==='delbody'){var mid=t.getAttribute('data-mid');FILES.body[mid].splice(+t.getAttribute('data-i'),1);render();}
+  else if(act==='addcover'){var s=matState(t.getAttribute('data-mid'));s.covers.push({id:uid(),type:t.getAttribute('data-type'),copy:''});saveState();render();}
+  else if(act==='delcover'){var cid=t.getAttribute('data-cid');removeCover(cid);}
+  else if(act==='applyall'){applyAll(t.getAttribute('data-mid'));}
+
+});
+document.addEventListener('input',function(e){
+  var t=e.target.closest('[data-act]');if(!t)return;var act=t.getAttribute('data-act');
+  if(act==='caption'){matState(t.getAttribute('data-mid')).caption=t.value;saveState();footInfo();}
+  else if(act==='hashtag'){matState(t.getAttribute('data-mid')).hashtag=t.value;saveState();}
+  else if(act==='copycopy'){setCover(t.getAttribute('data-cid'),'copy',t.value);saveState();}
+});
+document.addEventListener('change',function(e){
+  var t=e.target.closest('[data-act]');if(!t)return;var act=t.getAttribute('data-act');
+  if(act==='assign'){var s=matState(t.getAttribute('data-mid'));s.assign[t.getAttribute('data-name')]=t.value;saveState();render();}
+  else if(act==='covertype'){setCover(t.getAttribute('data-cid'),'type',t.value);saveState();render();}
+  else if(act==='selmat'){SEL[t.getAttribute('data-mid')]=t.checked;footInfo();}
+  else if(act==='copybody'){var src=t.value;if(src){FILES.body[t.getAttribute('data-mid')]=(FILES.body[src]||[]).slice();render();}}
+});
+
+function setCover(cid,field,val){var mats=shownMaterials();for(var i=0;i<mats.length;i++){var s=matState(mats[i].id);var c=coverById(s,cid);if(c){c[field]=val;return;}}}
+function removeCover(cid){var mats=shownMaterials();for(var i=0;i<mats.length;i++){var s=matState(mats[i].id);var idx=s.covers.findIndex(function(c){return c.id===cid;});if(idx>=0){s.covers.splice(idx,1);delete FILES.cover[cid];for(var k in s.assign){if(s.assign[k]===cid)delete s.assign[k];}saveState();render();return;}}}
+function addBody(mid,fs){if(!FILES.body[mid])FILES.body[mid]=[];fs.forEach(function(f){FILES.body[mid].push(f);});render();}
+function applyAll(mid){var src=matState(mid);shownMaterials().forEach(function(m){var s=matState(m.id);s.caption=src.caption;s.hashtag=src.hashtag;});saveState();render();toast('전체 소재에 캡션·해시태그 적용됨');}
+
+/* 파일 선택 헬퍼 */
+function pickFiles(multiple,cb){var inp=document.createElement('input');inp.type='file';inp.multiple=!!multiple;if(!multiple)inp.accept='image/*';inp.onchange=function(){cb(Array.prototype.slice.call(inp.files));};inp.click();}
+/* 드래그앤드롭 */
+document.addEventListener('dragover',function(e){var d=e.target.closest('.drop');if(d){e.preventDefault();d.classList.add('hot');}});
+document.addEventListener('dragleave',function(e){var d=e.target.closest('.drop');if(d)d.classList.remove('hot');});
+document.addEventListener('drop',function(e){var d=e.target.closest('.drop');if(!d)return;e.preventDefault();d.classList.remove('hot');
+  var fs=Array.prototype.slice.call(e.dataTransfer.files);if(!fs.length)return;var act=d.getAttribute('data-act');
+  if(act==='bodydrop')addBody(d.getAttribute('data-mid'),fs);
+  else if(act==='coverdrop'){FILES.cover[d.getAttribute('data-cid')]=fs[0];render();}
+});
+
+/* ===== ZIP 생성 ===== */
+function validate(mids){
+  var errs=[];var mats=shownMaterials();
+  if(mids&&mids.length)mats=mats.filter(function(m){return mids.indexOf(m.id)>=0;});
+  mats.forEach(function(m){
+    var L=letter(m.index)+' 소재';var s=matState(m.id);ensureAssign(m);
+    if(!(FILES.body[m.id]||[]).length)errs.push(L+': 본문 파일이 없습니다');
+    m.accs.forEach(function(a){
+      var cid=resolveCoverId(s,a);var c=coverById(s,cid);
+      if(!c){errs.push(L+' · @'+a.name+': 표지가 배정되지 않았습니다');return;}
+      if(!c.copy.trim())errs.push(L+' · @'+a.name+': 표지 카피가 비어 있습니다');
+      if(c.type==='image'&&!FILES.cover[c.id])errs.push(L+' · @'+a.name+': 이미지 표지인데 이미지 파일이 없습니다');
     });
   });
-  return order.map(function(co){return '['+co+']\n'+byco[co].join('\n');}).join('\n\n');
+  return errs;
 }
-function openTextModal(){$('tTextL').value=genTextBySojae();$('tTextR').value=genTextByCompany();$('textModal').classList.add('show');}
-function sparkLikes(posts){
-  var p=(posts||[]).filter(function(x){return x.likes!=null;});
-  if(p.length<2) return '<div style="color:var(--muted);font-size:12px">추이를 그릴 게시물이 부족해요</div>';
-  var ys=p.map(function(x){return x.likes;});
-  var mn=Math.min.apply(null,ys),mx=Math.max.apply(null,ys),sp=(mx-mn)||1;
-  var w=440,h=120,padX=16,padT=12,padB=24;
-  var step=(w-padX*2)/(p.length-1);
-  function X(i){return padX+i*step;}
-  function Y(v){return (h-padB)-((v-mn)/sp)*(h-padB-padT);}
-  function md(d){var m=/\d{4}-(\d{2})-(\d{2})/.exec(d||'');return m?m[1]+'.'+m[2]:'';}
-  var line=p.map(function(x,i){return X(i).toFixed(1)+','+Y(x.likes).toFixed(1);}).join(' ');
-  var dots=p.map(function(x,i){var cx=X(i).toFixed(1),cy=Y(x.likes).toFixed(1);
-    return '<circle cx="'+cx+'" cy="'+cy+'" r="4" fill="var(--accent)" stroke="var(--card)" stroke-width="1.5" style="pointer-events:none"/>'
-      +'<circle cx="'+cx+'" cy="'+cy+'" r="11" fill="transparent" data-likes="'+fmt(x.likes)+'" data-date="'+md(x.date)+'" style="cursor:pointer"/>';}).join('');
-  var seen={},labels='';
-  p.forEach(function(x,i){var k=md(x.date);if(k&&!seen[k]){seen[k]=1;labels+='<text x="'+X(i).toFixed(1)+'" y="'+(h-7)+'" font-size="9" fill="var(--muted)" text-anchor="middle">'+k+'</text>';}});
-  return '<svg viewBox="0 0 '+w+' '+h+'" style="width:100%;height:auto;overflow:visible">'
-    +'<polyline points="'+line+'" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>'
-    +dots+labels+'</svg>'
-    +'<div style="font-size:11px;color:var(--muted);margin-top:2px">꼭짓점에 마우스를 올리면 날짜·좋아요 수가 떠요</div>';
-}
-function openDetail(id){
-  var a=acctById(id); if(!a) return;
-  var e=EFF[a.name]||{};
-  var posts=(e.posts||[]);
-  var top=posts.slice().sort(function(x,y){return (y.likes||0)-(x.likes||0);}).slice(0,5);
-  var co=companyOf(a.name);
-  var h='';
-  h+='<div style="display:flex;align-items:center;gap:6px;margin-bottom:12px">'
-    +'<span style="font-size:12px;font-weight:700;color:var(--muted);white-space:nowrap">업체명</span>'
-    +'<input id="dCompanyInput" type="text" value="'+esc(co==='(업체 미지정)'?'':co)+'" placeholder="업체명 입력 후 저장" '
-    +'style="flex:1;min-width:0;font:inherit;padding:6px 9px;border:1px solid var(--border);border-radius:7px;background:var(--card);color:var(--text)">'
-    +'<button data-act="savecompany" data-name="'+esc(a.name)+'" class="primary" style="padding:6px 14px;white-space:nowrap">저장</button></div>';
-  h+='<div style="font-size:13px;color:var(--muted);margin-bottom:6px">'
-    +(e.followers!=null?'팔로워 <b style="color:var(--text)">'+fmt(e.followers)+'</b> · ':'')
-    +'참여율 <b style="color:var(--text)">'+(e.rate!=null?e.rate.toFixed(2)+'%':'—')+'</b>'
-    +' · 평균 좋아요(7일) <b style="color:var(--text)">'+(e.likes!=null?fmt(e.likes):'—')+'</b></div>';
-  h+='<div style="font-size:12px;font-weight:700;margin:14px 0 4px">최근 7일 좋아요 추이</div>'+sparkLikes(posts);
-  h+='<div style="font-size:12px;font-weight:700;margin:16px 0 6px">좋아요 TOP 5 (최근 7일)</div>';
-  if(top.length){
-    h+='<ol style="margin:0;padding-left:20px">'+top.map(function(p){
-      var lnk=p.permalink?' <a href="'+p.permalink+'" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">열기↗</a>':'';
-      return '<li style="margin-bottom:5px">❤ <b>'+fmt(p.likes)+'</b> <span style="color:var(--muted)">· '+(p.date||'')+'</span>'+lnk+'</li>';
-    }).join('')+'</ol>';
-  } else {
-    h+='<div style="color:var(--muted);font-size:13px">수집된 게시물이 없어요. (Actions 수집을 한 번 돌리면 표시됩니다)</div>';
-  }
-  $('dTitle').innerHTML='@'+esc(a.name)+' <span style="font-size:12px;font-weight:600;color:var(--text-accent,var(--accent));background:var(--accent-bg);padding:2px 9px;border-radius:999px;vertical-align:middle;margin-left:6px">'+esc(co)+'</span>';
-  $('dBody').innerHTML=h;
-  $('detailModal').classList.add('show');
-}
-function openModal(a){
-  var m=$('modal');m.classList.add('show');
-  $('mTitle').textContent=a?'계정 수정':'계정 추가';
-  $('mName').value=a?a.name:'';$('mPrice').value=a?(a.price!=null?a.price:''):'';
-  var t=a?a.type:'none';
-  Array.prototype.forEach.call($('mType').children,function(bt){bt.classList.toggle('on',bt.dataset.t===t);});
-  $('mDelete').style.display=a?'block':'none';m._editId=a?a.id:null;
-  setTimeout(function(){$('mName').focus();},50);
-}
-function closeModal(){$('modal').classList.remove('show');}
-
-document.addEventListener('click',function(e){
-  var t=e.target,act=t.getAttribute('data-act');
-  if(t.id==='addAcct'){openModal(null);return;}
-  if(t.id==='addMat'){addMaterial();return;}
-  if(t.id==='textBtn'){openTextModal();return;}
-  if(act==='addslot'){addSlot(+t.getAttribute('data-mi'));return;}
-  if(t.id==='todayBtn'){$('date').value=todayKST();changeDate(todayKST());return;}
-  if(t.id==='themeBtn'){toggleTheme();return;}
-  if(t.id==='backupBtn'){backupMenu();return;}
-  if(act==='detail'){openDetail(t.getAttribute('data-id'));return;}
-  if(act==='savecompany'){
-    var nm=t.getAttribute('data-name');var inp=$('dCompanyInput');var val=(inp?inp.value:'').trim();
-    if(val)COMPANY_OVERRIDE[nm]=val; else delete COMPANY_OVERRIDE[nm];
-    lastCoJson=JSON.stringify(COMPANY_OVERRIDE); dbSet('company_overrides',COMPANY_OVERRIDE);
-    toast('업체명 저장됨'); var acc=ACCOUNTS.filter(function(x){return x.name===nm;})[0]; if(acc)openDetail(acc.id);
-    return;
-  }
-  if(act==='type'){setType(t.getAttribute('data-id'),t.getAttribute('data-t'));return;}
-  if(act==='edit'){openModal(acctById(t.getAttribute('data-id')));return;}
-  if(act==='clear'){clearSlot(+t.getAttribute('data-mi'),+t.getAttribute('data-si'));return;}
-  if(act==='delmat'){removeMaterial(+t.getAttribute('data-mi'));return;}
-  var slot=t.closest('.slot');
-  if(slot&&picked){place(picked,+slot.getAttribute('data-mi'),+slot.getAttribute('data-si'));return;}
-  var acctEl=t.closest('.acct');
-  if(acctEl&&!t.closest('button')){var aid=acctEl.getAttribute('data-aid');if(usedMap()[aid]===undefined){picked=(picked===aid)?null:aid;render();}return;}
-});
-document.addEventListener('dragstart',function(e){var c=e.target.closest?e.target.closest('.acct'):null;if(c&&c.getAttribute('draggable')==='true'){e.dataTransfer.setData('text/plain',c.dataset.aid);e.dataTransfer.effectAllowed='move';}});
-document.addEventListener('dragover',function(e){var s=e.target.closest?e.target.closest('.slot'):null;if(s){e.preventDefault();s.classList.add('over');}});
-document.addEventListener('dragleave',function(e){var s=e.target.closest?e.target.closest('.slot'):null;if(s)s.classList.remove('over');});
-document.addEventListener('drop',function(e){var s=e.target.closest?e.target.closest('.slot'):null;if(!s)return;e.preventDefault();s.classList.remove('over');var aid=e.dataTransfer.getData('text/plain');if(aid)place(aid,+s.getAttribute('data-mi'),+s.getAttribute('data-si'));});
-
-$('mType').addEventListener('click',function(e){if(e.target.dataset.t){Array.prototype.forEach.call(this.children,function(b){b.classList.remove('on');});e.target.classList.add('on');}});
-$('mCancel').addEventListener('click',closeModal);
-$('modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
-$('dClose').addEventListener('click',function(){$('detailModal').classList.remove('show');});
-$('detailModal').addEventListener('click',function(e){if(e.target===this)this.classList.remove('show');});
-function tipAt(e,c){var tip=$('dTip');tip.textContent=c.getAttribute('data-date')+' · ❤ '+c.getAttribute('data-likes');tip.style.left=e.clientX+'px';tip.style.top=e.clientY+'px';tip.classList.add('show');}
-document.addEventListener('mouseover',function(e){var c=e.target.closest?e.target.closest('circle[data-likes]'):null;if(c)tipAt(e,c);});
-document.addEventListener('mousemove',function(e){if(!$('dTip').classList.contains('show'))return;var c=e.target.closest?e.target.closest('circle[data-likes]'):null;if(c){tipAt(e,c);}else{$('dTip').classList.remove('show');}});
-document.addEventListener('mouseout',function(e){var c=e.target.closest?e.target.closest('circle[data-likes]'):null;if(c)$('dTip').classList.remove('show');});
-$('tClose').addEventListener('click',function(){$('textModal').classList.remove('show');});
-$('textModal').addEventListener('click',function(e){if(e.target===this)this.classList.remove('show');});
-function copyTa(id){var ta=$(id);ta.focus();ta.select();ta.setSelectionRange(0,999999);
-  var ok=function(){toast('복사됐어요');};
-  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(ta.value).then(ok,function(){try{document.execCommand('copy');ok();}catch(e){toast('복사 실패 — 직접 선택해 복사하세요');}});}
-  else{try{document.execCommand('copy');ok();}catch(e){toast('복사 실패 — 직접 선택해 복사하세요');}}}
-$('tCopyL').addEventListener('click',function(){copyTa('tTextL');});
-$('tCopyR').addEventListener('click',function(){copyTa('tTextR');});
-$('mSave').addEventListener('click',function(){
-  var name=$('mName').value.trim().replace(/^@/,'');if(!name){toast('계정명을 입력하세요');return;}
-  var price=parseInt($('mPrice').value,10);if(isNaN(price))price=0;
-  var on=$('mType').querySelector('.on');var type=on?on.dataset.t:'none';var id=$('modal')._editId;
-  if(id){var a=acctById(id);if(a){a.name=name;a.price=price;a.type=type;}}
-  else{ACCOUNTS.push({id:uid(),name:name,type:type,price:price});}
-  saveAccounts();render();closeModal();
-});
-$('mDelete').addEventListener('click',function(){
-  var id=$('modal')._editId;if(!id)return;
-  ACCOUNTS=ACCOUNTS.filter(function(a){return a.id!==id;});
-  if(PLAN){PLAN.materials.forEach(function(m){m.slots=m.slots.map(function(x){return x===id?null:x;});});savePlan();}
-  saveAccounts();render();closeModal();
-});
-
-async function changeDate(d){DATE=d;picked=null;PLAN=await dbGet('plan:'+DATE)||emptyPlan(DATE);lastPlanJson=JSON.stringify(PLAN);render();}
-$('date').addEventListener('change',function(){changeDate(this.value||todayKST());});
-
-function toggleTheme(){var r=document.documentElement;var cur=r.getAttribute('data-theme');var next=cur==='dark'?'light':(cur==='light'?'':'dark');if(next)r.setAttribute('data-theme',next);else r.removeAttribute('data-theme');try{localStorage.setItem('cm_theme',next);}catch(e){}}
-try{var th=localStorage.getItem('cm_theme');if(th)document.documentElement.setAttribute('data-theme',th);}catch(e){}
-
-async function backupMenu(){
-  if(confirm('확인 = 백업 파일 내려받기\n취소 = 백업 파일 불러오기(복원)')){
-    var data={accounts:ACCOUNTS,plans:{}};
-    try{var rr=await SB.from('store').select('k,v').like('k','plan:%');(rr.data||[]).forEach(function(row){data.plans[row.k]=row.v;});}catch(e){}
-    var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
-    var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='channel-planner-backup-'+todayKST()+'.json';a.click();
-    toast('백업 파일을 내려받았어요');
-  } else { $('restoreFile').click(); }
-}
-$('restoreFile').addEventListener('change',function(){
-  var f=this.files[0];if(!f)return;var rd=new FileReader();
-  rd.onload=async function(){try{var d=JSON.parse(rd.result);
-    if(d.accounts){await dbSet('accounts',d.accounts);}
-    if(d.plans){var ks=Object.keys(d.plans);for(var i=0;i<ks.length;i++){var k=ks[i];var nk=k.indexOf('cm_plan_')===0?('plan:'+k.slice(8)):k;await dbSet(nk,d.plans[k]);}}
-    toast('복원 완료 — 모두에게 공유됩니다. 새로고침할게요');setTimeout(function(){location.reload();},1000);
-  }catch(e){toast('파일을 읽을 수 없어요');}};
-  rd.readAsText(f);this.value='';
-});
-
-$('date').value=DATE;
-$('status').textContent='공유 저장 연결 중…';
-(async function(){
+async function buildZip(mids){
+  var errs=validate(mids);var box=$('errBox');
+  if(errs.length){box.innerHTML='<b>확인 필요</b><ul>'+errs.map(function(e){return '<li>'+esc(e)+'</li>';}).join('')+'</ul>';box.classList.add('show');box.scrollIntoView({behavior:'smooth',block:'center'});return;}
+  box.classList.remove('show');
+  var zip=new JSZip();var root=zip.folder('['+mmdd(DATE)+']');
+  var mats=shownMaterials();
+  if(mids&&mids.length)mats=mats.filter(function(m){return mids.indexOf(m.id)>=0;});
+  if(!mats.length){toast('압축할 소재가 없습니다');return;}
+  var zipName='['+mmdd(DATE)+'].zip';
+  mats.forEach(function(m){
+    var s=matState(m.id);var body=FILES.body[m.id]||[];
+    m.accs.forEach(function(a){
+      var f=root.folder(a.name);
+      body.forEach(function(file){f.file(file.name,file);});
+      var c=coverById(s,resolveCoverId(s,a));
+      if(c.type==='image'){var cf=FILES.cover[c.id];f.file('1.cover.'+extOf(cf.name),cf);}
+      var txt='표지 카피: '+c.copy+'\r\n캡션 : '+s.caption+'\r\n해시태그 :'+s.hashtag;
+      f.file('caption_hashtag.txt',txt);
+    });
+  });
+  var btn=$('zipBtn'),prog=$('prog'),bar=prog.firstElementChild;
+  btn.disabled=true;prog.classList.add('show');
   try{
-    await loadAccounts(); await loadPlan();
-    COMPANY_OVERRIDE=await dbGet('company_overrides')||{}; lastCoJson=JSON.stringify(COMPANY_OVERRIDE);
-    lastAccJson=JSON.stringify(ACCOUNTS); lastPlanJson=JSON.stringify(PLAN);
-    render();
-    $('status').textContent='✅ 팀 공유 저장 · 모두 같은 데이터를 봅니다 · 효율은 매일 07시 자동 갱신';
-    startSync();
-  }catch(e){
-    $('status').textContent='⚠️ 공유 저장 연결 실패 — 상단 URL/키 또는 Supabase 정책을 확인하세요';
-  }
-  loadEfficiency();
-})();
+    var blob=await zip.generateAsync({type:'blob',compression:'STORE'},function(md){bar.style.width=(md.percent|0)+'%';});
+    var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download=zipName;document.body.appendChild(a);a.click();a.remove();
+    setTimeout(function(){URL.revokeObjectURL(url);},4000);
+    toast('ZIP 생성 완료 — 다운로드를 확인하세요');
+  }catch(err){toast('ZIP 생성 실패: '+err.message);}
+  finally{btn.disabled=false;setTimeout(function(){prog.classList.remove('show');bar.style.width='0';},800);}
+}
+$('zipBtn').addEventListener('click',function(){buildZip();});
+$('zipSelBtn').addEventListener('click',function(){
+  var ids=Object.keys(SEL).filter(function(k){return SEL[k];});
+  if(!ids.length){toast('압축할 소재를 체크해 주세요');return;}
+  buildZip(ids);
+});
+
+/* ===== 초기화 ===== */
+$('datePick').addEventListener('change',function(){location.href='package.html?date='+encodeURIComponent(this.value);});
+async function init(){
+  var q=new URLSearchParams(location.search);DATE=q.get('date')||todayKST();
+  $('datePick').value=DATE;
+  loadState();
+  try{
+    ACCOUNTS=await dbGet('accounts')||[];
+    PLAN=await dbGet('plan:'+DATE)||{date:DATE,materials:[]};
+    $('status').textContent='['+mmdd(DATE)+'] 배정 불러옴 · 본문/표지 이미지는 새로고침하면 다시 올려야 해요(텍스트는 저장됨)';
+  }catch(e){$('status').textContent='불러오기 실패 — 네트워크/권한 확인';}
+  render();
+}
+init();
 </script>
 </body>
 </html>
