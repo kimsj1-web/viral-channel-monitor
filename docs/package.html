@@ -85,7 +85,7 @@ a.back{color:var(--accent);text-decoration:none;font-size:13px}
   <div class="top">
     <h1>📦 협찬 패키징</h1><span class="badge">ZIP 자동 생성</span>
     <div class="bar">
-      <a class="back" href="index.html">← 배정 화면</a>
+      <a class="back" href="index.html" onclick="location.href='index.html'+(DATE?('?date='+encodeURIComponent(DATE)):'');return false;">← 배정 화면</a>
       <input type="date" id="datePick">
     </div>
   </div>
