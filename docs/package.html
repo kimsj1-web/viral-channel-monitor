@@ -150,20 +150,32 @@ function matState(mid){
 function coverById(s,cid){for(var i=0;i<s.covers.length;i++){if(s.covers[i].id===cid)return s.covers[i];}return null;}
 
 /* 배정된 소재만 (슬롯에 계정이 1개 이상) */
+var TYPE_RANK={image:0,text:1};
+function typeRank(t){return TYPE_RANK[t]!=null?TYPE_RANK[t]:2;}
 function shownMaterials(){
   if(!PLAN)return [];
   return PLAN.materials.map(function(m,i){
     var accs=(m.slots||[]).map(acctById).filter(Boolean);
+    accs=accs.map(function(a,j){return {a:a,j:j};})
+      .sort(function(x,y){return typeRank(x.a.type)-typeRank(y.a.type)||x.j-y.j;})
+      .map(function(x){return x.a;});   // 이미지끼리/텍스트끼리 모이게(추가 순서는 타입 안에서 유지)
     return {id:m.id,index:i,accs:accs};
   }).filter(function(m){return m.accs.length>0;});
 }
 function letter(i){return String.fromCharCode(65+i);}
+/* 표지도 타입별로 묶어서(이미지 먼저, 텍스트 뒤) — 저장 순서는 안 바꾸고 보기만 정렬 */
+function coversOf(s){
+  return s.covers.map(function(c,i){return {c:c,i:i};})
+    .sort(function(a,b){return typeRank(a.c.type)-typeRank(b.c.type)||a.i-b.i;})
+    .map(function(x){return x.c;});
+}
 
 /* 계정 기본 표지 선택: 계정 유형과 같은 타입의 첫 표지 */
 function defaultCover(s,acc){
+  var cov=coversOf(s);
   var want=acc.type==='image'?'image':acc.type==='text'?'text':null;
-  if(want){for(var i=0;i<s.covers.length;i++){if(s.covers[i].type===want)return s.covers[i].id;}}
-  return s.covers.length?s.covers[0].id:'';
+  if(want){for(var i=0;i<cov.length;i++){if(cov[i].type===want)return cov[i].id;}}
+  return cov.length?cov[0].id:'';
 }
 function resolveCoverId(s,acc){
   var cur=s.assign[acc.name];
@@ -178,11 +190,12 @@ function ensureAssign(m){
     if(cur&&coverById(s,cur)){used[cur]=true;}           // 유효한 배정은 중복이어도 그대로 존중
     else if(cur){delete s.assign[a.name];changed=true;}  // 삭제된 표지를 가리키면 정리
   });
+  var cov=coversOf(s);
   m.accs.forEach(function(a){                             // 빈 계정만 기본값으로 채움(가급적 안 겹치게)
     if(s.assign[a.name])return;
     var want=a.type==='image'?'image':a.type==='text'?'text':null,pick=null,i;
-    if(want)for(i=0;i<s.covers.length;i++){if(s.covers[i].type===want&&!used[s.covers[i].id]){pick=s.covers[i].id;break;}}
-    if(!pick)for(i=0;i<s.covers.length;i++){if(!used[s.covers[i].id]){pick=s.covers[i].id;break;}}
+    if(want)for(i=0;i<cov.length;i++){if(cov[i].type===want&&!used[cov[i].id]){pick=cov[i].id;break;}}
+    if(!pick)for(i=0;i<cov.length;i++){if(!used[cov[i].id]){pick=cov[i].id;break;}}
     if(!pick)pick=defaultCover(s,a);                      // 남는 표지가 없으면 기본(중복 허용)
     if(pick){s.assign[a.name]=pick;used[pick]=true;changed=true;}
   });
@@ -207,7 +220,7 @@ function render(){
       .map(function(x){return '<option value="'+x.id+'">'+letter(x.index)+' 소재 본문 복사</option>';}).join('');
     var copyBodySel=otherOpts?'<select data-act="copybody" data-mid="'+m.id+'"><option value="">다른 소재 본문 복사…</option>'+otherOpts+'</select>':'';
 
-    var covers=s.covers.map(function(c){
+    var covers=coversOf(s).map(function(c){
       var isImg=c.type==='image';
       var file=FILES.cover[c.id];
       var thumb=file?'<img class="thumb" src="'+URL.createObjectURL(file)+'">':'';
@@ -228,7 +241,7 @@ function render(){
     var rows=m.accs.map(function(a){
       var rid=resolveCoverId(s,a);
       var chip=a.type==='image'?'<span class="chip img">이미지</span>':a.type==='text'?'<span class="chip txt">텍스트</span>':'<span class="chip non">미설정</span>';
-      var opts=s.covers.map(function(c,ci){
+      var opts=coversOf(s).map(function(c,ci){
         var label=(c.type==='image'?'🖼 ':'📝 ')+(c.copy?c.copy.slice(0,24):'(카피 없음) '+(ci+1));
         if(owner[c.id]&&owner[c.id]!==a.name)label+=' (사용중)';   // 안내만 — 선택은 가능
         return '<option value="'+c.id+'"'+(c.id===rid?' selected':'')+'>'+esc(label)+'</option>';
