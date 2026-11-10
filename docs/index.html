@@ -521,6 +521,8 @@ $('restoreFile').addEventListener('change',function(){
   rd.readAsText(f);this.value='';
 });
 
+var _qd=new URLSearchParams(location.search).get('date');
+if(_qd&&/^\d{4}-\d{2}-\d{2}$/.test(_qd))DATE=_qd;
 $('date').value=DATE;
 $('status').textContent='공유 저장 연결 중…';
 (async function(){
