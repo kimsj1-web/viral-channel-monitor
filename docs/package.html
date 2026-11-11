@@ -125,6 +125,10 @@ var STATE={materials:{}};
 var FILES={body:{},cover:{}};
 /* ZIP 포함 선택(세션) : materialId -> true */
 var SEL={};
+/* 업체 매핑 (index.html과 동일) + 팝업에서 저장한 오버라이드(Supabase) */
+var COMPANY_BY_ACCOUNT={"mamy014":"굿띵투유","365_hot":"굿띵투유","mukddoonge":"굿띵투유","yes__jam_":"굿띵투유","humor_ssul":"굿띵투유","pink_humor25":"업크루","sksk1sksk0":"굿띵투유","pink_idolly":"업크루","luna.humor":"루나앤코코","kutbba101":"굿띵투유","kkang_funny":"트렌드 연구소","apple_enter":"업크루","text_pyeong":"동후작가","nato.zzal":"루나앤코코","happy__pyeong":"동후작가","pangpang_one":"굿띵투유","hachuping_humor":"루나앤코코","zzalqueen":"업크루","nato.tip":"루나앤코코","some2lve":"아택","one_day_humor_diary":"굿띵투유","wikitrip.kr":"동후작가","luv_l0v_0":"동후작가","jolly__humor":"루나앤코코","smile_king_s2":"아택","laugh.34":"굿띵투유","nato.iove":"루나앤코코","pisik_2":"굿띵투유","tree.tving":"루나앤코코","flower_pyeong":"동후작가","humor_yonggari":"굿띵투유","luna.besty":"루나앤코코","two_pyeong":"동후작가","malangping_zzal":"루나앤코코","humorphim":"업크루","nato.humor":"루나앤코코","anavocado12345":"동후작가","guliguli_humor":"업크루","ddonutping_zzal":"루나앤코코","happyhappy_pick":"업크루","hahahohokiki6814":"굿띵투유","ho1y_time":"동후작가","good_tip_magazine":"루나앤코코","lime.now":"스튜디오 엔터","ourdays_pick":"아택","celeb_lunar":"잼스튜디오","celeb.holi":"잼스튜디오","celeb.mon":"잼스튜디오","news_goodgood":"잼스튜디오","news_comcom":"잼스튜디오","newws_ess":"잼스튜디오","glitter_artistic":"잼스튜디오","artistic_okay":"잼스튜디오","artistic_popp":"잼스튜디오","artistic_rainboww":"잼스튜디오","news_esc":"잼스튜디오","news.se.kr":"잼스튜디오","nuna_tommi":"잼스튜디오","nuna_yomiyam":"잼스튜디오","nuna.laview":"잼스튜디오","nuna.mannaja":"잼스튜디오","edaily.googoo":"잼스튜디오","edaily.hoohoo":"잼스튜디오","e.daily_fox":"잼스튜디오","edaily.vovo":"잼스튜디오","0n1y0ne10ve":"잼스튜디오","enter.jennifer":"잼스튜디오","_shank.hahaha":"잼스튜디오","_pepa.hahaha":"잼스튜디오","_aerophone.hahaha":"잼스튜디오","idor_loveeeer":"잼스튜디오","idor_stalker":"잼스튜디오","idor_only":"잼스튜디오","idor_draap":"잼스튜디오","oppa.mannaja":"잼스튜디오","oppa.moheaa":"잼스튜디오","oppa.garm":"잼스튜디오","oppa.manna":"잼스튜디오","oppa.bogopa":"잼스튜디오","oppa.ttott":"잼스튜디오","lallalll.llallla":"잼스튜디오","oppa_good0good":"잼스튜디오","oppa_okdoki":"잼스튜디오","oppa.laview":"잼스튜디오","enter.babyy":"잼스튜디오","enter.tiana":"잼스튜디오","time_holy":"굿띵투유","entertainment_yonggari":"굿띵투유","wingk_eujuneun_halu":"굿띵투유","mukja_fun":"굿띵투유","Mukddoonge":"굿띵투유","theone_issue_":"굿띵투유","eattt.zin":"굿띵투유","today_quest":"굿띵투유","oyes__blue":"굿띵투유","pangpang_one_":"굿띵투유","u_tub_save":"굿띵투유","humor__seoul":"굿띵투유","365_real":"굿띵투유","kikikikiki0403":"굿띵투유","hoho_cutie_":"굿띵투유","sanai_tv":"굿띵투유","humor_11st":"굿띵투유","soso___zzal":"굿띵투유","matzzip.zoa":"굿띵투유","muk_hungry":"굿띵투유","haappy__smile":"굿띵투유","ssapsori__yonggari":"굿띵투유","graegaja":"굿띵투유","jjangfan":"굿띵투유","y_oominyy":"굿띵투유","humor_endorphin":"굿띵투유","good__day_today":"굿띵투유","love_noljagram":"굿띵투유","lulu__sky_":"굿띵투유","days__green":"굿띵투유","masitgoon":"굿띵투유","today.zzal":"굿띵투유","sanai_issue":"굿띵투유","minha_drama_diary":"굿띵투유","humor_bean":"굿띵투유","bibim___bap":"굿띵투유","365_zone":"굿띵투유","days__pink":"굿띵투유","humor___cok":"굿띵투유","le___monan":"굿띵투유","nyam_moomoo":"굿띵투유","nyom.yomi":"굿띵투유","_lilys_home":"★ 신규","_beauty_picks":"★ 신규","tem.duck":"★ 신규","김현수":"★ 신규","웃긴영상":"★ 신규","486__humor":"★ 신규","rkenrgksgodqhr7":"★ 신규","laugh_bbang":"★ 신규","healing.zip":"★ 신규","threepit_4":"★ 신규","deepdeep_dukhoo":"★ 신규","jjalgongjang":"★ 신규","dopamine_mp4":"★ 신규","kkul___tteok":"★ 신규","humani_3":"★ 신규","uzzzza_":"★ 신규","issue.jolly":"★ 신규","pick.___.pick":"★ 신규","noop.now":"★ 신규","moonmoon.actor":"★ 신규","enjoy_hit11":"★ 신규","tem.tory_":"★ 신규","deepdeep_beauty":"★ 신규","zzintem_spot":"★ 신규","five_star_item":"★ 신규","picknstar":"★ 신규","셀럽온":"★ 신규","쇼핑이멀전시":"★ 신규","미모지상주의":"★ 신규","언니파우치":"★ 신규","꿀단지왕국":"★ 신규","패션 수집가":"★ 신규","news.exitexit":"★ 신규","screenissue_best":"★ 신규","buzzfactory19":"★ 신규","chal___tteok":"★ 신규","reporter_daram":"★ 신규","healing_enter_":"★ 신규","ding.issue":"★ 신규","K-POPPOPCORN":"★ 신규","ruby_kikiki":"와이트라이브","tiger_enter":"와이트라이브","happy_global_zip":"와이트라이브","issue_pororo":"와이트라이브","issue_petty":"와이트라이브","maltese_kikiki":"와이트라이브","shorts_otaku":"와이트라이브","platinum_humor_.zip":"와이트라이브","hus_kiki":"와이트라이브","cherry__joy_0_0":"와이트라이브","coffee_humor_zip":"와이트라이브","issue_loopy":"와이트라이브","neo9ri_zip":"와이트라이브","goose.zzal":"와이트라이브","tree_humor_zip":"와이트라이브","issue_hacker":"와이트라이브","strawberry__joy_0_0":"와이트라이브","avocado_fun.ny":"와이트라이브","fairy_humor_zip":"와이트라이브","apple_fun.ny":"와이트라이브","capybara_kikiki":"와이트라이브","4makfox_zip":"와이트라이브","zzal.panda":"와이트라이브","soccer_enjoy__":"와이트라이브","humor__slide":"와이트라이브","tiffany_kikiki":"와이트라이브","silver_humor_zip":"와이트라이브","issue_eddy":"와이트라이브","cooo_kiki":"와이트라이브","watermelon__joy_0_0":"와이트라이브","apple__joy_0_0":"와이트라이브","fish.zzal":"와이트라이브","basketball_enjoy__":"와이트라이브","hound_kikiki":"와이트라이브","blueberry_fun.ny":"와이트라이브","goodsongs.zip":"와이트라이브","worldmasterpiece1000":"와이트라이브","cast__tv":"트렌드 연구소","mey_moons":"트렌드 연구소","sey_moon":"트렌드 연구소","today__list":"트렌드 연구소","satan__more":"트렌드 연구소","besty_moon":"트렌드 연구소","vogo__pop":"트렌드 연구소","zoom__tv":"트렌드 연구소","frenddoo_tv":"트렌드 연구소","satan__zzal":"트렌드 연구소","purple_tv_":"트렌드 연구소","fooding.gg":"트렌드 연구소","day_smile_humor":"트렌드 연구소","youngees_":"트렌드 연구소","ssokku_tv":"트렌드 연구소","muk_mmin":"트렌드 연구소","tmi_black":"트렌드 연구소","theone_humor_":"트렌드 연구소","days_purple":"트렌드 연구소","quote_zzal":"트렌드 연구소","7dayz_black":"트렌드 연구소","7dayz_white":"트렌드 연구소","one_star_video":"기존","luna.player":"기존","luna.djing":"기존","hana.zzal":"기존","dotori_channel":"기존","comedy.1989__":"기존","showing_box":"기존","tving_box":"기존","dding_box":"기존","tteokbokki__zip":"기존","bibimbap__zip":"기존","yozmhumor":"기존","달달 이슈":"기존","미니홈피":"기존","big_talk_kiki":"기존","핫뉴스":"기존","mymemoryplaylist":"PF Company","daily_ipduck":"PF Company","wiki_sound":"PF Company","nmnl_zip":"PF Company","kikii_zip":"PF Company","onair_daily":"PF Company","new._.stagram":"PF Company","cakey_music_shop":"PF Company","ssul.music":"PF Company","dailymews_":"PF Company","ssue_playlist":"PF Company","love.on.pop":"PF Company","hh_studi5":"PF Company","kitty_pop.zip":"PF Company","ipduck_studio":"PF Company","스마일 오구오구":"아택","smile_haha_s2":"아택","smile_nyang_s2":"아택","nuna_enter":"누나엔터","nuna.coco":"누나엔터","nuna.ruru":"누나엔터","장미향같은웃음원하신가요?":"업크루","pink__issue":"업크루","musimko_why":"업크루","kuk_snack":"킨다그로스","풉스낵":"킨다그로스","웁스낵":"킨다그로스","워너Bee":"확인필요","kpop_reporter_daram":"확인필요","delicious_good12":"확인필요","Z2_commerce":"Z2company","z2_global":"Z2company","lululala_blue":"humani_3","favo.rite2312":"humani_3","ringdingdongri":"기존채널","02_pick":"기존채널","datecourse123":"피드코리아","my_good_tip":"피드코리아","matdori._.humor":"(광고 피드가 대부분, 최근 평균 좋아요 수 저조)","chobo_sorry":"(최근 게시물 - 작년)","z2_feeling":"biz","dopamin_archive":"도파민 아카이브","_enter.random":"사용불가","artistic.thu":"스튜디오 엔터","unni_enter":"스튜디오엔터","himag__":"하이매거진","your.best.ott":"핫띵즈","trend_know_":"기타/개인","two.zzal":"기타/개인","time_enter":"기타/개인","z2_ssul":"기타/개인","zzal.zup":"기타/개인","laughingsalon":"기타/개인","yozmbbang":"기타/개인","i.dol_cute":"기타/개인","i.dol_issue":"기타/개인","365days_sat":"기타/개인","illll_lllll_llll":"기타/개인","i.dol_lime":"기타/개인","lululala.yello":"기타/개인","seven.zzal":"기타/개인","dungmulnung":"기타/개인","camu.zzal":"기타/개인","365days_mon":"기타/개인","i.dol_love":"기타/개인","lllll_lllli_llll":"기타/개인","six.zzal":"기타/개인","kkilkkil.enter":"기타/개인","snake.zzal":"기타/개인","artistic.sun":"기타/개인","enter_feb":"기타/개인","pig.zzal":"기타/개인","arra_yummy":"기타/개인","365days_thu":"기타/개인","red.zzal":"기타/개인","five.zzal":"기타/개인","lululala.lime":"기타/개인","enter_sarang":"기타/개인","yomyom.z":"기타/개인","joayotem":"기타/개인","mat.zzua":"기타/개인","sheep.zzal":"기타/개인","sky.zzal":"기타/개인","tmi_green":"기타/개인","three.zzal":"기타/개인","tmi_blue":"기타/개인","_king_enter":"기타/개인","green.zzal":"기타/개인","horse.zzal":"기타/개인","lllll_lllll_llil":"기타/개인","enter_lulu":"기타/개인","happy.happy1004":"기타/개인","lllll_llill_llll":"기타/개인","minari.now":"기타/개인","artistic.sat":"기타/개인","halbi.zzal":"기타/개인","summer.zzal":"기타/개인","tmi_yello":"기타/개인","lllll_lllll_lill":"기타/개인","pink.zzal":"기타/개인","enter_mar":"기타/개인","grape.zzal":"기타/개인","winter.zzal":"기타/개인","chicken.zzal":"기타/개인","one.zzal":"기타/개인","four.zzal":"기타/개인","semo.zzal":"기타/개인","artistic.mon":"기타/개인","dragon.zzal":"기타/개인","for_ur_happy":"기타/개인","lllll_lllll_illl":"기타/개인","orange.zzal":"기타/개인","norang.zzal":"기타/개인","enter_lime":"기타/개인","nine.zzal":"기타/개인","enter_pink":"기타/개인","enter_purple":"기타/개인","lllll_lllll_llli":"기타/개인","the.qoo_tem":"기타/개인","enter_jan":"기타/개인","jjokpa.now":"기타/개인","fall.zzal":"기타/개인","mingd_nyam":"기타/개인","ooi.now":"기타/개인","piggy.zzang":"기타/개인","melon.zzal":"기타/개인","tmi_red":"기타/개인","lllll_illll_llll":"기타/개인","enter_yellow":"기타/개인","gochu.now":"기타/개인","spring.zzal":"기타/개인","kkalkkal.enter":"기타/개인","mukdunge":"기타/개인","sangchu.now":"기타/개인","babayotem":"기타/개인","nemo.zzal":"기타/개인","daepa.now":"기타/개인","enter_green":"기타/개인","zzisuuuu_":"기타/개인","issue._.check":"기타/개인","hanol_issue":"기타/개인","fast_than_.fast":"기타/개인","dolmang9_":"기타/개인","healing._.video":"기타/개인","zzal_legend":"기타/개인","busan_realtime":"기타/개인","ssosso.humor":"기타/개인","supermemememememememememe":"기타/개인","bbangbbanghumor":"기타/개인","antkdrjawja":"기타/개인","twitter.archive":"기타/개인","kimmimi_1127":"기타/개인","mam.memeandme":"기타/개인","laugh_sto":"기타/개인","mz_haha_":"기타/개인","smile_today_s2":"기타/개인","flower_words03":"기타/개인","smile_life_s2":"기타/개인","lifebookcase":"동후작가","z2_best":"기타/개인","celeb.healing":"기타/개인","ennie_pyeong":"기타/개인","z2_story":"기타/개인","z2_issue":"기타/개인","z2_humor":"기타/개인","lifes.zip":"기타/개인","100000xhumor":"기타/개인","legend_tving":"기타/개인","today_word.kr":"기타/개인","huduck_zip":"기타/개인","huduck_wang":"기타/개인","huduck_challenge":"기타/개인","huduck_zzal":"기타/개인","ssosso.happy":"기타/개인","issue.ping0_0":"기타/개인","shorts_pia":"기타/개인","lululala.lim":"기타/개인","유머클립":"기타/개인","칰스매거진":"기타/개인","구리이슈":"기타/개인","이슈체크":"기타/개인","스크린이슈":"기타/개인","movie.followme":"기타/개인","issue_lounge_":"기타/개인","k._.dpm":"기타/개인","jamjamissue_":"기타/개인","meme_bbang00":"기타/개인","mongddang_00":"기타/개인","1_music_sound":"기타/개인","myhoney_salim":"기타/개인","gamsung_crater":"기타/개인","palette_red_":"기타/개인","official_jam_haru":"기타/개인","hotmix.zip":"기타/개인","mini_tving":"기타/개인","reelchin.nom":"기타/개인","1qns_duddlf":"기타/개인","𝘰𝘬2_𝘩𝘶𝘮𝘰𝘳":"기타/개인","486__comedy":"기타/개인","486__music":"기타/개인","3sec_trend":"기타/개인","enter_capybara":"기타/개인","kimhyunsoo0582":"기타/개인","k_poppopcorn":"기타/개인","boldpage.kr":"기타/개인","_goyouu":"기타/개인","snt25_blue":"기타/개인","_no_out":"기타/개인","i_dole__":"기타/개인","muzic.kr":"기타/개인","jjal_jju":"기타/개인","ok2_soso":"기타/개인","beagle_beagle012":"기타/개인","caresmile123":"기타/개인","trend__palette_":"기타/개인","_itsmyedit":"기타/개인","jjalivery.enter":"기타/개인","kmeme.lab":"기타/개인","hott.sauce_":"기타/개인","muziik.time":"기타/개인","힐링무비":"기타/개인","huduck_issue":"기타/개인","cutie_zzal":"기타/개인","냥군냥군":"기타/개인","huduck_gamja":"기타/개인","book_pyeong":"기타/개인","ii_pyeong":"기타/개인","inssa_humor":"기타/개인","ted_comic":"기타/개인","today_issue_":"기타/개인","girls_yuzem":"기타/개인","today_humor_":"기타/개인","girls_comecome":"기타/개인","chachaping_zzal":"루나앤코코","hana.humor":"루나앤코코","nato.tving":"루나앤코코","pink_fun_diary":"루나앤코코","tree.zzal":"루나앤코코","nato.funny":"루나앤코코","nato.healing":"루나앤코코","hanjan5940":"동후작가"};
+var COMPANY_OVERRIDE={};
+function companyOf(name){return COMPANY_OVERRIDE[name]||COMPANY_BY_ACCOUNT[name]||'(업체 미지정)';}
 
 async function dbGet(k){var r=await SB.from('store').select('v').eq('k',k).maybeSingle();if(r.error)throw r.error;return r.data?r.data.v:null;}
 function acctById(id){for(var i=0;i<ACCOUNTS.length;i++){if(ACCOUNTS[i].id===id)return ACCOUNTS[i];}return null;}
@@ -349,31 +353,55 @@ async function buildZip(mids){
   var errs=validate(mids);var box=$('errBox');
   if(errs.length){box.innerHTML='<b>확인 필요</b><ul>'+errs.map(function(e){return '<li>'+esc(e)+'</li>';}).join('')+'</ul>';box.classList.add('show');box.scrollIntoView({behavior:'smooth',block:'center'});return;}
   box.classList.remove('show');
-  var zip=new JSZip();var root=zip.folder('['+mmdd(DATE)+']');
   var mats=shownMaterials();
   if(mids&&mids.length)mats=mats.filter(function(m){return mids.indexOf(m.id)>=0;});
   if(!mats.length){toast('압축할 소재가 없습니다');return;}
   var zipName='['+mmdd(DATE)+'].zip';
+  var tag=mmdd(DATE).replace('.','');           // "11.12" → "1112"
+  var zip=new JSZip();var root=zip.folder('['+mmdd(DATE)+']');
+
+  // 계정을 업체별로 그룹
+  var byco={},order=[];
   mats.forEach(function(m){
-    var s=matState(m.id);var body=FILES.body[m.id]||[];
+    var s=matState(m.id),body=FILES.body[m.id]||[];
     m.accs.forEach(function(a){
-      var f=root.folder(a.name);
-      body.forEach(function(file){f.file(file.name,file);});
-      var c=coverById(s,resolveCoverId(s,a));
-      if(c.type==='image'){var cf=FILES.cover[c.id];f.file('1.cover.'+extOf(cf.name),cf);}
-      var txt='표지 카피: '+c.copy+'\r\n캡션 : '+s.caption+'\r\n해시태그 :'+s.hashtag;
-      f.file('caption_hashtag.txt',txt);
+      var co=companyOf(a.name);
+      if(!byco[co]){byco[co]=[];order.push(co);}
+      byco[co].push({s:s,body:body,a:a});
     });
   });
-  var btn=$('zipBtn'),prog=$('prog'),bar=prog.firstElementChild;
-  btn.disabled=true;prog.classList.add('show');
+
+  var btn=$('zipBtn'),sbtn=$('zipSelBtn'),prog=$('prog'),bar=prog.firstElementChild;
+  btn.disabled=true;sbtn.disabled=true;prog.classList.add('show');bar.style.width='0';
   try{
-    var blob=await zip.generateAsync({type:'blob',compression:'STORE'},function(md){bar.style.width=(md.percent|0)+'%';});
+    // 업체별 폴더 + 업체별 개별 zip
+    for(var i=0;i<order.length;i++){
+      var co=order[i], safe=String(co).replace(/[\/\\:*?"<>|]/g,'_').trim();
+      var coName='['+safe+' '+tag+']';
+      var coFolder=root.folder(coName);
+      var coZip=new JSZip(), coZipRoot=coZip.folder(coName);
+      byco[co].forEach(function(j){
+        addAcctFiles(coFolder.folder(j.a.name), j.s, j.body, j.a);
+        addAcctFiles(coZipRoot.folder(j.a.name), j.s, j.body, j.a);
+      });
+      var coBlob=await coZip.generateAsync({type:'blob',compression:'STORE'});
+      root.file(coName+'.zip', coBlob);
+      bar.style.width=Math.round((i+1)/order.length*70)+'%';
+    }
+    // 바깥 전체 zip
+    var blob=await zip.generateAsync({type:'blob',compression:'STORE'},function(md){bar.style.width=(70+(md.percent|0)*0.3)+'%';});
     var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download=zipName;document.body.appendChild(a);a.click();a.remove();
     setTimeout(function(){URL.revokeObjectURL(url);},4000);
     toast('ZIP 생성 완료 — 다운로드를 확인하세요');
   }catch(err){toast('ZIP 생성 실패: '+err.message);}
-  finally{btn.disabled=false;setTimeout(function(){prog.classList.remove('show');bar.style.width='0';},800);}
+  finally{btn.disabled=false;sbtn.disabled=false;setTimeout(function(){prog.classList.remove('show');bar.style.width='0';},800);}
+}
+/* 한 계정 폴더에 본문 + 표지(이미지) + caption_hashtag.txt 채우기 */
+function addAcctFiles(folder, s, body, a){
+  body.forEach(function(file){folder.file(file.name,file);});
+  var c=coverById(s,resolveCoverId(s,a));
+  if(c&&c.type==='image'){var cf=FILES.cover[c.id];if(cf)folder.file('1.cover.'+extOf(cf.name),cf);}
+  folder.file('caption_hashtag.txt','표지 카피: '+(c?c.copy:'')+'\r\n캡션 : '+s.caption+'\r\n해시태그 :'+s.hashtag);
 }
 $('zipBtn').addEventListener('click',function(){buildZip();});
 $('zipSelBtn').addEventListener('click',function(){
@@ -391,6 +419,7 @@ async function init(){
   try{
     ACCOUNTS=await dbGet('accounts')||[];
     PLAN=await dbGet('plan:'+DATE)||{date:DATE,materials:[]};
+    COMPANY_OVERRIDE=await dbGet('company_overrides')||{};
     $('status').textContent='['+mmdd(DATE)+'] 배정 불러옴 · 본문/표지 이미지는 새로고침하면 다시 올려야 해요(텍스트는 저장됨)';
   }catch(e){$('status').textContent='불러오기 실패 — 네트워크/권한 확인';}
   render();
