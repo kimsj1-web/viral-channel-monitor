@@ -161,17 +161,10 @@ button.ghost{border:none;background:transparent;color:var(--muted);padding:2px 6
 <div class="modal" id="textModal">
   <div class="box" style="width:760px;max-width:100%">
     <h3>소재 배정 텍스트</h3>
-    <div style="display:flex;gap:12px;flex-wrap:wrap">
-      <div style="flex:1 1 300px;min-width:0">
-        <div style="font-size:12px;font-weight:700;margin-bottom:4px;color:var(--muted)">소재별</div>
-        <textarea id="tTextL" readonly style="width:100%;height:300px;font:13px/1.6 ui-monospace,monospace;color:var(--text);background:var(--slot);border:1px solid var(--border);border-radius:8px;padding:10px;resize:vertical"></textarea>
-        <button class="primary" id="tCopyL" style="width:100%;margin-top:6px">소재별 복사</button>
-      </div>
-      <div style="flex:1 1 300px;min-width:0">
-        <div style="font-size:12px;font-weight:700;margin-bottom:4px;color:var(--muted)">업체별</div>
-        <textarea id="tTextR" readonly style="width:100%;height:300px;font:13px/1.6 ui-monospace,monospace;color:var(--text);background:var(--slot);border:1px solid var(--border);border-radius:8px;padding:10px;resize:vertical"></textarea>
-        <button class="primary" id="tCopyR" style="width:100%;margin-top:6px">업체별 복사</button>
-      </div>
+    <div>
+      <div style="font-size:12px;font-weight:700;margin-bottom:4px;color:var(--muted)">소재별 + 업체별 (한 번에 복사)</div>
+      <textarea id="tTextAll" readonly style="width:100%;height:420px;font:13px/1.6 ui-monospace,monospace;color:var(--text);background:var(--slot);border:1px solid var(--border);border-radius:8px;padding:10px;resize:vertical"></textarea>
+      <button class="primary" id="tCopyAll" style="width:100%;margin-top:6px">전체 복사</button>
     </div>
     <div class="acts"><button id="tClose" style="flex:1">닫기</button></div>
   </div>
@@ -370,7 +363,8 @@ function genTextByCompany(){
   });
   return order.map(function(co){return '['+co+']\n'+byco[co].join('\n');}).join('\n\n');
 }
-function openTextModal(){$('tTextL').value=genTextBySojae();$('tTextR').value=genTextByCompany();$('textModal').classList.add('show');}
+function genTextCombined(){return genTextBySojae()+'\n\n<업체별>\n'+genTextByCompany();}
+function openTextModal(){$('tTextAll').value=genTextCombined();$('textModal').classList.add('show');}
 function sparkLikes(posts){
   var p=(posts||[]).filter(function(x){return x.likes!=null;});
   if(p.length<2) return '<div style="color:var(--muted);font-size:12px">추이를 그릴 게시물이 부족해요</div>';
@@ -479,8 +473,7 @@ function copyTa(id){var ta=$(id);ta.focus();ta.select();ta.setSelectionRange(0,9
   var ok=function(){toast('복사됐어요');};
   if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(ta.value).then(ok,function(){try{document.execCommand('copy');ok();}catch(e){toast('복사 실패 — 직접 선택해 복사하세요');}});}
   else{try{document.execCommand('copy');ok();}catch(e){toast('복사 실패 — 직접 선택해 복사하세요');}}}
-$('tCopyL').addEventListener('click',function(){copyTa('tTextL');});
-$('tCopyR').addEventListener('click',function(){copyTa('tTextR');});
+$('tCopyAll').addEventListener('click',function(){copyTa('tTextAll');});
 $('mSave').addEventListener('click',function(){
   var name=$('mName').value.trim().replace(/^@/,'');if(!name){toast('계정명을 입력하세요');return;}
   var price=parseInt($('mPrice').value,10);if(isNaN(price))price=0;
