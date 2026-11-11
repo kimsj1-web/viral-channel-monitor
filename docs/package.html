@@ -140,7 +140,7 @@ function saveState(){try{localStorage.setItem(stKey(),JSON.stringify(STATE));}ca
 function matState(mid){
   var s=STATE.materials[mid];
   if(!s){
-    s={caption:'와 대박이다 ㄷㄷ',hashtag:'#유머 #이슈 #유행 #나폴리맛피아',covers:[],assign:{}};
+    s={caption:'와 대박이다 ㄷㄷ',hashtag:'#유머 #이슈 #유행 #나폴리맛피아',covers:[],assign:{},manual:{}};
     s.covers.push({id:uid(),type:'image',copy:''});
     s.covers.push({id:uid(),type:'image',copy:''});
     s.covers.push({id:uid(),type:'text',copy:''});
@@ -149,6 +149,7 @@ function matState(mid){
   }
   if(!s.assign)s.assign={};
   if(!s.covers)s.covers=[];
+  if(!s.manual)s.manual={};
   return s;
 }
 function coverById(s,cid){for(var i=0;i<s.covers.length;i++){if(s.covers[i].id===cid)return s.covers[i];}return null;}
@@ -186,22 +187,22 @@ function resolveCoverId(s,acc){
   if(cur&&coverById(s,cur))return cur;
   return defaultCover(s,acc);
 }
-/* 한 소재 안에서 표지는 계정당 1개씩만 — 기존 배정 유지하며 중복 제거 + 빈 계정은 안 쓰인 표지로 자동 채움 */
+/* 자동배정: 같은 타입끼리 "순서대로" 매칭.
+   i번째 이미지 계정 → i번째 이미지 표지, i번째 텍스트 계정 → i번째 텍스트 표지.
+   사용자가 드롭다운으로 직접 고른 계정(manual)은 그대로 유지. */
 function ensureAssign(m){
-  var s=matState(m.id),used={},changed=false;
+  var s=matState(m.id),changed=false,cov=coversOf(s);
+  var imgC=cov.filter(function(c){return c.type==='image';});
+  var txtC=cov.filter(function(c){return c.type==='text';});
+  var iN=0,tN=0;
   m.accs.forEach(function(a){
-    var cur=s.assign[a.name];
-    if(cur&&coverById(s,cur)){used[cur]=true;}           // 유효한 배정은 중복이어도 그대로 존중
-    else if(cur){delete s.assign[a.name];changed=true;}  // 삭제된 표지를 가리키면 정리
-  });
-  var cov=coversOf(s);
-  m.accs.forEach(function(a){                             // 빈 계정만 기본값으로 채움(가급적 안 겹치게)
-    if(s.assign[a.name])return;
-    var want=a.type==='image'?'image':a.type==='text'?'text':null,pick=null,i;
-    if(want)for(i=0;i<cov.length;i++){if(cov[i].type===want&&!used[cov[i].id]){pick=cov[i].id;break;}}
-    if(!pick)for(i=0;i<cov.length;i++){if(!used[cov[i].id]){pick=cov[i].id;break;}}
-    if(!pick)pick=defaultCover(s,a);                      // 남는 표지가 없으면 기본(중복 허용)
-    if(pick){s.assign[a.name]=pick;used[pick]=true;changed=true;}
+    var pool,idx;
+    if(a.type==='text'){pool=txtC;idx=tN++;}
+    else if(a.type==='image'){pool=imgC;idx=iN++;}
+    else {pool=cov;idx=0;}
+    if(s.manual[a.name]&&s.assign[a.name]&&coverById(s,s.assign[a.name]))return; // 직접 고른 건 유지
+    var pick=pool.length?pool[Math.min(idx,pool.length-1)].id:(cov.length?cov[0].id:'');
+    if(pick&&s.assign[a.name]!==pick){s.assign[a.name]=pick;changed=true;}
   });
   return changed;
 }
@@ -307,11 +308,11 @@ document.addEventListener('input',function(e){
   var t=e.target.closest('[data-act]');if(!t)return;var act=t.getAttribute('data-act');
   if(act==='caption'){matState(t.getAttribute('data-mid')).caption=t.value;saveState();footInfo();}
   else if(act==='hashtag'){matState(t.getAttribute('data-mid')).hashtag=t.value;saveState();}
-  else if(act==='copycopy'){setCover(t.getAttribute('data-cid'),'copy',t.value);saveState();}
+  else if(act==='copycopy'){var cid=t.getAttribute('data-cid'),caret=t.selectionStart;setCover(cid,'copy',t.value);saveState();render();var el=document.querySelector('textarea[data-act="copycopy"][data-cid="'+cid+'"]');if(el){el.focus();try{el.setSelectionRange(caret,caret);}catch(e){}}}
 });
 document.addEventListener('change',function(e){
   var t=e.target.closest('[data-act]');if(!t)return;var act=t.getAttribute('data-act');
-  if(act==='assign'){var s=matState(t.getAttribute('data-mid'));s.assign[t.getAttribute('data-name')]=t.value;saveState();render();}
+  if(act==='assign'){var s=matState(t.getAttribute('data-mid'));var nm=t.getAttribute('data-name');s.assign[nm]=t.value;s.manual[nm]=true;saveState();render();}
   else if(act==='covertype'){setCover(t.getAttribute('data-cid'),'type',t.value);saveState();render();}
   else if(act==='selmat'){SEL[t.getAttribute('data-mid')]=t.checked;footInfo();}
   else if(act==='copybody'){var src=t.value;if(src){FILES.body[t.getAttribute('data-mid')]=(FILES.body[src]||[]).slice();render();}}
