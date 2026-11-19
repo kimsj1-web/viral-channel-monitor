@@ -117,6 +117,7 @@ function todayKST(){var d=new Date(Date.now()+9*3600*1000);return d.toISOString(
 function mmdd(dstr){var m=/\d{4}-(\d{2})-(\d{2})/.exec(dstr||'');return m?m[1]+'.'+m[2]:dstr;}
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
 function extOf(name){var m=/\.([a-z0-9]+)$/i.exec(name||'');return m?m[1].toLowerCase():'png';}
+function fmtSize(b){if(b>=1e9)return (b/1e9).toFixed(2)+'GB';if(b>=1e6)return Math.round(b/1e6)+'MB';return Math.max(1,Math.round(b/1e3))+'KB';}
 
 var DATE=todayKST(), ACCOUNTS=[], PLAN=null;
 /* 텍스트 상태(캡션/해시태그/표지카피/배정)는 날짜별로 localStorage에 저장 — 파일은 세션 메모리에만 */
@@ -372,25 +373,28 @@ async function buildZip(mids){
     });
   });
 
+  // 예상 용량/폴더 수 미리 계산 → 너무 크면 경고
+  var est=0,folders=0;
+  order.forEach(function(co){byco[co].forEach(function(j){
+    folders++;
+    j.body.forEach(function(f){est+=(f.size||0);});
+    var c=coverById(j.s,resolveCoverId(j.s,j.a));
+    if(c&&c.type==='image'){var cf=FILES.cover[c.id];if(cf)est+=(cf.size||0);}
+  });});
+  var head='예상 용량 약 '+fmtSize(est)+' · 폴더(계정) '+folders+'개.\n\n';
+  if(est>1.2e9){ if(!confirm(head+'⚠️ 매우 큽니다. 브라우저가 압축을 못 만들어 실패할 가능성이 높아요.\n\'선택 소재 ZIP\'으로 소재를 나눠 받는 걸 권장합니다.\n\n그래도 진행할까요?'))return; }
+  else if(est>7e8){ if(!confirm(head+'조금 큰 편이라 시간이 걸릴 수 있어요. 계속할까요?'))return; }
+
   var btn=$('zipBtn'),sbtn=$('zipSelBtn'),prog=$('prog'),bar=prog.firstElementChild;
   btn.disabled=true;sbtn.disabled=true;prog.classList.add('show');bar.style.width='0';
   try{
-    // 업체별 폴더 + 업체별 개별 zip
+    // 업체별 폴더로 묶기 (중첩 zip은 용량 2배라 제외 — 큰 날 메모리 초과 방지)
     for(var i=0;i<order.length;i++){
       var co=order[i], safe=String(co).replace(/[\/\\:*?"<>|]/g,'_').trim();
-      var coName='['+safe+' '+tag+']';
-      var coFolder=root.folder(coName);
-      var coZip=new JSZip(), coZipRoot=coZip.folder(coName);
-      byco[co].forEach(function(j){
-        addAcctFiles(coFolder.folder(j.a.name), j.s, j.body, j.a);
-        addAcctFiles(coZipRoot.folder(j.a.name), j.s, j.body, j.a);
-      });
-      var coBlob=await coZip.generateAsync({type:'blob',compression:'STORE'});
-      root.file(coName+'.zip', coBlob);
-      bar.style.width=Math.round((i+1)/order.length*70)+'%';
+      var coFolder=root.folder('['+safe+' '+tag+']');
+      byco[co].forEach(function(j){ addAcctFiles(coFolder.folder(j.a.name), j.s, j.body, j.a); });
     }
-    // 바깥 전체 zip
-    var blob=await zip.generateAsync({type:'blob',compression:'STORE'},function(md){bar.style.width=(70+(md.percent|0)*0.3)+'%';});
+    var blob=await zip.generateAsync({type:'blob',compression:'STORE'},function(md){bar.style.width=(md.percent|0)+'%';});
     var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download=zipName;document.body.appendChild(a);a.click();a.remove();
     setTimeout(function(){URL.revokeObjectURL(url);},4000);
     toast('ZIP 생성 완료 — 다운로드를 확인하세요');
