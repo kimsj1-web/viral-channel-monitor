@@ -277,9 +277,21 @@ function loadEfficiency(){
 
 function place(aid,mi,si){
   if(!PLAN)PLAN=emptyPlan(DATE);
+  var a=acctById(aid); if(!a)return;
   var used=usedMap();
-  if(used[aid]!==undefined&&used[aid]!==mi){var a=acctById(aid);toast('⚠️ '+(a?('@'+a.name):'이 계정')+' — 이미 '+letter(used[aid])+' 소재에 선정했어요');return;}
+  if(used[aid]!==undefined&&used[aid]!==mi){toast('⚠️ @'+a.name+' — 이미 '+letter(used[aid])+' 소재에 선정했어요');return;}
   if(used[aid]===mi){toast('이미 이 소재에 있어요');return;}
+  // 같은 @계정명이 (영상/이미지/텍스트 상관없이) 다른 소재에 이미 있으면 차단
+  var dupMi=null,dupType=null;
+  PLAN.materials.forEach(function(m,mj){m.slots.forEach(function(sid){
+    if(!sid||sid===aid)return;var sa=acctById(sid);
+    if(sa&&sa.name===a.name&&dupMi===null){dupMi=mj;dupType=sa.type;}
+  });});
+  if(dupMi!==null){
+    var tl=dupType==='video'?'영상':dupType==='image'?'이미지':dupType==='text'?'텍스트':'다른';
+    toast('⚠️ @'+a.name+' — 이미 '+letter(dupMi)+' 소재('+tl+')에 배정된 채널입니다');
+    return;
+  }
   PLAN.materials[mi].slots[si]=aid;picked=null;savePlan();render();
 }
 function clearSlot(mi,si){if(!PLAN)return;PLAN.materials[mi].slots[si]=null;savePlan();render();}
@@ -306,13 +318,10 @@ function renderAccounts(){
     var u=used[a.id]!==undefined;
     var tg=(!a.type||a.type==='none')?'<div class="tg"><button data-act="type" data-id="'+a.id+'" data-t="image">이미지</button><button data-act="type" data-id="'+a.id+'" data-t="text">텍스트</button><button data-act="type" data-id="'+a.id+'" data-t="video">영상</button></div>':'';
     var right=u?'<span class="usedtag">'+letter(used[a.id])+' 사용중</span>':'';
-    var oth={};ACCOUNTS.forEach(function(x){if(x.name===a.name&&x.type!==a.type)oth[x.type]=1;});
-    var ks=Object.keys(oth).map(function(t){return t==='video'?'영상':t==='image'?'이미지':t==='text'?'텍스트':null;}).filter(Boolean);
-    var also=ks.length?'<span class="alsotag" title="이 계정은 다른 유형으로도 등록돼 있어요">'+ks.join('·')+'도</span>':'';
     return '<div class="acct'+(u?' used':'')+(picked===a.id?' picked':'')+'" data-aid="'+a.id+'" draggable="'+(!u)+'">'
       +'<span class="nm" data-act="detail" data-id="'+a.id+'">@'+esc(a.name)+'</span>'
       +rateHTML(a.name)
-      +'<span class="pr">'+won(a.price)+'</span>'+also+tg+right
+      +'<span class="pr">'+won(a.price)+'</span>'+tg+right
       +'<button class="ghost" data-act="edit" data-id="'+a.id+'" title="수정">⋯</button></div>';
   }
   function fill(el,arr,msg){el.innerHTML=arr.length?arr.map(card).join(''):'<div class="empty-note">'+msg+'</div>';}
