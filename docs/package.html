@@ -165,7 +165,8 @@ function shownMaterials(){
     accs=accs.map(function(a,j){return {a:a,j:j};})
       .sort(function(x,y){return typeRank(x.a.type)-typeRank(y.a.type)||x.j-y.j;})
       .map(function(x){return x.a;});   // 이미지끼리/텍스트끼리 모이게(추가 순서는 타입 안에서 유지)
-    return {id:m.id,index:i,accs:accs};
+    var video=accs.some(function(a){return a.type==='video';});  // 영상 계정이 있으면 영상 소재
+    return {id:m.id,index:i,accs:accs,video:video};
   }).filter(function(m){return m.accs.length>0;});
 }
 function letter(i){return String.fromCharCode(65+i);}
@@ -192,6 +193,7 @@ function resolveCoverId(s,acc){
    i번째 이미지 계정 → i번째 이미지 표지, i번째 텍스트 계정 → i번째 텍스트 표지.
    사용자가 드롭다운으로 직접 고른 계정(manual)은 그대로 유지. */
 function ensureAssign(m){
+  if(m.video)return false;   // 영상 소재는 표지 배정 없음
   var s=matState(m.id),changed=false,cov=coversOf(s);
   var imgC=cov.filter(function(c){return c.type==='image';});
   var txtC=cov.filter(function(c){return c.type==='text';});
@@ -256,13 +258,23 @@ function render(){
         '<select data-act="assign" data-mid="'+m.id+'" data-name="'+esc(a.name)+'">'+opts+'</select></div>';
     }).join('');
 
+    var coverSection = m.video
+      ? '<div class="lbl">표지</div><div style="font-size:13px;color:var(--vid,#0f6e56);background:var(--vid-bg,#e1f5ee);border-radius:8px;padding:10px 12px">🎬 영상 소재라 표지가 없어요. 본문(영상) + 캡션·해시태그만 들어갑니다.</div>'
+      : '<div class="lbl">표지 풀 (여기서 만든 표지를 아래에서 계정에 배정)</div>'+
+        '<div class="covers">'+covers+'</div>'+
+        '<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">'+
+          '<button class="sm" data-act="addcover" data-mid="'+m.id+'" data-type="image">+ 이미지 표지</button>'+
+          '<button class="sm" data-act="addcover" data-mid="'+m.id+'" data-type="text">+ 텍스트 표지</button>'+
+        '</div>'+
+        '<div class="lbl">계정별 표지 배정</div>'+rows;
+
     return '<div class="mat">'+
-      '<h2>'+letter(m.index)+' 소재 <span class="muted" style="font-weight:400">· 배정 '+m.accs.length+'개 계정</span>'+
+      '<h2>'+letter(m.index)+' 소재 '+(m.video?'<span style="font-size:11px;font-weight:600;color:var(--vid,#0f6e56);background:var(--vid-bg,#e1f5ee);padding:1px 8px;border-radius:999px">🎬 영상</span> ':'')+'<span class="muted" style="font-weight:400">· 배정 '+m.accs.length+'개 계정</span>'+
         '<label style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;user-select:none">'+
           '<input type="checkbox" data-act="selmat" data-mid="'+m.id+'"'+(SEL[m.id]?' checked':'')+' style="width:16px;height:16px"> ZIP에 포함</label></h2>'+
 
       '<div class="lbl">본문 파일 (이 소재의 모든 계정에 공통 복사됨)</div>'+
-      '<div class="drop" data-act="bodydrop" data-mid="'+m.id+'">여기에 본문 파일 끌어다 놓기 / 클릭해서 선택 (예: 2.mp4, 3.png … 88.png)</div>'+
+      '<div class="drop" data-act="bodydrop" data-mid="'+m.id+'">여기에 본문 파일 끌어다 놓기 / 클릭해서 선택'+(m.video?' (영상)':' (예: 2.mp4, 3.png … 88.png)')+'</div>'+
       '<div class="filelist">'+bf+'</div>'+
       (copyBodySel?'<div style="margin-top:6px">'+copyBodySel+'</div>':'')+
 
@@ -274,14 +286,7 @@ function render(){
         '<button class="sm" data-act="applyall" data-mid="'+m.id+'">이 캡션·해시태그를 전체 소재에 적용</button>'+
       '</div>'+
 
-      '<div class="lbl">표지 풀 (여기서 만든 표지를 아래에서 계정에 배정)</div>'+
-      '<div class="covers">'+covers+'</div>'+
-      '<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">'+
-        '<button class="sm" data-act="addcover" data-mid="'+m.id+'" data-type="image">+ 이미지 표지</button>'+
-        '<button class="sm" data-act="addcover" data-mid="'+m.id+'" data-type="text">+ 텍스트 표지</button>'+
-      '</div>'+
-
-      '<div class="lbl">계정별 표지 배정</div>'+rows+
+      coverSection+
     '</div>';
   }).join('');
   $('mats').innerHTML=html;
@@ -342,7 +347,7 @@ function validate(mids){
   mats.forEach(function(m){
     var L=letter(m.index)+' 소재';var s=matState(m.id);ensureAssign(m);
     if(!(FILES.body[m.id]||[]).length)errs.push(L+': 본문 파일이 없습니다');
-    m.accs.forEach(function(a){
+    if(!m.video) m.accs.forEach(function(a){
       var cid=resolveCoverId(s,a);var c=coverById(s,cid);
       if(!c){errs.push(L+' · @'+a.name+': 표지가 배정되지 않았습니다');return;}
       if(!c.copy.trim())errs.push(L+' · @'+a.name+': 표지 카피가 비어 있습니다');
@@ -369,7 +374,7 @@ async function buildZip(mids){
     m.accs.forEach(function(a){
       var co=companyOf(a.name);
       if(!byco[co]){byco[co]=[];order.push(co);}
-      byco[co].push({s:s,body:body,a:a});
+      byco[co].push({s:s,body:body,a:a,video:m.video});
     });
   });
 
@@ -392,7 +397,7 @@ async function buildZip(mids){
     for(var i=0;i<order.length;i++){
       var co=order[i], safe=String(co).replace(/[\/\\:*?"<>|]/g,'_').trim();
       var coFolder=root.folder('['+safe+' '+tag+']');
-      byco[co].forEach(function(j){ addAcctFiles(coFolder.folder(j.a.name), j.s, j.body, j.a); });
+      byco[co].forEach(function(j){ addAcctFiles(coFolder.folder(j.a.name), j.s, j.body, j.a, j.video); });
     }
     var blob=await zip.generateAsync({type:'blob',compression:'STORE'},function(md){bar.style.width=(md.percent|0)+'%';});
     var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download=zipName;document.body.appendChild(a);a.click();a.remove();
@@ -402,8 +407,12 @@ async function buildZip(mids){
   finally{btn.disabled=false;sbtn.disabled=false;setTimeout(function(){prog.classList.remove('show');bar.style.width='0';},800);}
 }
 /* 한 계정 폴더에 본문 + 표지(이미지) + caption_hashtag.txt 채우기 */
-function addAcctFiles(folder, s, body, a){
+function addAcctFiles(folder, s, body, a, video){
   body.forEach(function(file){folder.file(file.name,file);});
+  if(video){   // 영상: 표지 없음, 캡션·해시태그 두 줄만
+    folder.file('caption_hashtag.txt','캡션 : '+s.caption+'\r\n해시태그 :'+s.hashtag);
+    return;
+  }
   var c=coverById(s,resolveCoverId(s,a));
   if(c&&c.type==='image'){var cf=FILES.cover[c.id];if(cf)folder.file('1.cover.'+extOf(cf.name),cf);}
   folder.file('caption_hashtag.txt','표지 카피: '+(c?c.copy:'')+'\r\n캡션 : '+s.caption+'\r\n해시태그 :'+s.hashtag);
