@@ -8,19 +8,19 @@
 :root{
   --bg:#f6f6f4; --card:#ffffff; --head:#1f2937; --text:#1a1a1a; --muted:#6b7280;
   --border:#e5e7eb; --line:#ececeb; --accent:#4f46e5; --accent-bg:#eef2ff;
-  --img:#2563eb; --img-bg:#eff6ff; --txt:#d97706; --txt-bg:#fff7ed;
+  --img:#2563eb; --img-bg:#eff6ff; --txt:#d97706; --txt-bg:#fff7ed; --vid:#0f6e56; --vid-bg:#e1f5ee;
   --up:#dc2626; --down:#2563eb; --danger:#dc2626; --radius:10px; --slot:#fafafa;
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
   --bg:#161619; --card:#1f2024; --head:#0f1522; --text:#ededed; --muted:#9aa0aa;
   --border:#2e3036; --line:#26282e; --accent:#a5b4fc; --accent-bg:#232542;
-  --img:#60a5fa; --img-bg:#17233b; --txt:#fbbf24; --txt-bg:#2a2112;
+  --img:#60a5fa; --img-bg:#17233b; --txt:#fbbf24; --txt-bg:#2a2112; --vid:#5dcaa5; --vid-bg:#12302a;
   --up:#f87171; --down:#60a5fa; --danger:#f87171; --slot:#191a1e;
 }}
 :root[data-theme="dark"]{
   --bg:#161619; --card:#1f2024; --head:#0f1522; --text:#ededed; --muted:#9aa0aa;
   --border:#2e3036; --line:#26282e; --accent:#a5b4fc; --accent-bg:#232542;
-  --img:#60a5fa; --img-bg:#17233b; --txt:#fbbf24; --txt-bg:#2a2112;
+  --img:#60a5fa; --img-bg:#17233b; --txt:#fbbf24; --txt-bg:#2a2112; --vid:#5dcaa5; --vid-bg:#12302a;
   --up:#f87171; --down:#60a5fa; --danger:#f87171; --slot:#191a1e;
 }
 *{box-sizing:border-box}
@@ -56,6 +56,8 @@ button.ghost{border:none;background:transparent;color:var(--muted);padding:2px 6
 .chip.img{color:var(--img);background:var(--img-bg)}
 .chip.txt{color:var(--txt);background:var(--txt-bg)}
 .chip.non{color:var(--muted);background:var(--line)}
+.chip.vid{color:var(--vid);background:var(--vid-bg)}
+.alsotag{font-size:10px;color:var(--muted);background:var(--line);padding:1px 5px;border-radius:4px}
 .acct{display:flex;align-items:center;gap:7px;padding:7px 9px;border:1px solid var(--border);border-radius:8px;
   margin-bottom:7px;background:var(--card);cursor:grab}
 .acct[draggable=true]:active{cursor:grabbing}
@@ -129,6 +131,7 @@ button.ghost{border:none;background:transparent;color:var(--muted);padding:2px 6
     <div class="cols">
       <div class="col"><h3><span class="chip img">이미지 썸네일</span></h3><div class="listbox" id="colImg"></div></div>
       <div class="col"><h3><span class="chip txt">텍스트 썸네일</span></h3><div class="listbox" id="colTxt"></div></div>
+      <div class="col"><h3><span class="chip vid">영상</span></h3><div class="listbox" id="colVid"></div></div>
       <div class="col"><h3><span class="chip non">미설정</span></h3><div class="listbox" id="colNon"></div></div>
     </div>
   </div>
@@ -179,6 +182,7 @@ button.ghost{border:none;background:transparent;color:var(--muted);padding:2px 6
     <div class="seg" id="mType">
       <button data-t="image">이미지</button>
       <button data-t="text">텍스트</button>
+      <button data-t="video">영상</button>
       <button data-t="none">미설정</button>
     </div>
     <label>단가 (만원)</label>
@@ -295,33 +299,37 @@ function sortByEff(a,b){
 }
 function render(){renderAccounts();renderPlan();}
 function renderAccounts(){
-  var used=usedMap(), b={image:[],text:[],none:[]};
+  var used=usedMap(), b={image:[],text:[],video:[],none:[]};
   ACCOUNTS.forEach(function(a){(b[a.type]||b.none).push(a);});
-  b.image.sort(sortByEff);b.text.sort(sortByEff);b.none.sort(sortByEff);
+  b.image.sort(sortByEff);b.text.sort(sortByEff);b.video.sort(sortByEff);b.none.sort(sortByEff);
   function card(a){
     var u=used[a.id]!==undefined;
-    var tg=a.type==='none'?'<div class="tg"><button data-act="type" data-id="'+a.id+'" data-t="image">이미지</button><button data-act="type" data-id="'+a.id+'" data-t="text">텍스트</button></div>':'';
+    var tg=(!a.type||a.type==='none')?'<div class="tg"><button data-act="type" data-id="'+a.id+'" data-t="image">이미지</button><button data-act="type" data-id="'+a.id+'" data-t="text">텍스트</button><button data-act="type" data-id="'+a.id+'" data-t="video">영상</button></div>':'';
     var right=u?'<span class="usedtag">'+letter(used[a.id])+' 사용중</span>':'';
+    var oth={};ACCOUNTS.forEach(function(x){if(x.name===a.name&&x.type!==a.type)oth[x.type]=1;});
+    var ks=Object.keys(oth).map(function(t){return t==='video'?'영상':t==='image'?'이미지':t==='text'?'텍스트':null;}).filter(Boolean);
+    var also=ks.length?'<span class="alsotag" title="이 계정은 다른 유형으로도 등록돼 있어요">'+ks.join('·')+'도</span>':'';
     return '<div class="acct'+(u?' used':'')+(picked===a.id?' picked':'')+'" data-aid="'+a.id+'" draggable="'+(!u)+'">'
       +'<span class="nm" data-act="detail" data-id="'+a.id+'">@'+esc(a.name)+'</span>'
       +rateHTML(a.name)
-      +'<span class="pr">'+won(a.price)+'</span>'+tg+right
+      +'<span class="pr">'+won(a.price)+'</span>'+also+tg+right
       +'<button class="ghost" data-act="edit" data-id="'+a.id+'" title="수정">⋯</button></div>';
   }
   function fill(el,arr,msg){el.innerHTML=arr.length?arr.map(card).join(''):'<div class="empty-note">'+msg+'</div>';}
   fill($('colImg'),b.image,'아직 없어요');
   fill($('colTxt'),b.text,'아직 없어요');
+  fill($('colVid'),b.video,'아직 없어요');
   fill($('colNon'),b.none,'전부 유형이 지정됐어요 👍');
 }
 function renderPlan(){
   if(!PLAN)PLAN=emptyPlan(DATE);
   var grand=0;
   var html=PLAN.materials.map(function(m,mi){
-    var mt=0;
+    var mt=0, isVid=m.slots.some(function(aid){var a=aid&&acctById(aid);return a&&a.type==='video';});
     var slots=m.slots.map(function(aid,si){
       if(aid){var a=acctById(aid);
         if(a){mt+=(a.price||0);
-          var chip=a.type==='image'?'<span class="chip img">이미지</span>':a.type==='text'?'<span class="chip txt">텍스트</span>':'<span class="chip non">미설정</span>';
+          var chip=a.type==='image'?'<span class="chip img">이미지</span>':a.type==='text'?'<span class="chip txt">텍스트</span>':a.type==='video'?'<span class="chip vid">영상</span>':'<span class="chip non">미설정</span>';
           var e=EFF[a.name]; var fr=(e&&e.likes!=null)?'<span class="fr">❤ '+Number(e.likes).toLocaleString()+'</span>':'';
           return '<div class="slot" data-mi="'+mi+'" data-si="'+si+'"><span class="fn">@'+esc(a.name)+'</span>'+chip+fr+'<span class="fp">'+won(a.price)+'</span><button class="ghost" data-act="clear" data-mi="'+mi+'" data-si="'+si+'">✕</button></div>';
         }
@@ -330,7 +338,8 @@ function renderPlan(){
       return '<div class="slot'+(picked?' pickable':'')+'" data-mi="'+mi+'" data-si="'+si+'"><span class="empty">'+(picked?'여기 클릭':'끌어다 놓기')+'</span></div>';
     }).join('');
     grand+=mt;
-    return '<div class="mat"><div class="mh"><span class="lbl">'+letter(mi)+' 소재</span><span class="mt">'+won(mt)+'</span><button class="ghost" data-act="delmat" data-mi="'+mi+'" title="소재 삭제">✕</button></div>'+slots+'<button class="addslot" data-act="addslot" data-mi="'+mi+'">+ 채널 추가</button></div>';
+    var vidBadge=isVid?' <span class="chip vid" title="영상 계정이 포함된 소재 — 패키징에서 영상 모드">영상</span>':'';
+    return '<div class="mat"><div class="mh"><span class="lbl">'+letter(mi)+' 소재</span>'+vidBadge+'<span class="mt">'+won(mt)+'</span><button class="ghost" data-act="delmat" data-mi="'+mi+'" title="소재 삭제">✕</button></div>'+slots+'<button class="addslot" data-act="addslot" data-mi="'+mi+'">+ 채널 추가</button></div>';
   }).join('');
   $('mats').innerHTML=html;
   $('grand').textContent='총 '+won(grand);
