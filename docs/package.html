@@ -272,9 +272,13 @@ function render(){
     }).join('');
 
     var vfiles=(FILES.body[m.id]||[]).map(function(f){return f.name;});
+    var vowner={};m.accs.forEach(function(a){var fn=s.vmap[a.name];if(fn&&!vowner[fn])vowner[fn]=a.name;}); // 각 영상의 첫 사용 계정
     var vrows=m.accs.map(function(a){
       var cur=s.vmap[a.name]||'';
-      var o='<option value="">(미배정)</option>'+vfiles.map(function(fn){return '<option value="'+esc(fn)+'"'+(fn===cur?' selected':'')+'>'+esc(fn)+'</option>';}).join('');
+      var o='<option value="">(미배정)</option>'+vfiles.map(function(fn){
+        var lab=fn+((vowner[fn]&&vowner[fn]!==a.name)?' (사용중)':'');
+        return '<option value="'+esc(fn)+'"'+(fn===cur?' selected':'')+'>'+esc(lab)+'</option>';
+      }).join('');
       var mark=cur?'':'<span style="color:var(--danger);font-size:11px;font-weight:600">미배정</span>';
       return '<div class="assignrow"><span class="nm">🎬 @'+esc(a.name)+'</span>'+mark+'<select data-act="vassign" data-mid="'+m.id+'" data-name="'+esc(a.name)+'">'+o+'</select></div>';
     }).join('');
