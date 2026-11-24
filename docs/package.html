@@ -141,7 +141,7 @@ function saveState(){try{localStorage.setItem(stKey(),JSON.stringify(STATE));}ca
 function matState(mid){
   var s=STATE.materials[mid];
   if(!s){
-    s={caption:'와 대박이다 ㄷㄷ',hashtag:'#유머 #이슈 #유행 #나폴리맛피아',covers:[],assign:{},manual:{}};
+    s={caption:'와 대박이다 ㄷㄷ',hashtag:'#유머 #이슈 #유행 #나폴리맛피아',covers:[],assign:{},manual:{},vmap:{}};
     s.covers.push({id:uid(),type:'image',copy:''});
     s.covers.push({id:uid(),type:'image',copy:''});
     s.covers.push({id:uid(),type:'text',copy:''});
@@ -151,6 +151,7 @@ function matState(mid){
   if(!s.assign)s.assign={};
   if(!s.covers)s.covers=[];
   if(!s.manual)s.manual={};
+  if(!s.vmap)s.vmap={};
   return s;
 }
 function coverById(s,cid){for(var i=0;i<s.covers.length;i++){if(s.covers[i].id===cid)return s.covers[i];}return null;}
@@ -192,6 +193,18 @@ function resolveCoverId(s,acc){
 /* 자동배정: 같은 타입끼리 "순서대로" 매칭.
    i번째 이미지 계정 → i번째 이미지 표지, i번째 텍스트 계정 → i번째 텍스트 표지.
    사용자가 드롭다운으로 직접 고른 계정(manual)은 그대로 유지. */
+/* 영상 소재: 업로드한 영상 풀을 계정에 1:1로 배정 (순서대로, 중복 없이). 수동 선택은 유지 */
+function ensureVideoAssign(m){
+  var s=matState(m.id),changed=false;
+  var files=(FILES.body[m.id]||[]).map(function(f){return f.name;});
+  var used={};
+  m.accs.forEach(function(a){var fn=s.vmap[a.name];
+    if(fn&&files.indexOf(fn)>=0&&!used[fn]){used[fn]=true;}
+    else if(fn){delete s.vmap[a.name];changed=true;}});
+  m.accs.forEach(function(a){if(s.vmap[a.name])return;
+    for(var i=0;i<files.length;i++){if(!used[files[i]]){s.vmap[a.name]=files[i];used[files[i]]=true;changed=true;break;}}});
+  return changed;
+}
 function ensureAssign(m){
   if(m.video)return false;   // 영상 소재는 표지 배정 없음
   var s=matState(m.id),changed=false,cov=coversOf(s);
@@ -219,7 +232,7 @@ function ownerMap(m){
 function render(){
   var mats=shownMaterials();
   if(!mats.length){$('mats').innerHTML='<p class="muted">이 날짜에 배정된 계정이 없어요. 배정 화면에서 먼저 소재에 계정을 넣어주세요.</p>';footInfo();return;}
-  var syncChanged=false;mats.forEach(function(m){if(ensureAssign(m))syncChanged=true;});if(syncChanged)saveState();
+  var syncChanged=false;mats.forEach(function(m){if(m.video?ensureVideoAssign(m):ensureAssign(m))syncChanged=true;});if(syncChanged)saveState();
   var html=mats.map(function(m){
     var s=matState(m.id);
     var bodyFiles=FILES.body[m.id]||[];
@@ -258,8 +271,15 @@ function render(){
         '<select data-act="assign" data-mid="'+m.id+'" data-name="'+esc(a.name)+'">'+opts+'</select></div>';
     }).join('');
 
+    var vfiles=(FILES.body[m.id]||[]).map(function(f){return f.name;});
+    var vrows=m.accs.map(function(a){
+      var cur=s.vmap[a.name]||'';
+      var o='<option value="">(미배정)</option>'+vfiles.map(function(fn){return '<option value="'+esc(fn)+'"'+(fn===cur?' selected':'')+'>'+esc(fn)+'</option>';}).join('');
+      var mark=cur?'':'<span style="color:var(--danger);font-size:11px;font-weight:600">미배정</span>';
+      return '<div class="assignrow"><span class="nm">🎬 @'+esc(a.name)+'</span>'+mark+'<select data-act="vassign" data-mid="'+m.id+'" data-name="'+esc(a.name)+'">'+o+'</select></div>';
+    }).join('');
     var coverSection = m.video
-      ? '<div class="lbl">표지</div><div style="font-size:13px;color:var(--vid,#0f6e56);background:var(--vid-bg,#e1f5ee);border-radius:8px;padding:10px 12px">🎬 영상 소재라 표지가 없어요. 본문(영상) + 캡션·해시태그만 들어갑니다.</div>'
+      ? '<div class="lbl">계정별 영상 배정 <span class="muted" style="font-weight:400">· 순서대로 자동 배정, 드롭다운으로 변경</span></div>'+vrows
       : '<div class="lbl">표지 풀 (여기서 만든 표지를 아래에서 계정에 배정)</div>'+
         '<div class="covers">'+covers+'</div>'+
         '<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">'+
@@ -273,8 +293,9 @@ function render(){
         '<label style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;user-select:none">'+
           '<input type="checkbox" data-act="selmat" data-mid="'+m.id+'"'+(SEL[m.id]?' checked':'')+' style="width:16px;height:16px"> ZIP에 포함</label></h2>'+
 
-      '<div class="lbl">본문 파일 (이 소재의 모든 계정에 공통 복사됨)</div>'+
-      '<div class="drop" data-act="bodydrop" data-mid="'+m.id+'">여기에 본문 파일 끌어다 놓기 / 클릭해서 선택'+(m.video?' (영상)':' (예: 2.mp4, 3.png … 88.png)')+'</div>'+
+      '<div class="lbl">'+(m.video?'영상 파일 (계정마다 서로 다른 영상 1개씩 · 위에서부터 순서대로 배정)':'본문 파일 (이 소재의 모든 계정에 공통 복사됨)')+'</div>'+
+      (m.video?'<div style="font-size:11px;color:var(--muted);margin:-2px 0 6px">💡 릴스(20~30초)는 한 번에 100개 안팎까지 안전해요. 넘으면 ZIP 전에 경고가 떠요.</div>':'')+
+      '<div class="drop" data-act="bodydrop" data-mid="'+m.id+'">여기에 '+(m.video?'영상 끌어다 놓기 / 클릭해서 선택':'본문 파일 끌어다 놓기 / 클릭해서 선택 (예: 2.mp4, 3.png … 88.png)')+'</div>'+
       '<div class="filelist">'+bf+'</div>'+
       (copyBodySel?'<div style="margin-top:6px">'+copyBodySel+'</div>':'')+
 
@@ -319,6 +340,10 @@ document.addEventListener('input',function(e){
 document.addEventListener('change',function(e){
   var t=e.target.closest('[data-act]');if(!t)return;var act=t.getAttribute('data-act');
   if(act==='assign'){var s=matState(t.getAttribute('data-mid'));var nm=t.getAttribute('data-name');s.assign[nm]=t.value;s.manual[nm]=true;saveState();render();}
+  else if(act==='vassign'){var s=matState(t.getAttribute('data-mid'));var nm=t.getAttribute('data-name'),fn=t.value;
+    if(fn)Object.keys(s.vmap).forEach(function(k){if(k!==nm&&s.vmap[k]===fn)delete s.vmap[k];}); // 같은 영상 다른 계정에서 제거(1:1)
+    if(fn)s.vmap[nm]=fn; else delete s.vmap[nm];
+    saveState();render();}
   else if(act==='covertype'){setCover(t.getAttribute('data-cid'),'type',t.value);saveState();render();}
   else if(act==='selmat'){SEL[t.getAttribute('data-mid')]=t.checked;footInfo();}
   else if(act==='copybody'){var src=t.value;if(src){FILES.body[t.getAttribute('data-mid')]=(FILES.body[src]||[]).slice();render();}}
@@ -345,9 +370,12 @@ function validate(mids){
   var errs=[];var mats=shownMaterials();
   if(mids&&mids.length)mats=mats.filter(function(m){return mids.indexOf(m.id)>=0;});
   mats.forEach(function(m){
-    var L=letter(m.index)+' 소재';var s=matState(m.id);ensureAssign(m);
-    if(!(FILES.body[m.id]||[]).length)errs.push(L+': 본문 파일이 없습니다');
-    if(!m.video) m.accs.forEach(function(a){
+    var L=letter(m.index)+' 소재';var s=matState(m.id);if(m.video)ensureVideoAssign(m);else ensureAssign(m);
+    if(!(FILES.body[m.id]||[]).length)errs.push(L+(m.video?': 영상 파일이 없습니다':': 본문 파일이 없습니다'));
+    if(m.video) m.accs.forEach(function(a){
+      if(!(s.vmap&&s.vmap[a.name]))errs.push(L+' · @'+a.name+': 영상이 배정되지 않았습니다 (영상 개수가 계정 수보다 적어요)');
+    });
+    else m.accs.forEach(function(a){
       var cid=resolveCoverId(s,a);var c=coverById(s,cid);
       if(!c){errs.push(L+' · @'+a.name+': 표지가 배정되지 않았습니다');return;}
       if(!c.copy.trim())errs.push(L+' · @'+a.name+': 표지 카피가 비어 있습니다');
@@ -382,9 +410,10 @@ async function buildZip(mids){
   var est=0,folders=0;
   order.forEach(function(co){byco[co].forEach(function(j){
     folders++;
-    j.body.forEach(function(f){est+=(f.size||0);});
-    var c=coverById(j.s,resolveCoverId(j.s,j.a));
-    if(c&&c.type==='image'){var cf=FILES.cover[c.id];if(cf)est+=(cf.size||0);}
+    if(j.video){ var fn=j.s.vmap&&j.s.vmap[j.a.name];var vf=fn?j.body.filter(function(f){return f.name===fn;})[0]:null;if(vf)est+=(vf.size||0); }
+    else { j.body.forEach(function(f){est+=(f.size||0);});
+      var c=coverById(j.s,resolveCoverId(j.s,j.a));
+      if(c&&c.type==='image'){var cf=FILES.cover[c.id];if(cf)est+=(cf.size||0);} }
   });});
   var head='예상 용량 약 '+fmtSize(est)+' · 폴더(계정) '+folders+'개.\n\n';
   if(est>1.2e9){ if(!confirm(head+'⚠️ 매우 큽니다. 브라우저가 압축을 못 만들어 실패할 가능성이 높아요.\n\'선택 소재 ZIP\'으로 소재를 나눠 받는 걸 권장합니다.\n\n그래도 진행할까요?'))return; }
@@ -408,11 +437,14 @@ async function buildZip(mids){
 }
 /* 한 계정 폴더에 본문 + 표지(이미지) + caption_hashtag.txt 채우기 */
 function addAcctFiles(folder, s, body, a, video){
-  body.forEach(function(file){folder.file(file.name,file);});
-  if(video){   // 영상: 표지 없음, 캡션·해시태그 두 줄만
+  if(video){   // 영상: 배정된 영상 1개 + 캡션·해시태그 두 줄만 (표지 없음)
+    var fn=s.vmap&&s.vmap[a.name];
+    var vf=fn?body.filter(function(f){return f.name===fn;})[0]:null;
+    if(vf)folder.file(vf.name,vf);
     folder.file('caption_hashtag.txt','캡션 : '+s.caption+'\r\n해시태그 :'+s.hashtag);
     return;
   }
+  body.forEach(function(file){folder.file(file.name,file);});
   var c=coverById(s,resolveCoverId(s,a));
   if(c&&c.type==='image'){var cf=FILES.cover[c.id];if(cf)folder.file('1.cover.'+extOf(cf.name),cf);}
   folder.file('caption_hashtag.txt','표지 카피: '+(c?c.copy:'')+'\r\n캡션 : '+s.caption+'\r\n해시태그 :'+s.hashtag);
