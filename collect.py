@@ -23,13 +23,21 @@ GRAPH_VER = "v26.0"
 TOKEN = os.environ["IG_ACCESS_TOKEN"]
 IG_USER_ID = os.environ["IG_USER_ID"]
 
-LOOKBACK = 7            # 집계 기간(일)
+LOOKBACK = 7            # 좋아요·댓글(참여) 집계 기간(일)
 PAGE_SIZE = 50
 MAX_PAGES = 6          # 채널당 최대 페이지(무한 페이지네이션 방지)
 OUT_PATH = "docs/data.json"
 HISTORY_KEEP = 60
 KST = dt.timezone(dt.timedelta(hours=9))
-MEDIA_FIELDS = "id,media_type,timestamp,permalink,like_count,comments_count"
+
+# ── 릴스 조회수(효율) 설정 ──────────────────────────────
+REELS_N = 20           # 최근 업로드순 릴스 몇 개로 중앙값을 낼지
+MIN_REELS = 3          # 이보다 적으면 조회수 효율 산출 안 함(좋아요로 폴백)
+FRESH_HOURS = 24       # 업로드 후 이 시간 안 지난 릴스는 제외(조회수 덜 쌓임)
+
+# view_count: 릴스에만 값이 옴 / media_product_type: REELS 판별용
+MEDIA_FIELDS = ("id,media_type,media_product_type,timestamp,permalink,"
+                "like_count,comments_count,view_count")
 
 RL_CODES = {4, 17, 32, 613, 368}   # 레이트리밋/차단으로 보는 에러 코드
 MAX_RL_STREAK = 5                  # 연속 이만큼 막히면 조기 중단
@@ -41,6 +49,18 @@ SUPA_KEY = "sb_publishable_ZWCmMNsV1La-yMawjhzUtg_FWQp7-O1"
 
 def log(msg):
     print(msg, flush=True)   # Actions에서 진행 상황이 바로 보이도록 즉시 출력
+
+
+def median(xs):
+    """정수로 반올림한 중앙값. 빈 리스트면 None."""
+    xs = sorted(xs)
+    n = len(xs)
+    if n == 0:
+        return None
+    m = n // 2
+    if n % 2:
+        return xs[m]
+    return round((xs[m - 1] + xs[m]) / 2)
 
 
 def load_targets():
@@ -126,8 +146,10 @@ def api_get(params, retries=3):
     return {"error": {"message": "max retries exceeded", "code": 4}}
 
 
-def fetch(username, since):
-    items, followers, after, pages = [], None, None, 0
+def fetch(username, since, now):
+    items, reels, followers, after, pages = [], [], None, None, 0
+    engagement_done = False
+    fresh_cut = now - dt.timedelta(hours=FRESH_HOURS)
     while pages < MAX_PAGES:
         pages += 1
         if after:
@@ -146,28 +168,60 @@ def fetch(username, since):
         rows = media.get("data", [])
         if not rows:
             break
-        old = False
+        old_on_page = 0
         for it in rows:
             ts = parse_ts(it.get("timestamp"))
             if not ts:
                 continue
+            # 릴스 조회수: 핀(고정)이 날짜 순서를 흐트러뜨리므로 날짜 무관하게 전부 모아둠.
+            # 나중에 timestamp로 다시 정렬해 최근 N개만 쓰므로, 오래된 핀은 자동으로 빠짐.
+            if it.get("media_product_type") == "REELS" and it.get("view_count") is not None:
+                reels.append({"id": it.get("id"), "_ts": ts,
+                              "views": it.get("view_count") or 0,
+                              "permalink": it.get("permalink", "")})
+            # 참여(좋아요·댓글)는 기존대로 집계 기간(LOOKBACK*2) 내 게시물만
             if ts < since:
-                old = True
-                continue
-            it["_ts"] = ts
-            items.append(it)
+                old_on_page += 1
+            else:
+                it["_ts"] = ts
+                items.append(it)
+        # 핀은 최대 3개. 한 페이지에서 '오래된 글'이 3개를 넘으면 진짜 과거 구간에 도달한 것.
+        # (핀 한두 개 때문에 집계가 조기 종료되던 기존 버그도 함께 방지)
+        if old_on_page > 3:
+            engagement_done = True
+        reels_old = sum(1 for r in reels if r["_ts"] <= fresh_cut)
         paging = media.get("paging", {})
         after = paging.get("cursors", {}).get("after")
-        if old or not paging.get("next") or not after:
+        # 참여 구간을 다 덮었고 + 24h 지난 릴스를 N개 이상 확보했으면 종료
+        if (engagement_done and reels_old >= REELS_N) or not paging.get("next") or not after:
             break
-    return {"followers": followers, "items": items}, None
+    return {"followers": followers, "items": items, "reels": reels}, None
 
 
-def summarize(username, followers, items, now):
+def summarize(username, followers, items, reels, now):
     rs = now - dt.timedelta(days=LOOKBACK)
     ps = now - dt.timedelta(days=LOOKBACK * 2)
     recent = [it for it in items if it["_ts"] >= rs]
     prior = [it for it in items if ps <= it["_ts"] < rs]
+
+    # ── 릴스 조회수 중앙값(효율) ──
+    # 1) id 중복 제거  2) 업로드 24h 이내 제외  3) 최신순 N개  4) 중앙값
+    fresh_cut = now - dt.timedelta(hours=FRESH_HOURS)
+    seen, uniq = set(), []
+    for r in sorted(reels, key=lambda r: r["_ts"], reverse=True):
+        if r["id"] in seen:
+            continue
+        seen.add(r["id"])
+        uniq.append(r)
+    eligible = [r for r in uniq if r["_ts"] <= fresh_cut]   # 이미 최신순
+    used = eligible[:REELS_N]
+    view_median = median([r["views"] for r in used]) if len(used) >= MIN_REELS else None
+    reels_used = len(used) if view_median is not None else 0
+    top_reels = ([{"views": r["views"],
+                   "date": r["_ts"].astimezone(KST).strftime("%Y-%m-%d"),
+                   "permalink": r["permalink"]}
+                  for r in sorted(used, key=lambda r: r["views"], reverse=True)[:5]]
+                 if view_median is not None else [])
 
     def eng(it):
         return (it.get("like_count") or 0) + (it.get("comments_count") or 0)
@@ -199,6 +253,9 @@ def summarize(username, followers, items, now):
         "eng_rate": eng_rate,
         "trend_pct": trend,
         "posts": posts_out,
+        "view_median": view_median,
+        "reels_used": reels_used,
+        "top_reels": top_reels,
         "error": None,
     }
 
@@ -226,7 +283,7 @@ def main():
 
     for idx, u in enumerate(targets, 1):
         log(f"[{idx}/{total}] @{u} ...")
-        res, err = fetch(u, since)
+        res, err = fetch(u, since, now)
         if err:
             rl = is_rate_limit(err)
             rl_streak = rl_streak + 1 if rl else 0
@@ -250,7 +307,7 @@ def main():
             continue
 
         rl_streak = 0
-        s = summarize(u, res["followers"], res["items"], now)
+        s = summarize(u, res["followers"], res["items"], res["reels"], now)
         channels.append(s)
         ok_count += 1
         pts = [p for p in history.get(u, []) if p.get("date") != today]
