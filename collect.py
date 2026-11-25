@@ -46,6 +46,10 @@ MAX_RL_STREAK = 5                  # 연속 이만큼 막히면 조기 중단
 SUPA_URL = "https://nmsrzdlgmaaqqcalfbhr.supabase.co"
 SUPA_KEY = "sb_publishable_ZWCmMNsV1La-yMawjhzUtg_FWQp7-O1"
 
+# 영상 계정(type=='video') 집합 — load_targets에서 채움.
+# 영상은 릴스 조회수만, 이미지·텍스트는 참여(좋아요·댓글)만 깊게 긁어 호출 절약.
+VIDEO_ACCOUNTS = set()
+
 
 def log(msg):
     print(msg, flush=True)   # Actions에서 진행 상황이 바로 보이도록 즉시 출력
@@ -89,7 +93,11 @@ def load_targets():
         if rows and isinstance(rows[0].get("v"), list):
             for a in rows[0]["v"]:
                 add(a.get("name"))
-        log(f"Supabase 계정 {len(names)}개 로드")
+                if a.get("type") == "video":
+                    nm = (a.get("name") or "").strip().lstrip("@")
+                    if nm:
+                        VIDEO_ACCOUNTS.add(nm)
+        log(f"Supabase 계정 {len(names)}개 로드 (영상 {len(VIDEO_ACCOUNTS)}개)")
     except Exception as e:
         log(f"Supabase 로드 실패 → channels.txt로 대체: {e}")
 
@@ -146,7 +154,7 @@ def api_get(params, retries=3):
     return {"error": {"message": "max retries exceeded", "code": 4}}
 
 
-def fetch(username, since, now):
+def fetch(username, since, now, is_video=False):
     items, reels, followers, after, pages = [], [], None, None, 0
     engagement_done = False
     fresh_cut = now - dt.timedelta(hours=FRESH_HOURS)
@@ -173,27 +181,29 @@ def fetch(username, since, now):
             ts = parse_ts(it.get("timestamp"))
             if not ts:
                 continue
-            # 릴스 조회수: 핀(고정)이 날짜 순서를 흐트러뜨리므로 날짜 무관하게 전부 모아둠.
-            # 나중에 timestamp로 다시 정렬해 최근 N개만 쓰므로, 오래된 핀은 자동으로 빠짐.
-            if it.get("media_product_type") == "REELS" and it.get("view_count") is not None:
-                reels.append({"id": it.get("id"), "_ts": ts,
-                              "views": it.get("view_count") or 0,
-                              "permalink": it.get("permalink", "")})
-            # 참여(좋아요·댓글)는 기존대로 집계 기간(LOOKBACK*2) 내 게시물만
-            if ts < since:
-                old_on_page += 1
+            if is_video:
+                # 영상 계정: 릴스 조회수만 모음(참여 집계 생략). 핀이 날짜순서를 흐트러도
+                # 나중에 timestamp로 정렬해 최근 N개만 쓰므로 오래된 핀은 자동 제외.
+                if it.get("media_product_type") == "REELS" and it.get("view_count") is not None:
+                    reels.append({"id": it.get("id"), "_ts": ts,
+                                  "views": it.get("view_count") or 0,
+                                  "permalink": it.get("permalink", "")})
             else:
-                it["_ts"] = ts
-                items.append(it)
-        # 핀은 최대 3개. 한 페이지에서 '오래된 글'이 3개를 넘으면 진짜 과거 구간에 도달한 것.
-        # (핀 한두 개 때문에 집계가 조기 종료되던 기존 버그도 함께 방지)
+                # 이미지·텍스트 계정: 참여(좋아요·댓글)만, 집계 기간(LOOKBACK*2) 내 게시물
+                if ts < since:
+                    old_on_page += 1
+                else:
+                    it["_ts"] = ts
+                    items.append(it)
+        # 핀은 최대 3개. 한 페이지에서 '오래된 글'이 3개 넘으면 진짜 과거 구간 도달.
         if old_on_page > 3:
             engagement_done = True
         reels_old = sum(1 for r in reels if r["_ts"] <= fresh_cut)
         paging = media.get("paging", {})
         after = paging.get("cursors", {}).get("after")
-        # 참여 구간을 다 덮었고 + 24h 지난 릴스를 N개 이상 확보했으면 종료
-        if (engagement_done and reels_old >= REELS_N) or not paging.get("next") or not after:
+        # 영상: 24h 지난 릴스 N개 확보하면 종료 / 이미지·텍스트: 참여 구간 덮으면 바로 종료(헛페이지 X)
+        done = (reels_old >= REELS_N) if is_video else engagement_done
+        if done or not paging.get("next") or not after:
             break
     return {"followers": followers, "items": items, "reels": reels}, None
 
@@ -282,8 +292,9 @@ def main():
     aborted = False
 
     for idx, u in enumerate(targets, 1):
-        log(f"[{idx}/{total}] @{u} ...")
-        res, err = fetch(u, since, now)
+        is_video = u in VIDEO_ACCOUNTS
+        log(f"[{idx}/{total}] @{u}{' (영상)' if is_video else ''} ...")
+        res, err = fetch(u, since, now, is_video)
         if err:
             rl = is_rate_limit(err)
             rl_streak = rl_streak + 1 if rl else 0
@@ -303,7 +314,7 @@ def main():
                         channels.append({"username": v, "error": "skipped (rate limited)"})
                 aborted = True
                 break
-            time.sleep(0.5)
+            time.sleep(3)
             continue
 
         rl_streak = 0
@@ -312,10 +323,14 @@ def main():
         ok_count += 1
         pts = [p for p in history.get(u, []) if p.get("date") != today]
         pts.append({"date": today, "eng_rate": s["eng_rate"],
-                    "avg_engagement": s["avg_engagement"]})
+                    "avg_engagement": s["avg_engagement"],
+                    "view_median": s["view_median"]})
         history[u] = pts[-HISTORY_KEEP:]
-        log(f"    [ok] 참여율 {s['eng_rate']}% / 평균좋아요 {s['avg_likes']}")
-        time.sleep(0.5)
+        if is_video:
+            log(f"    [ok] 조회수중앙값 {s['view_median']} (릴스 {s['reels_used']}개)")
+        else:
+            log(f"    [ok] 참여율 {s['eng_rate']}% / 평균좋아요 {s['avg_likes']}")
+        time.sleep(3)
 
     # 안전장치: 이번에 새로 성공한 계정이 0개면 기존 data.json 보존(덮어쓰지 않음)
     if ok_count == 0:
