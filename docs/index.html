@@ -128,12 +128,8 @@ button.ghost{border:none;background:transparent;color:var(--muted);padding:2px 6
 
   <div class="panels">
   <div class="sec panel-acc">
-    <h2>계정 목록 <span class="n" id="sortHint">평균 좋아요 많은 순 · 드래그로 배정 · 계정명 클릭 시 상세</span>
-      <span style="margin-left:auto;display:inline-flex;gap:4px">
-        <button id="sortLikes" class="sortbtn on">좋아요순</button>
-        <button id="sortEff" class="sortbtn">조회수순</button>
-      </span>
-      <button class="primary" id="addAcct">+ 계정 추가</button>
+    <h2>계정 목록 <span class="n">이미지·텍스트는 좋아요순 · 영상은 조회수순 · 드래그로 배정 · 계정명 클릭 시 상세</span>
+      <button class="primary" id="addAcct" style="margin-left:auto">+ 계정 추가</button>
     </h2>
     <div class="cols">
       <div class="col"><h3><span class="chip img">이미지 썸네일</span></h3><div class="listbox" id="colImg"></div></div>
@@ -278,7 +274,8 @@ function usedMap(){var map={};if(!PLAN)return map;PLAN.materials.forEach(functio
 
 function loadEfficiency(){
   fetch('./data.json?_='+Date.now()).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){
-    (d.channels||[]).forEach(function(c){ if(c.username) EFF[c.username]={rate:c.eng_rate,trend:c.trend_pct,likes:c.avg_likes,followers:c.followers,posts:c.posts||[],viewMedian:(c.view_median!=null?c.view_median:null),reelsUsed:c.reels_used||0,reels:c.top_reels||[]}; });
+    var HIST=d.history||{};
+    (d.channels||[]).forEach(function(c){ if(c.username) EFF[c.username]={rate:c.eng_rate,trend:c.trend_pct,likes:c.avg_likes,followers:c.followers,posts:c.posts||[],viewMedian:(c.view_median!=null?c.view_median:null),reelsUsed:c.reels_used||0,reels:c.top_reels||[],histViews:(HIST[c.username]||[]).filter(function(p){return p.view_median!=null;}).map(function(p){return {date:p.date,v:p.view_median};})}; });
     $('freshness').textContent='참여율 '+(d.updated_kst||'')+' 기준';
     render();
   }).catch(function(){
@@ -325,30 +322,14 @@ function metricHTML(a){
   if(e.likes==null)return '';
   return '<span class="rate">❤ '+Number(e.likes).toLocaleString()+'</span>';
 }
-function sortByEff(a,b){
-  if(SORT_MODE==='eff'){
-    var va=effVal(a),vb=effVal(b);
-    if(vb!==va)return vb-va; return a.name.localeCompare(b.name);
-  }
-  var ra=(EFF[a.name]&&EFF[a.name].likes!=null)?EFF[a.name].likes:-1;
-  var rb=(EFF[b.name]&&EFF[b.name].likes!=null)?EFF[b.name].likes:-1;
-  if(rb!==ra)return rb-ra; return a.name.localeCompare(b.name);
-}
-function setSort(m){
-  if(SORT_MODE===m)return;
-  SORT_MODE=m; lsSet('cm_sort',m); syncSortUI(); renderAccounts();
-}
-function syncSortUI(){
-  var sl=$('sortLikes'),se=$('sortEff'),sh=$('sortHint');
-  if(sl)sl.classList.toggle('on',SORT_MODE==='likes');
-  if(se)se.classList.toggle('on',SORT_MODE==='eff');
-  if(sh)sh.textContent=(SORT_MODE==='eff'?'조회수 중앙값 많은 순':'평균 좋아요 많은 순')+' · 드래그로 배정 · 계정명 클릭 시 상세';
-}
+function likesOf(a){return (EFF[a.name]&&EFF[a.name].likes!=null)?EFF[a.name].likes:-1;}
+function byLikes(a,b){var ra=likesOf(a),rb=likesOf(b);if(rb!==ra)return rb-ra;return a.name.localeCompare(b.name);}
+function byViews(a,b){var va=effVal(a),vb=effVal(b);if(vb!==va)return vb-va;return byLikes(a,b);} /* 조회수 같거나 없으면 좋아요순 */
 function render(){renderAccounts();renderPlan();}
 function renderAccounts(){
   var used=usedMap(), b={image:[],text:[],video:[],none:[]};
   ACCOUNTS.forEach(function(a){(b[a.type]||b.none).push(a);});
-  b.image.sort(sortByEff);b.text.sort(sortByEff);b.video.sort(sortByEff);b.none.sort(sortByEff);
+  b.image.sort(byLikes);b.text.sort(byLikes);b.none.sort(byLikes);b.video.sort(byViews);
   function card(a){
     var u=used[a.id]!==undefined;
     var tg=(!a.type||a.type==='none')?'<div class="tg"><button data-act="type" data-id="'+a.id+'" data-t="image">이미지</button><button data-act="type" data-id="'+a.id+'" data-t="text">텍스트</button><button data-act="type" data-id="'+a.id+'" data-t="video">영상</button></div>':'';
@@ -427,32 +408,31 @@ function genTextByCompany(){
 }
 function genTextCombined(){return genTextBySojae()+'\n\n<업체별>\n'+genTextByCompany();}
 function openTextModal(){$('tTextAll').value=genTextCombined();$('textModal').classList.add('show');}
-function sparkLikes(posts){
-  var p=(posts||[]).filter(function(x){return x.likes!=null;});
-  if(p.length<2) return '<div style="color:var(--muted);font-size:12px">추이를 그릴 게시물이 부족해요</div>';
-  var ys=p.map(function(x){return x.likes;});
+function sparkSeries(pts,icon,word){
+  var p=(pts||[]).filter(function(x){return x.v!=null;});
+  if(p.length<2) return '<div style="color:var(--muted);font-size:12px">추이를 그릴 데이터가 부족해요</div>';
+  var ys=p.map(function(x){return x.v;});
   var mn=Math.min.apply(null,ys),mx=Math.max.apply(null,ys),sp=(mx-mn)||1;
   var w=440,h=120,padX=16,padT=12,padB=24;
   var step=(w-padX*2)/(p.length-1);
   function X(i){return padX+i*step;}
   function Y(v){return (h-padB)-((v-mn)/sp)*(h-padB-padT);}
   function md(d){var m=/\d{4}-(\d{2})-(\d{2})/.exec(d||'');return m?m[1]+'.'+m[2]:'';}
-  var line=p.map(function(x,i){return X(i).toFixed(1)+','+Y(x.likes).toFixed(1);}).join(' ');
-  var dots=p.map(function(x,i){var cx=X(i).toFixed(1),cy=Y(x.likes).toFixed(1);
+  var line=p.map(function(x,i){return X(i).toFixed(1)+','+Y(x.v).toFixed(1);}).join(' ');
+  var dots=p.map(function(x,i){var cx=X(i).toFixed(1),cy=Y(x.v).toFixed(1);
     return '<circle cx="'+cx+'" cy="'+cy+'" r="4" fill="var(--accent)" stroke="var(--card)" stroke-width="1.5" style="pointer-events:none"/>'
-      +'<circle cx="'+cx+'" cy="'+cy+'" r="11" fill="transparent" data-likes="'+fmt(x.likes)+'" data-date="'+md(x.date)+'" style="cursor:pointer"/>';}).join('');
+      +'<circle cx="'+cx+'" cy="'+cy+'" r="11" fill="transparent" data-likes="'+fmt(x.v)+'" data-date="'+md(x.date)+'" data-icon="'+icon+'" style="cursor:pointer"/>';}).join('');
   var seen={},labels='';
   p.forEach(function(x,i){var k=md(x.date);if(k&&!seen[k]){seen[k]=1;labels+='<text x="'+X(i).toFixed(1)+'" y="'+(h-7)+'" font-size="9" fill="var(--muted)" text-anchor="middle">'+k+'</text>';}});
   return '<svg viewBox="0 0 '+w+' '+h+'" style="width:100%;height:auto;overflow:visible">'
     +'<polyline points="'+line+'" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>'
     +dots+labels+'</svg>'
-    +'<div style="font-size:11px;color:var(--muted);margin-top:2px">꼭짓점에 마우스를 올리면 날짜·좋아요 수가 떠요</div>';
+    +'<div style="font-size:11px;color:var(--muted);margin-top:2px">꼭짓점에 마우스를 올리면 날짜·'+word+' 수가 떠요</div>';
 }
 function openDetail(id){
   var a=acctById(id); if(!a) return;
   var e=EFF[a.name]||{};
-  var posts=(e.posts||[]);
-  var top=posts.slice().sort(function(x,y){return (y.likes||0)-(x.likes||0);}).slice(0,5);
+  var isVid=a.type==='video';
   var co=companyOf(a.name);
   var h='';
   h+='<div style="display:flex;align-items:center;gap:6px;margin-bottom:12px">'
@@ -460,31 +440,40 @@ function openDetail(id){
     +'<input id="dCompanyInput" type="text" value="'+esc(co==='(업체 미지정)'?'':co)+'" placeholder="업체명 입력 후 저장" '
     +'style="flex:1;min-width:0;font:inherit;padding:6px 9px;border:1px solid var(--border);border-radius:7px;background:var(--card);color:var(--text)">'
     +'<button data-act="savecompany" data-name="'+esc(a.name)+'" class="primary" style="padding:6px 14px;white-space:nowrap">저장</button></div>';
-  h+='<div style="font-size:13px;color:var(--muted);margin-bottom:6px">'
-    +(e.followers!=null?'팔로워 <b style="color:var(--text)">'+fmt(e.followers)+'</b> · ':'')
-    +'참여율 <b style="color:var(--text)">'+(e.rate!=null?e.rate.toFixed(2)+'%':'—')+'</b>'
-    +' · 평균 좋아요(7일) <b style="color:var(--text)">'+(e.likes!=null?fmt(e.likes):'—')+'</b></div>';
-  var vm=(e.viewMedian!=null)?e.viewMedian:null;
-  h+='<div style="font-size:13px;color:var(--muted);margin-bottom:6px">'
-    +'조회수 중앙값 <b style="color:var(--text)">'+(vm!=null?fmt(vm):'—')+'</b>'
-    +(vm!=null?' <span style="font-size:11px">(최근 릴스 '+(e.reelsUsed||0)+'개)</span>':' <span style="font-size:11px">(릴스 부족)</span>')
-    +'</div>';
-  h+='<div style="font-size:12px;font-weight:700;margin:14px 0 4px">최근 7일 좋아요 추이</div>'+sparkLikes(posts);
-  h+='<div style="font-size:12px;font-weight:700;margin:16px 0 6px">좋아요 TOP 5 (최근 7일)</div>';
-  if(top.length){
-    h+='<ol style="margin:0;padding-left:20px">'+top.map(function(p){
-      var lnk=p.permalink?' <a href="'+p.permalink+'" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">열기↗</a>':'';
-      return '<li style="margin-bottom:5px">❤ <b>'+fmt(p.likes)+'</b> <span style="color:var(--muted)">· '+(p.date||'')+'</span>'+lnk+'</li>';
-    }).join('')+'</ol>';
-  } else {
-    h+='<div style="color:var(--muted);font-size:13px">수집된 게시물이 없어요. (Actions 수집을 한 번 돌리면 표시됩니다)</div>';
-  }
-  if((e.reels||[]).length){
+  if(isVid){
+    var vm=(e.viewMedian!=null)?e.viewMedian:null;
+    h+='<div style="font-size:13px;color:var(--muted);margin-bottom:6px">'
+      +(e.followers!=null?'팔로워 <b style="color:var(--text)">'+fmt(e.followers)+'</b> · ':'')
+      +'조회수 중앙값 <b style="color:var(--text)">'+(vm!=null?fmt(vm):'—')+'</b>'
+      +(vm!=null?' <span style="font-size:11px">(최근 릴스 '+(e.reelsUsed||0)+'개)</span>':' <span style="font-size:11px">(릴스 부족)</span>')
+      +'</div>';
+    h+='<div style="font-size:12px;font-weight:700;margin:14px 0 4px">조회수 중앙값 추이</div>'+sparkSeries(e.histViews,'▶','조회수');
     h+='<div style="font-size:12px;font-weight:700;margin:16px 0 6px">릴스 조회수 TOP 5 (최근 '+(e.reelsUsed||0)+'개 중)</div>';
-    h+='<ol style="margin:0;padding-left:20px">'+e.reels.map(function(p){
-      var lnk=p.permalink?' <a href="'+p.permalink+'" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">열기↗</a>':'';
-      return '<li style="margin-bottom:5px">조회수 <b>'+fmt(p.views)+'</b> <span style="color:var(--muted)">· '+(p.date||'')+'</span>'+lnk+'</li>';
-    }).join('')+'</ol>';
+    if((e.reels||[]).length){
+      h+='<ol style="margin:0;padding-left:20px">'+e.reels.map(function(p){
+        var lnk=p.permalink?' <a href="'+p.permalink+'" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">열기↗</a>':'';
+        return '<li style="margin-bottom:5px">▶ <b>'+fmt(p.views)+'</b> <span style="color:var(--muted)">· '+(p.date||'')+'</span>'+lnk+'</li>';
+      }).join('')+'</ol>';
+    } else {
+      h+='<div style="color:var(--muted);font-size:13px">수집된 릴스 조회수가 없어요. (수집을 한 번 돌리면 표시됩니다)</div>';
+    }
+  } else {
+    var posts=(e.posts||[]);
+    var top=posts.slice().sort(function(x,y){return (y.likes||0)-(x.likes||0);}).slice(0,5);
+    h+='<div style="font-size:13px;color:var(--muted);margin-bottom:6px">'
+      +(e.followers!=null?'팔로워 <b style="color:var(--text)">'+fmt(e.followers)+'</b> · ':'')
+      +'참여율 <b style="color:var(--text)">'+(e.rate!=null?e.rate.toFixed(2)+'%':'—')+'</b>'
+      +' · 평균 좋아요(7일) <b style="color:var(--text)">'+(e.likes!=null?fmt(e.likes):'—')+'</b></div>';
+    h+='<div style="font-size:12px;font-weight:700;margin:14px 0 4px">최근 7일 좋아요 추이</div>'+sparkSeries(posts.map(function(p){return {date:p.date,v:p.likes};}),'❤','좋아요');
+    h+='<div style="font-size:12px;font-weight:700;margin:16px 0 6px">좋아요 TOP 5 (최근 7일)</div>';
+    if(top.length){
+      h+='<ol style="margin:0;padding-left:20px">'+top.map(function(p){
+        var lnk=p.permalink?' <a href="'+p.permalink+'" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">열기↗</a>':'';
+        return '<li style="margin-bottom:5px">❤ <b>'+fmt(p.likes)+'</b> <span style="color:var(--muted)">· '+(p.date||'')+'</span>'+lnk+'</li>';
+      }).join('')+'</ol>';
+    } else {
+      h+='<div style="color:var(--muted);font-size:13px">수집된 게시물이 없어요. (Actions 수집을 한 번 돌리면 표시됩니다)</div>';
+    }
   }
   $('dTitle').innerHTML='@'+esc(a.name)+' <span style="font-size:12px;font-weight:600;color:var(--text-accent,var(--accent));background:var(--accent-bg);padding:2px 9px;border-radius:999px;vertical-align:middle;margin-left:6px">'+esc(co)+'</span>';
   $('dBody').innerHTML=h;
@@ -505,8 +494,6 @@ function closeModal(){$('modal').classList.remove('show');}
 document.addEventListener('click',function(e){
   var t=e.target,act=t.getAttribute('data-act');
   if(t.id==='addAcct'){openModal(null);return;}
-  if(t.id==='sortLikes'){setSort('likes');return;}
-  if(t.id==='sortEff'){setSort('eff');return;}
   if(t.id==='addMat'){addMaterial();return;}
   if(t.id==='textBtn'){openTextModal();return;}
   if(act==='addslot'){addSlot(+t.getAttribute('data-mi'));return;}
@@ -540,7 +527,7 @@ $('mCancel').addEventListener('click',closeModal);
 $('modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
 $('dClose').addEventListener('click',function(){$('detailModal').classList.remove('show');});
 $('detailModal').addEventListener('click',function(e){if(e.target===this)this.classList.remove('show');});
-function tipAt(e,c){var tip=$('dTip');tip.textContent=c.getAttribute('data-date')+' · ❤ '+c.getAttribute('data-likes');tip.style.left=e.clientX+'px';tip.style.top=e.clientY+'px';tip.classList.add('show');}
+function tipAt(e,c){var tip=$('dTip');tip.textContent=c.getAttribute('data-date')+' · '+(c.getAttribute('data-icon')||'❤')+' '+c.getAttribute('data-likes');tip.style.left=e.clientX+'px';tip.style.top=e.clientY+'px';tip.classList.add('show');}
 document.addEventListener('mouseover',function(e){var c=e.target.closest?e.target.closest('circle[data-likes]'):null;if(c)tipAt(e,c);});
 document.addEventListener('mousemove',function(e){if(!$('dTip').classList.contains('show'))return;var c=e.target.closest?e.target.closest('circle[data-likes]'):null;if(c){tipAt(e,c);}else{$('dTip').classList.remove('show');}});
 document.addEventListener('mouseout',function(e){var c=e.target.closest?e.target.closest('circle[data-likes]'):null;if(c)$('dTip').classList.remove('show');});
@@ -597,7 +584,7 @@ $('restoreFile').addEventListener('change',function(){
 var _qd=new URLSearchParams(location.search).get('date');
 if(_qd&&/^\d{4}-\d{2}-\d{2}$/.test(_qd))DATE=_qd;
 $('date').value=DATE;
-syncSortUI();
+
 $('status').textContent='공유 저장 연결 중…';
 (async function(){
   try{
