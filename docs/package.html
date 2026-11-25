@@ -167,7 +167,7 @@ function shownMaterials(){
       .sort(function(x,y){return typeRank(x.a.type)-typeRank(y.a.type)||x.j-y.j;})
       .map(function(x){return x.a;});   // 이미지끼리/텍스트끼리 모이게(추가 순서는 타입 안에서 유지)
     var video=accs.some(function(a){return a.type==='video';});  // 영상 계정이 있으면 영상 소재
-    return {id:m.id,index:i,accs:accs,video:video};
+    return {id:m.id,index:i,accs:accs,video:video,date:(m.date||DATE),dateRaw:m.date||''};
   }).filter(function(m){return m.accs.length>0;});
 }
 function letter(i){return String.fromCharCode(65+i);}
@@ -229,11 +229,21 @@ function ownerMap(m){
   return owner;
 }
 
+function pWeekday(d){var x=new Date(d+'T00:00:00');return ['일','월','화','수','목','금','토'][x.getDay()];}
+function pDLabel(d){var m=/\d{4}-(\d{2})-(\d{2})/.exec(d);return m?(m[1]+'.'+m[2]+'('+pWeekday(d)+')'):d;}
+function selectByDate(d){var mats=shownMaterials();SEL={};mats.forEach(function(m){if(m.date===d)SEL[m.id]=true;});render();}
 function render(){
   var mats=shownMaterials();
   if(!mats.length){$('mats').innerHTML='<p class="muted">이 날짜에 배정된 계정이 없어요. 배정 화면에서 먼저 소재에 계정을 넣어주세요.</p>';footInfo();return;}
   var syncChanged=false;mats.forEach(function(m){if(m.video?ensureVideoAssign(m):ensureAssign(m))syncChanged=true;});if(syncChanged)saveState();
-  var html=mats.map(function(m){
+  // 날짜별 빠른 선택 바 (서로 다른 날짜가 2개 이상일 때만)
+  var dstinct=mats.map(function(m){return m.date;}).filter(function(v,i,a){return a.indexOf(v)===i;}).sort();
+  var dateBar='';
+  if(dstinct.length>1){
+    dateBar='<div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:12px"><span style="font-size:12px;color:var(--muted)">날짜별 선택:</span>'+
+      dstinct.map(function(d){return '<button class="sm" onclick="selectByDate(\''+d+'\')">'+esc(pDLabel(d))+' 소재만</button>';}).join('')+'</div>';
+  }
+  var html=dateBar+mats.map(function(m){
     var s=matState(m.id);
     var bodyFiles=FILES.body[m.id]||[];
     var bf=bodyFiles.length?bodyFiles.map(function(f,i){return '<span class="f">'+esc(f.name)+' <button class="ghost" data-act="delbody" data-mid="'+m.id+'" data-i="'+i+'">✕</button></span>';}).join(''):'<span class="muted">업로드된 본문 파일 없음</span>';
@@ -293,7 +303,7 @@ function render(){
         '<div class="lbl">계정별 표지 배정</div>'+rows;
 
     return '<div class="mat">'+
-      '<h2>'+letter(m.index)+' 소재 '+(m.video?'<span style="font-size:11px;font-weight:600;color:var(--vid,#0f6e56);background:var(--vid-bg,#e1f5ee);padding:1px 8px;border-radius:999px">🎬 영상</span> ':'')+'<span class="muted" style="font-weight:400">· 배정 '+m.accs.length+'개 계정</span>'+
+      '<h2>'+letter(m.index)+' 소재 '+(m.video?'<span style="font-size:11px;font-weight:600;color:var(--vid,#0f6e56);background:var(--vid-bg,#e1f5ee);padding:1px 8px;border-radius:999px">🎬 영상</span> ':'')+'<span style="font-size:11px;font-weight:600;color:var(--accent);background:var(--accent-bg);padding:1px 8px;border-radius:999px">'+esc(pDLabel(m.date))+'</span> <span class="muted" style="font-weight:400">· 배정 '+m.accs.length+'개 계정</span>'+
         '<label style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;user-select:none">'+
           '<input type="checkbox" data-act="selmat" data-mid="'+m.id+'"'+(SEL[m.id]?' checked':'')+' style="width:16px;height:16px"> ZIP에 포함</label></h2>'+
 
@@ -395,30 +405,30 @@ async function buildZip(mids){
   var mats=shownMaterials();
   if(mids&&mids.length)mats=mats.filter(function(m){return mids.indexOf(m.id)>=0;});
   if(!mats.length){toast('압축할 소재가 없습니다');return;}
-  var zipName='['+mmdd(DATE)+'].zip';
-  var tag=mmdd(DATE).replace('.','');           // "11.12" → "1112"
-  var zip=new JSZip();var root=zip.folder('['+mmdd(DATE)+']');
+  var zip=new JSZip();
 
-  // 계정을 업체별로 그룹
-  var byco={},order=[];
+  // 계정별 항목 수집 (소재 날짜 포함)
+  var entries=[];
   mats.forEach(function(m){
     var s=matState(m.id),body=FILES.body[m.id]||[];
     m.accs.forEach(function(a){
-      var co=companyOf(a.name);
-      if(!byco[co]){byco[co]=[];order.push(co);}
-      byco[co].push({s:s,body:body,a:a,video:m.video});
+      entries.push({s:s,body:body,a:a,video:m.video,co:companyOf(a.name),date:m.date});
     });
   });
 
+  // ZIP 파일명: 선택한 소재들의 날짜로 (하나면 그 날짜, 여러 날짜면 처음~끝)
+  var dates=entries.map(function(j){return mmdd(j.date);}).filter(function(v,i,arr){return arr.indexOf(v)===i;}).sort();
+  var zipName='['+(dates.length<=1?(dates[0]||mmdd(DATE)):(dates[0]+'-'+dates[dates.length-1]))+'].zip';
+
   // 예상 용량/폴더 수 미리 계산 → 너무 크면 경고
   var est=0,folders=0;
-  order.forEach(function(co){byco[co].forEach(function(j){
+  entries.forEach(function(j){
     folders++;
     if(j.video){ var fn=j.s.vmap&&j.s.vmap[j.a.name];var vf=fn?j.body.filter(function(f){return f.name===fn;})[0]:null;if(vf)est+=(vf.size||0); }
     else { j.body.forEach(function(f){est+=(f.size||0);});
       var c=coverById(j.s,resolveCoverId(j.s,j.a));
       if(c&&c.type==='image'){var cf=FILES.cover[c.id];if(cf)est+=(cf.size||0);} }
-  });});
+  });
   var head='예상 용량 약 '+fmtSize(est)+' · 폴더(계정) '+folders+'개.\n\n';
   if(est>1.2e9){ if(!confirm(head+'⚠️ 매우 큽니다. 브라우저가 압축을 못 만들어 실패할 가능성이 높아요.\n\'선택 소재 ZIP\'으로 소재를 나눠 받는 걸 권장합니다.\n\n그래도 진행할까요?'))return; }
   else if(est>7e8){ if(!confirm(head+'조금 큰 편이라 시간이 걸릴 수 있어요. 계속할까요?'))return; }
@@ -426,12 +436,13 @@ async function buildZip(mids){
   var btn=$('zipBtn'),sbtn=$('zipSelBtn'),prog=$('prog'),bar=prog.firstElementChild;
   btn.disabled=true;sbtn.disabled=true;prog.classList.add('show');bar.style.width='0';
   try{
-    // 업체별 폴더로 묶기 (중첩 zip은 용량 2배라 제외 — 큰 날 메모리 초과 방지)
-    for(var i=0;i<order.length;i++){
-      var co=order[i], safe=String(co).replace(/[\/\\:*?"<>|]/g,'_').trim();
-      var coFolder=root.folder('['+safe+' '+tag+']');
-      byco[co].forEach(function(j){ addAcctFiles(coFolder.folder(j.a.name), j.s, j.body, j.a, j.video); });
-    }
+    // [날짜]/[업체 날짜]/계정/파일  (중첩 zip은 용량 2배라 제외)
+    entries.forEach(function(j){
+      var dmmdd=mmdd(j.date), dtag=dmmdd.replace('.','');
+      var safe=String(j.co).replace(/[\/\\:*?"<>|]/g,'_').trim();
+      var folder=zip.folder('['+dmmdd+']').folder('['+safe+' '+dtag+']').folder(j.a.name);
+      addAcctFiles(folder, j.s, j.body, j.a, j.video);
+    });
     var blob=await zip.generateAsync({type:'blob',compression:'STORE'},function(md){bar.style.width=(md.percent|0)+'%';});
     var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download=zipName;document.body.appendChild(a);a.click();a.remove();
     setTimeout(function(){URL.revokeObjectURL(url);},4000);
