@@ -103,6 +103,9 @@ button.ghost{border:none;background:transparent;color:var(--muted);padding:2px 6
 .seg{display:flex;gap:6px}
 .seg button{flex:1}
 .seg button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.sortbtn{font-size:12px;padding:4px 10px;border-radius:999px}
+.sortbtn.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.matdate{font-size:11px;padding:2px 6px;border-radius:6px;border:1px solid var(--border);background:var(--card);color:var(--text);margin-left:6px}
 .empty-note{color:var(--muted);font-size:13px;padding:6px 0}
 .charttip{position:fixed;z-index:70;background:var(--head);color:#fff;font-size:12px;font-weight:600;padding:5px 9px;border-radius:8px;pointer-events:none;opacity:0;transition:opacity .08s;white-space:nowrap;transform:translate(-50%,-135%)}
 .charttip.show{opacity:1}
@@ -125,8 +128,12 @@ button.ghost{border:none;background:transparent;color:var(--muted);padding:2px 6
 
   <div class="panels">
   <div class="sec panel-acc">
-    <h2>계정 목록 <span class="n">평균 좋아요 많은 순 · 드래그로 배정 · 계정명 클릭 시 상세</span>
-      <button class="primary" id="addAcct" style="margin-left:auto">+ 계정 추가</button>
+    <h2>계정 목록 <span class="n" id="sortHint">평균 좋아요 많은 순 · 드래그로 배정 · 계정명 클릭 시 상세</span>
+      <span style="margin-left:auto;display:inline-flex;gap:4px">
+        <button id="sortLikes" class="sortbtn on">좋아요순</button>
+        <button id="sortEff" class="sortbtn">조회수순</button>
+      </span>
+      <button class="primary" id="addAcct">+ 계정 추가</button>
     </h2>
     <div class="cols">
       <div class="col"><h3><span class="chip img">이미지 썸네일</span></h3><div class="listbox" id="colImg"></div></div>
@@ -185,6 +192,8 @@ button.ghost{border:none;background:transparent;color:var(--muted);padding:2px 6
       <button data-t="video">영상</button>
       <button data-t="none">미설정</button>
     </div>
+    <label>업체명</label>
+    <input type="text" id="mCompany" placeholder="예: 루나앤코코" autocomplete="off">
     <label>단가 (만원)</label>
     <input type="number" id="mPrice" min="0" step="1" placeholder="예: 10">
     <div class="acts">
@@ -207,6 +216,7 @@ var SEED=[
  {name:"guliguli_humor",price:10},{name:"happy__pyeong",price:6},{name:"pangpang_one",price:13}
 ];
 var ACCOUNTS=[], DATE=todayKST(), PLAN=null, picked=null, EFF={};
+var SORT_MODE=lsGet('cm_sort','likes'); /* 'likes' | 'eff'(조회수 중앙값) */
 /* 팝업에서 입력한 업체명(계정→업체). Supabase로 팀 공유 — 하드코딩 표보다 우선 */
 var COMPANY_OVERRIDE={}, lastCoJson='{}';
 /* ===== 공유 저장(Supabase) 설정 — 이 두 값만 본인 프로젝트 것으로 ===== */
@@ -268,7 +278,7 @@ function usedMap(){var map={};if(!PLAN)return map;PLAN.materials.forEach(functio
 
 function loadEfficiency(){
   fetch('./data.json?_='+Date.now()).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){
-    (d.channels||[]).forEach(function(c){ if(c.username) EFF[c.username]={rate:c.eng_rate,trend:c.trend_pct,likes:c.avg_likes,followers:c.followers,posts:c.posts||[]}; });
+    (d.channels||[]).forEach(function(c){ if(c.username) EFF[c.username]={rate:c.eng_rate,trend:c.trend_pct,likes:c.avg_likes,followers:c.followers,posts:c.posts||[],viewMedian:(c.view_median!=null?c.view_median:null),reelsUsed:c.reels_used||0,reels:c.top_reels||[]}; });
     $('freshness').textContent='참여율 '+(d.updated_kst||'')+' 기준';
     render();
   }).catch(function(){
@@ -301,14 +311,40 @@ function addMaterial(){if(!PLAN)PLAN=emptyPlan(DATE);PLAN.materials.push({id:uid
 function removeMaterial(mi){if(!PLAN)return;PLAN.materials.splice(mi,1);savePlan();render();}
 function setType(id,t){var a=acctById(id);if(!a)return;a.type=t;saveAccounts();render();}
 
-function rateHTML(name){
-  var e=EFF[name]; if(!e||e.likes==null) return '';
+function effVal(a){ /* 조회수 중앙값 */
+  var e=EFF[a.name];
+  return (e&&e.viewMedian!=null)?e.viewMedian:-1;
+}
+function metricHTML(a){
+  var e=EFF[a.name];
+  if(SORT_MODE==='eff'){
+    if(e&&e.viewMedian!=null){
+      return '<span class="rate" title="최근 릴스 '+(e.reelsUsed||0)+'개 조회수 중앙값">조회수 '+Number(e.viewMedian).toLocaleString()+'</span>';
+    }
+    if(e&&e.likes!=null)return '<span class="rate" style="color:var(--muted)" title="릴스 조회수 부족 — 좋아요로 표시">❤ '+Number(e.likes).toLocaleString()+'</span>';
+    return '';
+  }
+  if(!e||e.likes==null)return '';
   return '<span class="rate">❤ '+Number(e.likes).toLocaleString()+'</span>';
 }
 function sortByEff(a,b){
+  if(SORT_MODE==='eff'){
+    var va=effVal(a),vb=effVal(b);
+    if(vb!==va)return vb-va; return a.name.localeCompare(b.name);
+  }
   var ra=(EFF[a.name]&&EFF[a.name].likes!=null)?EFF[a.name].likes:-1;
   var rb=(EFF[b.name]&&EFF[b.name].likes!=null)?EFF[b.name].likes:-1;
   if(rb!==ra)return rb-ra; return a.name.localeCompare(b.name);
+}
+function setSort(m){
+  if(SORT_MODE===m)return;
+  SORT_MODE=m; lsSet('cm_sort',m); syncSortUI(); renderAccounts();
+}
+function syncSortUI(){
+  var sl=$('sortLikes'),se=$('sortEff'),sh=$('sortHint');
+  if(sl)sl.classList.toggle('on',SORT_MODE==='likes');
+  if(se)se.classList.toggle('on',SORT_MODE==='eff');
+  if(sh)sh.textContent=(SORT_MODE==='eff'?'조회수 중앙값 많은 순':'평균 좋아요 많은 순')+' · 드래그로 배정 · 계정명 클릭 시 상세';
 }
 function render(){renderAccounts();renderPlan();}
 function renderAccounts(){
@@ -321,7 +357,7 @@ function renderAccounts(){
     var right=u?'<span class="usedtag">'+letter(used[a.id])+' 사용중</span>':'';
     return '<div class="acct'+(u?' used':'')+(picked===a.id?' picked':'')+'" data-aid="'+a.id+'" draggable="'+(!u)+'">'
       +'<span class="nm" data-act="detail" data-id="'+a.id+'">@'+esc(a.name)+'</span>'
-      +rateHTML(a.name)
+      +metricHTML(a)
       +'<span class="pr">'+won(a.price)+'</span>'+tg+right
       +'<button class="ghost" data-act="edit" data-id="'+a.id+'" title="수정">⋯</button></div>';
   }
@@ -349,7 +385,7 @@ function renderPlan(){
     }).join('');
     grand+=mt;
     var vidBadge=isVid?' <span class="chip vid" title="영상 계정이 포함된 소재 — 패키징에서 영상 모드">영상</span>':'';
-    return '<div class="mat"><div class="mh"><span class="lbl">'+letter(mi)+' 소재</span>'+vidBadge+'<span class="mt">'+won(mt)+'</span><button class="ghost" data-act="delmat" data-mi="'+mi+'" title="소재 삭제">✕</button></div>'+slots+'<button class="addslot" data-act="addslot" data-mi="'+mi+'">+ 채널 추가</button></div>';
+    return '<div class="mat"><div class="mh"><span class="lbl">'+letter(mi)+' 소재</span>'+vidBadge+matDateSelect(mi,m.date||'')+'<span class="mt">'+won(mt)+'</span><button class="ghost" data-act="delmat" data-mi="'+mi+'" title="소재 삭제">✕</button></div>'+slots+'<button class="addslot" data-act="addslot" data-mi="'+mi+'">+ 채널 추가</button></div>';
   }).join('');
   $('mats').innerHTML=html;
   $('grand').textContent='총 '+won(grand);
@@ -357,6 +393,15 @@ function renderPlan(){
 
 function fmt(n){return Number(n).toLocaleString();}
 function weekdayKr(dstr){var d=new Date(dstr+'T00:00:00');return ['일','월','화','수','목','금','토'][d.getDay()];}
+function addDays(dstr,n){var d=new Date(dstr+'T00:00:00');d.setDate(d.getDate()+n);return d.toISOString().slice(0,10);}
+function dLabel(d){var m=/\d{4}-(\d{2})-(\d{2})/.exec(d);return m[1]+'.'+m[2]+'('+weekdayKr(d)+')';}
+function matDateSelect(mi,cur){
+  var opts='<option value="">(오늘 날짜)</option>',inRange=false;
+  for(var i=0;i<7;i++){var d=addDays(DATE,i);if(d===cur)inRange=true;opts+='<option value="'+d+'"'+(d===cur?' selected':'')+'>'+dLabel(d)+'</option>';}
+  if(cur&&!inRange)opts+='<option value="'+cur+'" selected>'+dLabel(cur)+'</option>';
+  return '<select class="matdate" onchange="setMatDate('+mi+',this.value)" title="이 소재의 예약 날짜">'+opts+'</select>';
+}
+function setMatDate(mi,v){if(!PLAN||!PLAN.materials[mi])return;PLAN.materials[mi].date=v||'';savePlan();render();}
 function genTextBySojae(){
   if(!PLAN) return '';
   var m=/\d{4}-(\d{2})-(\d{2})/.exec(DATE);
@@ -421,6 +466,11 @@ function openDetail(id){
     +(e.followers!=null?'팔로워 <b style="color:var(--text)">'+fmt(e.followers)+'</b> · ':'')
     +'참여율 <b style="color:var(--text)">'+(e.rate!=null?e.rate.toFixed(2)+'%':'—')+'</b>'
     +' · 평균 좋아요(7일) <b style="color:var(--text)">'+(e.likes!=null?fmt(e.likes):'—')+'</b></div>';
+  var vm=(e.viewMedian!=null)?e.viewMedian:null;
+  h+='<div style="font-size:13px;color:var(--muted);margin-bottom:6px">'
+    +'조회수 중앙값 <b style="color:var(--text)">'+(vm!=null?fmt(vm):'—')+'</b>'
+    +(vm!=null?' <span style="font-size:11px">(최근 릴스 '+(e.reelsUsed||0)+'개)</span>':' <span style="font-size:11px">(릴스 부족)</span>')
+    +'</div>';
   h+='<div style="font-size:12px;font-weight:700;margin:14px 0 4px">최근 7일 좋아요 추이</div>'+sparkLikes(posts);
   h+='<div style="font-size:12px;font-weight:700;margin:16px 0 6px">좋아요 TOP 5 (최근 7일)</div>';
   if(top.length){
@@ -431,6 +481,13 @@ function openDetail(id){
   } else {
     h+='<div style="color:var(--muted);font-size:13px">수집된 게시물이 없어요. (Actions 수집을 한 번 돌리면 표시됩니다)</div>';
   }
+  if((e.reels||[]).length){
+    h+='<div style="font-size:12px;font-weight:700;margin:16px 0 6px">릴스 조회수 TOP 5 (최근 '+(e.reelsUsed||0)+'개 중)</div>';
+    h+='<ol style="margin:0;padding-left:20px">'+e.reels.map(function(p){
+      var lnk=p.permalink?' <a href="'+p.permalink+'" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">열기↗</a>':'';
+      return '<li style="margin-bottom:5px">조회수 <b>'+fmt(p.views)+'</b> <span style="color:var(--muted)">· '+(p.date||'')+'</span>'+lnk+'</li>';
+    }).join('')+'</ol>';
+  }
   $('dTitle').innerHTML='@'+esc(a.name)+' <span style="font-size:12px;font-weight:600;color:var(--text-accent,var(--accent));background:var(--accent-bg);padding:2px 9px;border-radius:999px;vertical-align:middle;margin-left:6px">'+esc(co)+'</span>';
   $('dBody').innerHTML=h;
   $('detailModal').classList.add('show');
@@ -439,6 +496,7 @@ function openModal(a){
   var m=$('modal');m.classList.add('show');
   $('mTitle').textContent=a?'계정 수정':'계정 추가';
   $('mName').value=a?a.name:'';$('mPrice').value=a?(a.price!=null?a.price:''):'';
+  var co=a?companyOf(a.name):'';$('mCompany').value=(co&&co!=='(업체 미지정)')?co:'';
   var t=a?a.type:'none';
   Array.prototype.forEach.call($('mType').children,function(bt){bt.classList.toggle('on',bt.dataset.t===t);});
   $('mDelete').style.display=a?'block':'none';m._editId=a?a.id:null;
@@ -449,6 +507,8 @@ function closeModal(){$('modal').classList.remove('show');}
 document.addEventListener('click',function(e){
   var t=e.target,act=t.getAttribute('data-act');
   if(t.id==='addAcct'){openModal(null);return;}
+  if(t.id==='sortLikes'){setSort('likes');return;}
+  if(t.id==='sortEff'){setSort('eff');return;}
   if(t.id==='addMat'){addMaterial();return;}
   if(t.id==='textBtn'){openTextModal();return;}
   if(act==='addslot'){addSlot(+t.getAttribute('data-mi'));return;}
@@ -499,6 +559,9 @@ $('mSave').addEventListener('click',function(){
   var on=$('mType').querySelector('.on');var type=on?on.dataset.t:'none';var id=$('modal')._editId;
   if(id){var a=acctById(id);if(a){a.name=name;a.price=price;a.type=type;}}
   else{ACCOUNTS.push({id:uid(),name:name,type:type,price:price});}
+  var company=$('mCompany').value.trim();
+  if(company)COMPANY_OVERRIDE[name]=company; else delete COMPANY_OVERRIDE[name];
+  lastCoJson=JSON.stringify(COMPANY_OVERRIDE); dbSet('company_overrides',COMPANY_OVERRIDE);
   saveAccounts();render();closeModal();
 });
 $('mDelete').addEventListener('click',function(){
@@ -536,6 +599,7 @@ $('restoreFile').addEventListener('change',function(){
 var _qd=new URLSearchParams(location.search).get('date');
 if(_qd&&/^\d{4}-\d{2}-\d{2}$/.test(_qd))DATE=_qd;
 $('date').value=DATE;
+syncSortUI();
 $('status').textContent='공유 저장 연결 중…';
 (async function(){
   try{
