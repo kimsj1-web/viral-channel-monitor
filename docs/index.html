@@ -316,15 +316,13 @@ function effVal(a){ /* 조회수 중앙값 */
   return (e&&e.viewMedian!=null)?e.viewMedian:-1;
 }
 function metricHTML(a){
-  var e=EFF[a.name];
-  if(SORT_MODE==='eff'){
-    if(e&&e.viewMedian!=null){
-      return '<span class="rate" title="최근 릴스 '+(e.reelsUsed||0)+'개 조회수 중앙값">조회수 '+Number(e.viewMedian).toLocaleString()+'</span>';
-    }
-    if(e&&e.likes!=null)return '<span class="rate" style="color:var(--muted)" title="릴스 조회수 부족 — 좋아요로 표시">❤ '+Number(e.likes).toLocaleString()+'</span>';
+  var e=EFF[a.name]; if(!e)return '';
+  if(a.type==='video'){   // 영상은 조회수 기준 → ▶ 아이콘
+    if(e.viewMedian!=null)return '<span class="rate" title="최근 릴스 '+(e.reelsUsed||0)+'개 조회수 중앙값">▶ '+Number(e.viewMedian).toLocaleString()+'</span>';
+    if(e.likes!=null)return '<span class="rate" style="color:var(--muted)" title="릴스 조회수 아직 수집 전 — 임시로 좋아요 표시">▶ '+Number(e.likes).toLocaleString()+'</span>';
     return '';
   }
-  if(!e||e.likes==null)return '';
+  if(e.likes==null)return '';
   return '<span class="rate">❤ '+Number(e.likes).toLocaleString()+'</span>';
 }
 function sortByEff(a,b){
@@ -376,7 +374,7 @@ function renderPlan(){
       if(aid){var a=acctById(aid);
         if(a){mt+=(a.price||0);
           var chip=a.type==='image'?'<span class="chip img">이미지</span>':a.type==='text'?'<span class="chip txt">텍스트</span>':a.type==='video'?'<span class="chip vid">영상</span>':'<span class="chip non">미설정</span>';
-          var e=EFF[a.name]; var fr=(e&&e.likes!=null)?'<span class="fr">❤ '+Number(e.likes).toLocaleString()+'</span>':'';
+          var e=EFF[a.name]; var fr=(e&&a.type==='video'&&e.viewMedian!=null)?'<span class="fr">▶ '+Number(e.viewMedian).toLocaleString()+'</span>':(e&&a.type==='video'&&e.likes!=null)?'<span class="fr" style="color:var(--muted)">▶ '+Number(e.likes).toLocaleString()+'</span>':(e&&e.likes!=null)?'<span class="fr">❤ '+Number(e.likes).toLocaleString()+'</span>':'';
           return '<div class="slot" data-mi="'+mi+'" data-si="'+si+'"><span class="fn">@'+esc(a.name)+'</span>'+chip+fr+'<span class="fp">'+won(a.price)+'</span><button class="ghost" data-act="clear" data-mi="'+mi+'" data-si="'+si+'">✕</button></div>';
         }
         return '<div class="slot" data-mi="'+mi+'" data-si="'+si+'"><span class="empty">삭제된 계정</span><button class="ghost" data-act="clear" data-mi="'+mi+'" data-si="'+si+'">✕</button></div>';
