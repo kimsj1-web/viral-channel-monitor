@@ -115,7 +115,7 @@ button.ghost{border:none;background:transparent;color:var(--muted);padding:2px 6
 <div class="wrap">
   <div class="top">
     <h1>협찬 채널 소재 배정</h1>
-    <span class="badge" id="freshness">참여율 매일 07:00 갱신</span>
+    <span class="badge" id="freshness">좋아요 05:00 · 조회수 08:00 갱신</span>
     <div class="bar">
       <button class="ghost" id="themeBtn" title="테마">◐</button>
       <button id="backupBtn" title="백업/복원">백업</button>
@@ -276,7 +276,22 @@ function loadEfficiency(){
   fetch('./data.json?_='+Date.now()).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){
     var HIST=d.history||{};
     (d.channels||[]).forEach(function(c){ if(c.username) EFF[c.username]={rate:c.eng_rate,trend:c.trend_pct,likes:c.avg_likes,followers:c.followers,posts:c.posts||[],viewMedian:(c.view_median!=null?c.view_median:null),reelsUsed:c.reels_used||0,reels:c.top_reels||[],histViews:(HIST[c.username]||[]).filter(function(p){return p.view_median!=null;}).map(function(p){return {date:p.date,v:p.view_median};})}; });
-    $('freshness').textContent='참여율 '+(d.updated_kst||'')+' 기준';
+    (function(){
+      var el=$('freshness');
+      var e=d.engage_updated_kst, v=d.video_updated_kst;
+      if(e||v){
+        var today=new Date(Date.now()+9*3600*1000).toISOString().slice(0,10); // KST 오늘(YYYY-MM-DD)
+        var sh=function(s){return s?s.slice(5):'—';};            // "YYYY-MM-DD HH:MM" → "MM-DD HH:MM"
+        var stale=function(s){return s&&s.slice(0,10)!==today;}; // 수집 시각이 오늘이 아니면 아직 갱신 전
+        var mk=function(label,s){
+          return label+' <b style="color:'+(stale(s)?'var(--danger)':'var(--text)')+'">'+sh(s)+'</b>';
+        };
+        el.innerHTML=mk('좋아요',e)+' · '+mk('조회수',v)
+          +(stale(e)||stale(v)?' <span style="color:var(--danger)">⚠ 갱신 전</span>':' 기준');
+      } else {
+        el.textContent='참여율 '+(d.updated_kst||'')+' 기준'; // 구버전 data.json 폴백
+      }
+    })();
     render();
   }).catch(function(){
     $('freshness').textContent='참여율 데이터 없음 (수집 1회 후 표시)';
