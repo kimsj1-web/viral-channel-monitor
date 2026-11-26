@@ -32,7 +32,7 @@ KST = dt.timezone(dt.timedelta(hours=9))
 
 # ── 릴스 조회수(효율) 설정 ──────────────────────────────
 REELS_N = 20           # 최근 업로드순 릴스 몇 개로 중앙값을 낼지
-MIN_REELS = 3          # 이보다 적으면 조회수 효율 산출 안 함(좋아요로 폴백)
+MIN_REELS = 1          # 릴스가 이 개수 이상이면 조회수 중앙값 산출(1개면 그 값 그대로)
 FRESH_HOURS = 24       # 업로드 후 이 시간 안 지난 릴스는 제외(조회수 덜 쌓임)
 
 # view_count: 릴스에만 값이 옴 / media_product_type: REELS 판별용
