@@ -292,10 +292,47 @@ def summarize(username, followers, items, reels, now):
     }
 
 
+# ── 부분 갱신(merge) 설정 ───────────────────────────────
+# 시간대 분할 수집에서 '담당 필드만' 덮어쓰기 위한 분류.
+#   engage 런(참여) → ENG_FIELDS 만 갱신
+#   video  런(조회수) → VID_FIELDS 만 갱신
+# 이렇게 해야 5시(좋아요)·8시(조회수) 결과가 서로를 덮어쓰지 않음.
+ENG_FIELDS = ("posts_7d", "avg_likes", "avg_comments", "avg_engagement",
+              "eng_rate", "trend_pct", "posts")
+VID_FIELDS = ("view_median", "reels_used", "top_reels")
+
+
+def merge_into(base, s, mode):
+    """기존 채널 엔트리(base) 위에 이번 수집 결과(s)의 '담당 필드'만 덮어쓴다.
+    base가 없으면 새로 시작. 담당 아닌 필드는 base 값 그대로 보존."""
+    out = dict(base) if isinstance(base, dict) else {}
+    out["username"] = s["username"]
+    out["error"] = None
+    # 팔로워 수는 두 런 모두 받을 수 있음 → 받은 쪽이 최신값으로 갱신
+    if s.get("followers") is not None:
+        out["followers"] = s["followers"]
+    elif "followers" not in out:
+        out["followers"] = None
+    if mode in ("engage", "all"):
+        for k in ENG_FIELDS:
+            out[k] = s.get(k)
+    if mode in ("video", "all"):
+        for k in VID_FIELDS:
+            out[k] = s.get(k)
+    return out
+
+
 def main():
     now = dt.datetime.now(dt.timezone.utc)
     since = now - dt.timedelta(days=LOOKBACK * 2)
     today = dt.datetime.now(KST).strftime("%Y-%m-%d")
+
+    # 수집 모드: engage(참여/5시) · video(조회수/8시) · all(전부/기본)
+    mode = os.environ.get("COLLECT_MODE", "all").strip().lower()
+    if mode not in ("engage", "video", "all"):
+        log(f"알 수 없는 COLLECT_MODE='{mode}' → 'all'로 진행")
+        mode = "all"
+    log(f"수집 모드: {mode}")
 
     try:
         with open(OUT_PATH, encoding="utf-8") as f:
@@ -303,45 +340,54 @@ def main():
     except Exception:
         store = {}
     history = store.get("history", {})
-    prev_ok = {c.get("username"): c for c in store.get("channels", [])
-               if isinstance(c, dict) and not c.get("error") and c.get("followers") is not None}
+    # 기존 data.json의 모든 채널을 username으로 인덱싱 → 보존/merge의 기준(baseline)
+    prev_all = {c.get("username"): c for c in store.get("channels", [])
+                if isinstance(c, dict) and c.get("username")}
 
-    targets = load_targets()
+    all_targets = load_targets()
+    # 모드별 대상: engage=참여 필요 계정 / video=영상 계정 (겸용은 양쪽 모두 포함)
+    if mode == "engage":
+        targets = [u for u in all_targets
+                   if (u in ENGAGE_ACCOUNTS) or (u not in VIDEO_ACCOUNTS)]
+    elif mode == "video":
+        targets = [u for u in all_targets if u in VIDEO_ACCOUNTS]
+    else:
+        targets = all_targets
     total = len(targets)
-    channels = []
+    log(f"모드 '{mode}' 대상 {total}개 (전체 {len(all_targets)}개)")
+
+    # 최종 출력 = 기존 전체를 깔고, 이번 런이 담당분만 갱신(나머지 계정·필드 보존)
+    result = {u: c for u, c in prev_all.items()}
+
     ok_count = 0
     rl_streak = 0
     aborted = False
 
     for idx, u in enumerate(targets, 1):
-        want_reels = u in VIDEO_ACCOUNTS
-        # 영상 전용이 아니면 참여 수집(겸용·이미지·텍스트·txt·무유형 기본값).
-        want_eng = (u in ENGAGE_ACCOUNTS) or (u not in VIDEO_ACCOUNTS)
-        if want_reels and want_eng:
-            tag = " (겸용)"
-        elif want_reels:
-            tag = " (영상)"
-        else:
-            tag = ""
+        if mode == "engage":
+            want_reels, want_eng = False, True
+        elif mode == "video":
+            want_reels, want_eng = True, False
+        else:  # all
+            want_reels = u in VIDEO_ACCOUNTS
+            want_eng = (u in ENGAGE_ACCOUNTS) or (u not in VIDEO_ACCOUNTS)
+        tag = " (겸용)" if (want_reels and want_eng) else (" (영상)" if want_reels else "")
         log(f"[{idx}/{total}] @{u}{tag} ...")
         res, err = fetch(u, since, now, want_reels, want_eng)
         if err:
             rl = is_rate_limit(err)
             rl_streak = rl_streak + 1 if rl else 0
             msg = err.get("message", "error") if isinstance(err, dict) else str(err)
-            if u in prev_ok:
-                channels.append(prev_ok[u])
+            if u in result:
                 log(f"    ⚠️ 실패({msg}) → 직전 데이터 유지")
             else:
-                channels.append({"username": u, "error": msg})
+                result[u] = {"username": u, "error": msg}
                 log(f"    ⚠️ 실패: {msg}")
             if rl_streak >= MAX_RL_STREAK:
                 log(f"연속 {rl_streak}회 레이트리밋 → 앱이 막힌 상태로 보여 수집 중단합니다.")
-                for v in targets[idx:]:
-                    if v in prev_ok:
-                        channels.append(prev_ok[v])
-                    else:
-                        channels.append({"username": v, "error": "skipped (rate limited)"})
+                for v in targets[idx:]:   # 남은 대상: baseline 있으면 보존, 없으면 skipped
+                    if v not in result:
+                        result[v] = {"username": v, "error": "skipped (rate limited)"}
                 aborted = True
                 break
             time.sleep(3)
@@ -349,13 +395,21 @@ def main():
 
         rl_streak = 0
         s = summarize(u, res["followers"], res["items"], res["reels"], now)
-        channels.append(s)
+        result[u] = merge_into(result.get(u), s, mode)
         ok_count += 1
+
+        # history: 그날 포인트에 담당 지표만 갱신(다른 지표는 기존 값 보존)
+        day = next((dict(p) for p in history.get(u, []) if p.get("date") == today), {})
+        day["date"] = today
+        if mode in ("engage", "all"):
+            day["eng_rate"] = s["eng_rate"]
+            day["avg_engagement"] = s["avg_engagement"]
+        if mode in ("video", "all"):
+            day["view_median"] = s["view_median"]
         pts = [p for p in history.get(u, []) if p.get("date") != today]
-        pts.append({"date": today, "eng_rate": s["eng_rate"],
-                    "avg_engagement": s["avg_engagement"],
-                    "view_median": s["view_median"]})
+        pts.append(day)
         history[u] = pts[-HISTORY_KEEP:]
+
         if want_reels:
             dg = res.get("diag", {})
             log(f"    [ok] 조회수중앙값 {s['view_median']} (릴스 {s['reels_used']}개 사용) "
@@ -371,6 +425,7 @@ def main():
             "기존 data.json을 보존하고 덮어쓰지 않습니다. 잠시 후 다시 실행하세요.")
         sys.exit(0)
 
+    channels = list(result.values())
     channels.sort(
         key=lambda c: c.get("eng_rate") if c.get("eng_rate") is not None else -1,
         reverse=True,
@@ -385,7 +440,7 @@ def main():
     os.makedirs("docs", exist_ok=True)
     with open(OUT_PATH, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=2)
-    log(f"완료: {ok_count}/{total} 신규 수집, data.json 저장"
+    log(f"완료[{mode}]: {ok_count}/{total} 신규 수집, data.json 저장"
         + (" (중간 중단됨)" if aborted else ""))
 
 
