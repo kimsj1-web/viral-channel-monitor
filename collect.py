@@ -140,13 +140,14 @@ def is_rate_limit(err):
 
 
 def api_get(params, retries=3):
-    """짧은 백오프(3,6초). 레이트리밋이면 재시도, 그 외 에러는 즉시 반환."""
+    """네트워크/일시 오류만 짧게 재시도(3초). 레이트리밋(앱 요청 한도)은
+    몇 초 기다려도 안 풀리고 재시도가 한도만 더 깎으므로 즉시 반환한다."""
     url = f"https://graph.facebook.com/{GRAPH_VER}/{IG_USER_ID}"
     for i in range(retries):
         try:
             r = requests.get(url, params=params, timeout=30)
         except requests.RequestException:
-            time.sleep(3)
+            time.sleep(3)          # 통신 끊김 등 일시 오류는 재시도
             continue
         if r.status_code == 200:
             return r.json()
@@ -155,9 +156,8 @@ def api_get(params, retries=3):
             err = r.json().get("error", {})
         except Exception:
             err = {"message": r.text}
-        if (is_rate_limit(err) or r.status_code == 429) and i < retries - 1:
-            time.sleep(3 * (2 ** i))   # 3, 6
-            continue
+        # 레이트리밋이면 재시도 없이 바로 반환(헛호출로 한도 소모 방지).
+        # 그 외 에러도 즉시 반환.
         return {"error": err or {"message": "unknown"}}
     return {"error": {"message": "max retries exceeded", "code": 4}}
 
