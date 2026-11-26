@@ -158,6 +158,8 @@ def fetch(username, since, now, is_video=False):
     items, reels, followers, after, pages = [], [], None, None, 0
     engagement_done = False
     fresh_cut = now - dt.timedelta(hours=FRESH_HOURS)
+    # 진단용 카운터 (영상 계정이 왜 0인지 추적)
+    diag = {"rows": 0, "video": 0, "reels_tagged": 0, "reels_withview": 0, "pages": 0}
     while pages < MAX_PAGES:
         pages += 1
         if after:
@@ -177,6 +179,7 @@ def fetch(username, since, now, is_video=False):
         if not rows:
             break
         old_on_page = 0
+        diag["rows"] += len(rows)
         for it in rows:
             ts = parse_ts(it.get("timestamp"))
             if not ts:
@@ -184,7 +187,12 @@ def fetch(username, since, now, is_video=False):
             if is_video:
                 # 영상 계정: 릴스 조회수만 모음(참여 집계 생략). 핀이 날짜순서를 흐트러도
                 # 나중에 timestamp로 정렬해 최근 N개만 쓰므로 오래된 핀은 자동 제외.
+                if it.get("media_type") == "VIDEO":
+                    diag["video"] += 1
+                if it.get("media_product_type") == "REELS":
+                    diag["reels_tagged"] += 1
                 if it.get("media_product_type") == "REELS" and it.get("view_count") is not None:
+                    diag["reels_withview"] += 1
                     reels.append({"id": it.get("id"), "_ts": ts,
                                   "views": it.get("view_count") or 0,
                                   "permalink": it.get("permalink", "")})
@@ -205,7 +213,8 @@ def fetch(username, since, now, is_video=False):
         done = (reels_old >= REELS_N) if is_video else engagement_done
         if done or not paging.get("next") or not after:
             break
-    return {"followers": followers, "items": items, "reels": reels}, None
+    diag["pages"] = pages
+    return {"followers": followers, "items": items, "reels": reels, "diag": diag}, None
 
 
 def summarize(username, followers, items, reels, now):
@@ -327,7 +336,10 @@ def main():
                     "view_median": s["view_median"]})
         history[u] = pts[-HISTORY_KEEP:]
         if is_video:
-            log(f"    [ok] 조회수중앙값 {s['view_median']} (릴스 {s['reels_used']}개)")
+            dg = res.get("diag", {})
+            log(f"    [ok] 조회수중앙값 {s['view_median']} (릴스 {s['reels_used']}개 사용) "
+                f"| 진단: {dg.get('pages')}페이지·전체{dg.get('rows')}개 중 "
+                f"영상{dg.get('video')}·REELS태그{dg.get('reels_tagged')}·조회수有{dg.get('reels_withview')}")
         else:
             log(f"    [ok] 참여율 {s['eng_rate']}% / 평균좋아요 {s['avg_likes']}")
         time.sleep(3)
