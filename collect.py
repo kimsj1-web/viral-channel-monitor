@@ -430,9 +430,20 @@ def main():
         key=lambda c: c.get("eng_rate") if c.get("eng_rate") is not None else -1,
         reverse=True,
     )
+    now_kst = dt.datetime.now(KST).strftime("%Y-%m-%d %H:%M")
+    # 지표별 '마지막 수집 시각' — 담당 모드만 now로 갱신, 나머지는 기존 값 보존.
+    # (화면에서 좋아요·조회수가 각각 언제 기준인지 구분하기 위함)
+    engage_ts = store.get("engage_updated_kst")
+    video_ts = store.get("video_updated_kst")
+    if mode in ("engage", "all"):
+        engage_ts = now_kst
+    if mode in ("video", "all"):
+        video_ts = now_kst
     out = {
         "updated_at": now.isoformat(),
-        "updated_kst": dt.datetime.now(KST).strftime("%Y-%m-%d %H:%M"),
+        "updated_kst": now_kst,          # 마지막 저장 시각(호환용)
+        "engage_updated_kst": engage_ts,  # 좋아요·참여 마지막 수집 시각
+        "video_updated_kst": video_ts,    # 조회수 마지막 수집 시각
         "lookback_days": LOOKBACK,
         "channels": channels,
         "history": history,
