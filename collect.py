@@ -46,9 +46,13 @@ MAX_RL_STREAK = 5                  # 연속 이만큼 막히면 조기 중단
 SUPA_URL = "https://nmsrzdlgmaaqqcalfbhr.supabase.co"
 SUPA_KEY = "sb_publishable_ZWCmMNsV1La-yMawjhzUtg_FWQp7-O1"
 
-# 영상 계정(type=='video') 집합 — load_targets에서 채움.
-# 영상은 릴스 조회수만, 이미지·텍스트는 참여(좋아요·댓글)만 깊게 긁어 호출 절약.
+# 계정별로 '어떤 지표가 필요한가'를 load_targets에서 채운다.
+#   VIDEO_ACCOUNTS : 릴스 조회수(효율)가 필요한 계정 (type=='video')
+#   ENGAGE_ACCOUNTS: 좋아요·댓글(참여) 효율이 필요한 계정 (type!='video')
+# 같은 계정이 영상+이미지(또는 영상+텍스트) 겸용이면 두 집합에 모두 들어가,
+# 한 번의 수집에서 조회수와 좋아요를 같이 받는다(겸용 계정 좋아요 0 문제 해결).
 VIDEO_ACCOUNTS = set()
+ENGAGE_ACCOUNTS = set()
 
 
 def log(msg):
@@ -93,11 +97,15 @@ def load_targets():
         if rows and isinstance(rows[0].get("v"), list):
             for a in rows[0]["v"]:
                 add(a.get("name"))
-                if a.get("type") == "video":
-                    nm = (a.get("name") or "").strip().lstrip("@")
-                    if nm:
+                nm = (a.get("name") or "").strip().lstrip("@")
+                if nm:
+                    if a.get("type") == "video":
                         VIDEO_ACCOUNTS.add(nm)
-        log(f"Supabase 계정 {len(names)}개 로드 (영상 {len(VIDEO_ACCOUNTS)}개)")
+                    else:
+                        ENGAGE_ACCOUNTS.add(nm)   # 이미지·텍스트 등 영상 외 유형
+        both = VIDEO_ACCOUNTS & ENGAGE_ACCOUNTS
+        log(f"Supabase 계정 {len(names)}개 로드 "
+            f"(영상 {len(VIDEO_ACCOUNTS)} · 참여 {len(ENGAGE_ACCOUNTS)} · 겸용 {len(both)})")
     except Exception as e:
         log(f"Supabase 로드 실패 → channels.txt로 대체: {e}")
 
@@ -154,7 +162,7 @@ def api_get(params, retries=3):
     return {"error": {"message": "max retries exceeded", "code": 4}}
 
 
-def fetch(username, since, now, is_video=False):
+def fetch(username, since, now, want_reels=False, want_eng=True):
     items, reels, followers, after, pages = [], [], None, None, 0
     engagement_done = False
     fresh_cut = now - dt.timedelta(hours=FRESH_HOURS)
@@ -184,9 +192,10 @@ def fetch(username, since, now, is_video=False):
             ts = parse_ts(it.get("timestamp"))
             if not ts:
                 continue
-            if is_video:
-                # 영상 계정: 릴스 조회수만 모음(참여 집계 생략). 핀이 날짜순서를 흐트러도
-                # 나중에 timestamp로 정렬해 최근 N개만 쓰므로 오래된 핀은 자동 제외.
+            # 겸용 계정은 두 블록이 모두 돌아 조회수와 좋아요를 같은 응답에서 함께 수집.
+            if want_reels:
+                # 릴스 조회수(효율). 핀이 날짜순서를 흐트러도 나중에 timestamp로
+                # 정렬해 최근 N개만 쓰므로 오래된 핀은 자동 제외.
                 if it.get("media_type") == "VIDEO":
                     diag["video"] += 1
                 if it.get("media_product_type") == "REELS":
@@ -196,11 +205,12 @@ def fetch(username, since, now, is_video=False):
                     reels.append({"id": it.get("id"), "_ts": ts,
                                   "views": it.get("view_count") or 0,
                                   "permalink": it.get("permalink", "")})
-            else:
-                # 이미지·텍스트 계정: 참여(좋아요·댓글)만, 집계 기간(LOOKBACK*2) 내 게시물
+            if want_eng:
+                # 참여(좋아요·댓글): 집계 기간(LOOKBACK*2) 내 '피드 게시물'만.
+                # 릴스(REELS)는 영상 지표(조회수)로 따로 집계하므로 좋아요 효율에서 제외.
                 if ts < since:
-                    old_on_page += 1
-                else:
+                    old_on_page += 1          # 과거 구간 도달 판단은 전체 미디어 기준(안정적)
+                elif it.get("media_product_type") != "REELS":
                     it["_ts"] = ts
                     items.append(it)
         # 핀은 최대 3개. 한 페이지에서 '오래된 글'이 3개 넘으면 진짜 과거 구간 도달.
@@ -209,9 +219,12 @@ def fetch(username, since, now, is_video=False):
         reels_old = sum(1 for r in reels if r["_ts"] <= fresh_cut)
         paging = media.get("paging", {})
         after = paging.get("cursors", {}).get("after")
-        # 영상: 24h 지난 릴스 N개 확보하면 종료 / 이미지·텍스트: 참여 구간 덮으면 바로 종료(헛페이지 X)
-        done = (reels_old >= REELS_N) if is_video else engagement_done
-        if done or not paging.get("next") or not after:
+        # 필요한 지표를 모두 확보하면 종료:
+        #   릴스 → 24h 지난 릴스 N개 확보 / 참여 → 집계 구간 덮음
+        # 겸용이면 둘 다 만족해야 멈춘다(한쪽만 끝나고 멈춰 다른 쪽이 0 되는 것 방지).
+        reels_done = (not want_reels) or (reels_old >= REELS_N)
+        eng_done = (not want_eng) or engagement_done
+        if (reels_done and eng_done) or not paging.get("next") or not after:
             break
     diag["pages"] = pages
     return {"followers": followers, "items": items, "reels": reels, "diag": diag}, None
@@ -301,9 +314,17 @@ def main():
     aborted = False
 
     for idx, u in enumerate(targets, 1):
-        is_video = u in VIDEO_ACCOUNTS
-        log(f"[{idx}/{total}] @{u}{' (영상)' if is_video else ''} ...")
-        res, err = fetch(u, since, now, is_video)
+        want_reels = u in VIDEO_ACCOUNTS
+        # 영상 전용이 아니면 참여 수집(겸용·이미지·텍스트·txt·무유형 기본값).
+        want_eng = (u in ENGAGE_ACCOUNTS) or (u not in VIDEO_ACCOUNTS)
+        if want_reels and want_eng:
+            tag = " (겸용)"
+        elif want_reels:
+            tag = " (영상)"
+        else:
+            tag = ""
+        log(f"[{idx}/{total}] @{u}{tag} ...")
+        res, err = fetch(u, since, now, want_reels, want_eng)
         if err:
             rl = is_rate_limit(err)
             rl_streak = rl_streak + 1 if rl else 0
@@ -335,12 +356,12 @@ def main():
                     "avg_engagement": s["avg_engagement"],
                     "view_median": s["view_median"]})
         history[u] = pts[-HISTORY_KEEP:]
-        if is_video:
+        if want_reels:
             dg = res.get("diag", {})
             log(f"    [ok] 조회수중앙값 {s['view_median']} (릴스 {s['reels_used']}개 사용) "
                 f"| 진단: {dg.get('pages')}페이지·전체{dg.get('rows')}개 중 "
                 f"영상{dg.get('video')}·REELS태그{dg.get('reels_tagged')}·조회수有{dg.get('reels_withview')}")
-        else:
+        if want_eng:
             log(f"    [ok] 참여율 {s['eng_rate']}% / 평균좋아요 {s['avg_likes']}")
         time.sleep(3)
 
