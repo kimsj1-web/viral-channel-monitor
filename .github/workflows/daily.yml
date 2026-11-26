@@ -1,12 +1,29 @@
 name: Daily channel metrics
 
+# 시간대 분할 수집
+#  - 05:00 KST (= 20:00 UTC 전날) → 이미지·텍스트(참여/좋아요)  COLLECT_MODE=engage
+#  - 08:00 KST (= 23:00 UTC 전날) → 영상(조회수)              COLLECT_MODE=video
+#  겸용 계정은 두 런에 모두 포함되며, collect.py가 data.json을 merge 저장하므로
+#  5시 좋아요와 8시 조회수가 서로를 덮어쓰지 않음.
 on:
   schedule:
-    - cron: '0 22 * * *'   # 매일 07:00 KST (= 22:00 UTC 전날)
+    - cron: '0 20 * * *'   # 05:00 KST — 참여(engage)
+    - cron: '0 23 * * *'   # 08:00 KST — 조회수(video)
   workflow_dispatch:         # '수동 실행(Run workflow)' 버튼용
+    inputs:
+      mode:
+        description: '수집 모드 (engage=참여 / video=조회수 / all=전부)'
+        type: choice
+        options: [engage, video, all]
+        default: all
 
 permissions:
   contents: write
+
+# 두 스케줄이 혹시 겹쳐도 하나씩만 돌게(push 충돌 방지)
+concurrency:
+  group: daily-channel-metrics
+  cancel-in-progress: false
 
 jobs:
   collect:
@@ -21,16 +38,32 @@ jobs:
       - name: Install deps
         run: pip install requests
 
+      # 어떤 트리거인지로 수집 모드 결정
+      - name: Decide mode
+        id: mode
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "mode=${{ github.event.inputs.mode }}" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event.schedule }}" = "0 20 * * *" ]; then
+            echo "mode=engage" >> "$GITHUB_OUTPUT"
+          else
+            echo "mode=video" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Collect metrics
         env:
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          COLLECT_MODE: ${{ steps.mode.outputs.mode }}
         run: python collect.py
 
       - name: Commit updated data
+        env:
+          MODE: ${{ steps.mode.outputs.mode }}
         run: |
           git config user.name "github-actions"
           git config user.email "actions@users.noreply.github.com"
           git add docs/data.json
-          git diff --staged --quiet || git commit -m "Update metrics ($(date -u +%Y-%m-%d))"
+          git diff --staged --quiet || git commit -m "Update metrics - $MODE ($(date -u +%Y-%m-%d))"
+          git pull --rebase --autostash
           git push
