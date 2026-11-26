@@ -24,7 +24,7 @@ TOKEN = os.environ["IG_ACCESS_TOKEN"]
 IG_USER_ID = os.environ["IG_USER_ID"]
 
 LOOKBACK = 7            # 좋아요·댓글(참여) 집계 기간(일)
-PAGE_SIZE = 50
+PAGE_SIZE = 200        # 한 요청에 많이 받아 릴스가 뒤로 밀린 계정도 한 번에 잡음(요청 수↓ → 레이트리밋에 유리)
 MAX_PAGES = 6          # 채널당 최대 페이지(무한 페이지네이션 방지)
 OUT_PATH = "docs/data.json"
 HISTORY_KEEP = 60
