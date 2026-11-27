@@ -61,7 +61,7 @@ button.ghost{border:none;background:transparent;color:var(--muted);padding:2px 6
 .acct{display:flex;align-items:center;gap:7px;padding:7px 9px;border:1px solid var(--border);border-radius:8px;
   margin-bottom:7px;background:var(--card);cursor:grab}
 .acct[draggable=true]:active{cursor:grabbing}
-.acct.used{opacity:.45;cursor:default}
+.acct.used{opacity:.62}
 .acct.picked{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-bg)}
 .acct .nm{font-weight:500;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .acct .rate{font-weight:700;font-size:13px;white-space:nowrap}
@@ -270,7 +270,10 @@ function startSync(){
 
 function emptyPlan(date){var m=[];for(var i=0;i<DEFAULT_MATERIALS;i++){m.push({id:uid(),slots:new Array(SLOTS_PER).fill(null)});}return {date:date,materials:m};}
 function acctById(id){for(var i=0;i<ACCOUNTS.length;i++){if(ACCOUNTS[i].id===id)return ACCOUNTS[i];}return null;}
-function usedMap(){var map={};if(!PLAN)return map;PLAN.materials.forEach(function(m,mi){m.slots.forEach(function(aid){if(aid)map[aid]=mi;});});return map;}
+// 계정이 (날짜가 다른) 여러 소재에 들어갈 수 있으므로 aid→[소재index...] 배열로 수집
+function usedMap(){var map={};if(!PLAN)return map;PLAN.materials.forEach(function(m,mi){m.slots.forEach(function(aid){if(aid){(map[aid]=map[aid]||[]).push(mi);}});});return map;}
+// 소재의 예약 날짜(미지정이면 현재 선택 날짜 DATE로 취급)
+function matDate(mi){return (PLAN&&PLAN.materials[mi]&&PLAN.materials[mi].date)||DATE;}
 
 function loadEfficiency(){
   fetch('./data.json?_='+Date.now()).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){
@@ -301,18 +304,20 @@ function loadEfficiency(){
 function place(aid,mi,si){
   if(!PLAN)PLAN=emptyPlan(DATE);
   var a=acctById(aid); if(!a)return;
-  var used=usedMap();
-  if(used[aid]!==undefined&&used[aid]!==mi){toast('⚠️ @'+a.name+' — 이미 '+letter(used[aid])+' 소재에 선정했어요');return;}
-  if(used[aid]===mi){toast('이미 이 소재에 있어요');return;}
-  // 같은 @계정명이 (영상/이미지/텍스트 상관없이) 다른 소재에 이미 있으면 차단
-  var dupMi=null,dupType=null;
-  PLAN.materials.forEach(function(m,mj){m.slots.forEach(function(sid){
-    if(!sid||sid===aid)return;var sa=acctById(sid);
-    if(sa&&sa.name===a.name&&dupMi===null){dupMi=mj;dupType=sa.type;}
-  });});
+  // 같은 소재에 이미 있으면
+  if(PLAN.materials[mi].slots.indexOf(aid)!==-1){toast('이미 이 소재에 있어요');return;}
+  // 같은 '날짜'의 다른 소재에 같은 @계정명이 있으면 차단 (날짜가 다르면 중복 배정 허용)
+  var curD=matDate(mi), dupMi=null,dupType=null;
+  PLAN.materials.forEach(function(m,mj){
+    if(mj===mi||dupMi!==null||matDate(mj)!==curD)return;  // 날짜 다르면 통과(허용)
+    m.slots.forEach(function(sid){
+      if(!sid)return;var sa=acctById(sid);
+      if(sa&&sa.name===a.name&&dupMi===null){dupMi=mj;dupType=sa.type;}
+    });
+  });
   if(dupMi!==null){
     var tl=dupType==='video'?'영상':dupType==='image'?'이미지':dupType==='text'?'텍스트':'다른';
-    toast('⚠️ @'+a.name+' — 이미 '+letter(dupMi)+' 소재('+tl+')에 배정된 채널입니다');
+    toast('⚠️ @'+a.name+' — 같은 날짜('+dLabel(curD)+') '+letter(dupMi)+' 소재('+tl+')에 이미 배정된 채널입니다');
     return;
   }
   PLAN.materials[mi].slots[si]=aid;picked=null;savePlan();render();
@@ -346,10 +351,12 @@ function renderAccounts(){
   ACCOUNTS.forEach(function(a){(b[a.type]||b.none).push(a);});
   b.image.sort(byLikes);b.text.sort(byLikes);b.none.sort(byLikes);b.video.sort(byViews);
   function card(a){
-    var u=used[a.id]!==undefined;
+    var mis=used[a.id], u=mis&&mis.length;
     var tg=(!a.type||a.type==='none')?'<div class="tg"><button data-act="type" data-id="'+a.id+'" data-t="image">이미지</button><button data-act="type" data-id="'+a.id+'" data-t="text">텍스트</button><button data-act="type" data-id="'+a.id+'" data-t="video">영상</button></div>':'';
-    var right=u?'<span class="usedtag">'+letter(used[a.id])+' 사용중</span>':'';
-    return '<div class="acct'+(u?' used':'')+(picked===a.id?' picked':'')+'" data-aid="'+a.id+'" draggable="'+(!u)+'">'
+    var right='';
+    if(u){var seen={},lets=[];mis.forEach(function(mi){var L=letter(mi);if(!seen[L]){seen[L]=1;lets.push(L);}});right='<span class="usedtag">'+lets.join(',')+' 사용중</span>';}
+    // 사용중이어도 드래그 허용 — 날짜가 다른 소재엔 다시 배정할 수 있음(place에서 판정)
+    return '<div class="acct'+(u?' used':'')+(picked===a.id?' picked':'')+'" data-aid="'+a.id+'" draggable="true">'
       +'<span class="nm" data-act="detail" data-id="'+a.id+'">@'+esc(a.name)+'</span>'
       +metricHTML(a)
       +'<span class="pr">'+won(a.price)+'</span>'+tg+right
